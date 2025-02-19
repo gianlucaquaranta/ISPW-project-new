@@ -1,0 +1,25 @@
+.parent{
+    -fx-background-color: #E9E0D9;
+}
+.pane{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 80;
+}
+
+.text-field{
+    -fx-border-width: 2px;
+    -fx-border-color: #0b6b75;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+}
+
+.password-field{
+    -fx-border-width: 2px;
+    -fx-border-color: #0b6b75;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+}
+
+.annulla{
+
+}

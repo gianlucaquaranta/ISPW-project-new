@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="parent" stylesheets="@form_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="939.0" styleClass="pane" stylesheets="@form_Stylesheet.css" BorderPane.alignment="CENTER">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.31578946113586426" green="0.31578946113586426" blue="0.31578946113586426" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Label layoutX="299.0" layoutY="168.0" />
+            <Label alignment="CENTER" layoutY="48.2" prefHeight="40.0" prefWidth="542.0" styleClass="titolo" stylesheets="@form_Stylesheet.css" text="Form - aggiungi noleggio" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="90.0" layoutY="286.0" stylesheets="@form_Stylesheet.css" text="Cognome" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="230.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="89.0" layoutY="321.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il cognome" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="265.0" />
+            <Label layoutX="101.0" layoutY="376.0" text="Codice fiscale" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="335.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="64.0" layoutY="574.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="363.0" styleClass="annulla" text="Annulla" textFill="WHITE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="500.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Label layoutX="571.0" layoutY="124.0" prefHeight="30.0" prefWidth="469.0" text="Codice ISBN" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="125.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="625.0" layoutY="161.0" prefHeight="30.0" prefWidth="400.0" promptText="###-##-#####-##-#" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="160.0" />
+            <Label layoutX="85.0" layoutY="467.0" textAlignment="CENTER" textFill="#0b6b75">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="71.0" layoutY="404.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il CF" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="370.0" />
+            <Label layoutX="585.0" layoutY="230.0" text="Data di inizio del noleggio" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="230.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="563.0" layoutY="335.0" text="Data di scadenza del noleggio" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="335.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="60.0" layoutY="191.8" stylesheets="@form_Stylesheet.css" text="Nome" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="125.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="77.0" layoutY="238.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il nome" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="160.0" />
+            <Button layoutX="495.0" layoutY="455.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="363.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Aggiungi noleggio" textFill="WHITE" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="100.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <DatePicker layoutX="558.4" layoutY="264.0" prefHeight="30.0" prefWidth="281.0" promptText="Inserisci data di inizio" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="100.0" />
+            <DatePicker layoutX="554.0" layoutY="370.0" prefHeight="30.0" prefWidth="281.0" promptText="Inserisci data di scadenza" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="100.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

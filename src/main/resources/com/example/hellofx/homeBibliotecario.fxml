@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="parent" stylesheets="@Login_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hellofx.graphiccontroller.HomeBibGC">
+    <center>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="1064.0" styleClass="pane" stylesheets="@buttonList_Stylesheet.css" BorderPane.alignment="BOTTOM_CENTER">
+            <effect>
+                <DropShadow>
+                    <color>
+                        <Color red="0.31578946113586426" green="0.31578946113586426" blue="0.31578946113586426" />
+                    </color>
+                </DropShadow>
+            </effect>
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="visualizzaCatalogoButton" layoutY="254.0" mnemonicParsing="false" onAction="#visualizzaCatalogo" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Visualizza Catalogo" textFill="#565656" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="260.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/catalogo_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="registroNoleggiButton" layoutX="20.0" layoutY="318.6" mnemonicParsing="false" onAction="#visualizzaRegistroNoleggi" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Registro Noleggi" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="318.5">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/regNoleggio_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="372.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci Presentazione Eventi" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="377.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/eventi_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="118.0" layoutY="49.0" prefWidth="1064.0" text="Nome:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+            <Label layoutX="96.0" layoutY="129.0" prefWidth="1064.0" text="Indirizzo:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0" />
+            <Label layoutX="106.0" layoutY="139.0" prefWidth="1064.0" text="Bibliotecario:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="200.0" />
+            <Label layoutX="297.0" layoutY="72.0" styleClass="titolo" stylesheets="@buttonList_Stylesheet.css" text="Dati della biblioteca" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+            <Button fx:id="gestisciPrenotazioniButton" layoutX="20.0" layoutY="459.0" mnemonicParsing="false" onAction="#visualizzaPrenotazioni" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci Prenotazioni" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="435.5">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/prenotazioni_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="493.4" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Log out" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="493.4">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/logout_icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

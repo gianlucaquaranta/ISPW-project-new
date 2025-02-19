@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="1280.0" styleClass="parent" stylesheets="@Login_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hellofx.graphiccontroller.RegistrazioneUtenteGC">
+   <center>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="579.0" styleClass="pane" stylesheets="@Login_Stylesheet.css" BorderPane.alignment="CENTER">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.31578946113586426" green="0.31578946113586426" blue="0.31578946113586426" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <TextField layoutX="84.0" layoutY="238.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il tuo username" AnchorPane.leftAnchor="85.0" />
+            <PasswordField layoutX="102.0" layoutY="406.0" prefHeight="30.0" prefWidth="400.0" AnchorPane.leftAnchor="85.0" />
+            <ImageView fitHeight="150.0" fitWidth="420.0" layoutX="90.6" layoutY="50.4" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="79.6" AnchorPane.rightAnchor="79.20000000000005" AnchorPane.topAnchor="50.0">
+               <image>
+                  <Image url="@Images/BOOKISH_login.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="299.0" layoutY="168.0" />
+            <Label alignment="CENTER" layoutX="239.0" layoutY="146.0" text="Registrati" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="84.0" layoutY="202.0" text="Il tuo username" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="202.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="90.0" layoutY="286.0" text="La tua email" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="286.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="89.0" layoutY="321.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci la tua email" AnchorPane.leftAnchor="85.0" />
+            <Label layoutX="101.0" layoutY="376.0" text="La tua password" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="370.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="36.0" layoutY="462.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Registrati" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="462.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="50.4" layoutY="583.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Registrati con Google" textFill="WHITE" AnchorPane.leftAnchor="50.4" AnchorPane.rightAnchor="50.39999999999998">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" layoutY="534.0" prefHeight="30.0" prefWidth="361.0" text="Oppure" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="71.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../../../Downloads/58dbfa9b3c4f3b306117b81cd2e1188f.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="71.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/Google%20little%20logo.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="94.0" layoutY="212.0" onMouseClicked="#indietro" text="Torna al log in" textAlignment="CENTER" textFill="#0b6b75" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="650.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

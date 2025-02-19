@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="parent" stylesheets="@Login_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="1064.0" styleClass="pane" stylesheets="@Login_Stylesheet.css" BorderPane.alignment="CENTER">
+            <effect>
+                <DropShadow>
+                    <color>
+                        <Color red="0.31578946113586426" green="0.31578946113586426" blue="0.31578946113586426" />
+                    </color>
+                </DropShadow>
+            </effect>
+            <children>
+                <TextField layoutX="84.0" layoutY="238.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il tuo nome" styleClass="text-field" stylesheets="@Login_Stylesheet.css" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="570.0" AnchorPane.topAnchor="238.0" />
+                <PasswordField layoutX="163.0" layoutY="490.0" prefHeight="30.0" prefWidth="400.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="570.0" />
+                <Label layoutX="299.0" layoutY="168.0" />
+                <Label alignment="CENTER" layoutY="146.0" prefHeight="40.0" prefWidth="542.0" text="Dati bibliotecario" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="532.0">
+                    <font>
+                        <Font name="System Bold" size="28.0" />
+                    </font>
+                </Label>
+                <Label layoutX="84.0" layoutY="202.0" text="Il tuo nome" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="901.6" AnchorPane.topAnchor="202.0">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="90.0" layoutY="286.0" text="Il tuo cognome" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="286.0">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <TextField layoutX="89.0" layoutY="321.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il tuo cognome" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="570.0" AnchorPane.topAnchor="321.0" />
+                <Label layoutX="101.0" layoutY="376.0" text="Il tuo username" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="370.0">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Button layoutX="572.8" layoutY="575.2" mnemonicParsing="false" prefHeight="50.0" prefWidth="454.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Registrati" textFill="WHITE" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="575.0">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Button>
+            <Label alignment="CENTER" layoutX="532.2" layoutY="147.0" prefHeight="40.0" prefWidth="415.0" text="Dati biblioteca" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="532.2" AnchorPane.rightAnchor="0.599999999999909">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="554.0" layoutY="203.2" prefHeight="30.0" prefWidth="469.0" text="Nome" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="570.0" AnchorPane.topAnchor="202.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="533.0" layoutY="238.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il nome della biblitoeca" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="238.0" />
+            <Label layoutX="85.0" layoutY="467.0" textAlignment="CENTER" textFill="#0b6b75">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="71.0" layoutY="404.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il tuo username" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="570.0" AnchorPane.topAnchor="402.4" />
+            <Label layoutX="89.0" layoutY="448.0" text="La tua password" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="454.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="545.0" layoutY="288.0" text="Indirizzo" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="570.0" AnchorPane.topAnchor="286.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="565.0" layoutY="367.0" text="Città" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="570.0" AnchorPane.topAnchor="370.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="796.0" layoutY="371.0" text="C.A.P." textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="785.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="903.0" layoutY="370.0" text="Provincia" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="900.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="598.2" layoutY="320.0" prefHeight="30.0" prefWidth="323.0" promptText="Inserisci l'indirizzo della biblioteca" AnchorPane.leftAnchor="570.0" />
+            <Label layoutX="908.0" layoutY="320.0" text="n°" textAlignment="CENTER" textFill="#565656">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="938.0" layoutY="321.0" prefHeight="30.0" prefWidth="68.0" AnchorPane.rightAnchor="60.0" />
+            <TextField layoutX="573.0" layoutY="404.0" prefHeight="30.0" prefWidth="191.0" promptText="Inserisci la città di ubicazione" AnchorPane.leftAnchor="570.0" AnchorPane.topAnchor="402.4" />
+            <TextField layoutX="789.0" layoutY="403.0" prefHeight="30.0" prefWidth="87.0" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="402.4" />
+            <TextField layoutX="899.2" layoutY="402.6" prefHeight="30.0" prefWidth="104.0" AnchorPane.leftAnchor="900.0" AnchorPane.rightAnchor="60.799999999999955" AnchorPane.topAnchor="402.4" />
+            <Label layoutX="561.0" layoutY="454.0" prefHeight="30.0" prefWidth="469.0" text="Sito ufficiale (URL) " textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="570.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="609.0" layoutY="490.0" prefHeight="30.0" prefWidth="433.0" promptText="Inserisci l'URL del sito ufficiale della biblioteca" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="60.0" />
+            <ImageView fitHeight="80.0" fitWidth="753.0" layoutX="343.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="314.0" AnchorPane.rightAnchor="314.6" AnchorPane.topAnchor="40.0">
+               <image>
+                  <Image url="@Images/BOOKISH_login.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="38.0" layoutY="575.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="454.0" styleClass="annulla" stylesheets="@form_Stylesheet.css" text="Annulla" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="570.0" AnchorPane.topAnchor="575.0">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            </children>
+        </AnchorPane>
+   </center>
+</BorderPane>

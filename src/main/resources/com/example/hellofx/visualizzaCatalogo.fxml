@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="parent" stylesheets="@Login_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hellofx.graphiccontroller.CatalogoBibGC">
+   <center>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1260.0" styleClass="pane" stylesheets="@tableView_Stylesheet.css" BorderPane.alignment="BOTTOM_CENTER">
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.31578946113586426" green="0.31578946113586426" blue="0.31578946113586426" />
+               </color>
+            </DropShadow>
+         </effect>
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="home" layoutX="733.0" layoutY="41.0" mnemonicParsing="false" onAction="#home" prefHeight="46.0" prefWidth="73.0" text="Home" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="30.0" />
+            <Button fx:id="modificaCatalogo" layoutX="853.0" layoutY="40.0" mnemonicParsing="false" onAction="#modificaCatalogo" prefHeight="46.0" prefWidth="161.0" text="Modifica catalogo" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="30.0" />
+            <Label layoutX="65.8" layoutY="23.2" styleClass="titolo" text="Catalogo" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="23.2" />
+            <TableView fx:id="tableView" layoutX="71.2" layoutY="128.0" prefHeight="563.0" prefWidth="1118.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
+              <columns>
+                <TableColumn fx:id="copertinaCol" prefWidth="100.0" text="Copertina" />
+                <TableColumn fx:id="titoloCol" prefWidth="120.0" text="Titolo" />
+                  <TableColumn fx:id="autoreCol" prefWidth="120.0" text="Autore" />
+                  <TableColumn fx:id="editoreCol" prefWidth="120.0" text="Editore" />
+                  <TableColumn fx:id="genereCol" prefWidth="120.0" text="Genere" />
+                  <TableColumn id="colonneGrandi" fx:id="annoCol" prefWidth="180.0" text="Anno di pubblicazione" />
+                  <TableColumn fx:id="isbnCol" prefWidth="144.53326416015625" text="ISBN" />
+                  <TableColumn id="colonneGrandi" fx:id="copeCol" prefWidth="107.46685791015625" text="Num. copie" />
+                  <TableColumn id="colonneGrandi" fx:id="copieDispCol" prefWidth="184.2666015625" text="Num. copie disponibili" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

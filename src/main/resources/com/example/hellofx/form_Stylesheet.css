@@ -1,0 +1,76 @@
+.parent{
+    -fx-background-color: #E9E0D9;
+}
+.pane{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 80;
+}
+
+.label{
+    -fx-text-fill: #565656;
+    -fx-font-size: 20px;
+    -fx-alignment: right;
+    -fx-label-padding: 0;
+}
+.titolo{
+    -fx-text-fill: #0b6b75;
+    -fx-font-size: 30px;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+.text-field{
+    -fx-font-size: 20px;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+}
+.split-menu-button{
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+}
+
+.split-menu-button .arrow-button {
+    -fx-background-color: white;
+    -fx-background-radius: 0 7 7 0;
+    -fx-border-radius: 0 7 7 0;
+
+}
+.split-menu-button .label{
+    -fx-background-color: white;
+    -fx-background-radius: 7 0 0 7;
+    -fx-border-radius: 7 0 0 7;
+}
+
+.date-picker{
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+}
+.date-picker .text-field{
+    -fx-effect: none;
+    -fx-background-color: white;
+    -fx-background-radius: 7 0 0 7;
+    -fx-border-radius: 7 0 0 7;
+}
+.date-picker .arrow-button {
+    -fx-background-color: white;
+    -fx-background-radius: 0 7 7 0;
+    -fx-border-radius: 0 7 7 0;
+}
+
+.annulla{
+    -fx-background-color: white;
+    -fx-border-width: 3px;
+    -fx-border-radius: 15;
+    -fx-border-color: #0b6b75;
+    -fx-text-fill: #0b6b75;
+}
+
+.searchBar{
+    -fx-background-radius: 7 0 0 7;
+    -fx-border-radius: 7 0 0 7;
+    -fx-pref-height: 30;
+}
+.searchButton{
+    -fx-background-radius: 0 7 7 0;
+    -fx-border-radius: 0 7 7 0;
+    -fx-pref-width: 50;
+}
