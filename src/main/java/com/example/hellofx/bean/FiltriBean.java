@@ -19,6 +19,10 @@ public class FiltriBean {
         this.raggio = raggio;
     }
 
+    public FiltriBean() {
+
+    }
+
     public String getTitolo() {
         return titolo;
     }

@@ -23,7 +23,7 @@ public class LoginController {
     private final BibliotecarioDao bibliotecarioDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBibliotecario();
     private final BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBiblioteca();
 
-    public LoginBean authenticate(LoginBean loginBean) throws Exception {
+    public LoginBean authenticate(LoginBean loginBean) throws LoginException {
         // Prova autenticazione come utente
         Utente utente = authenticateUtente(loginBean);
         if (utente != null) {

@@ -31,7 +31,7 @@ public class RegistrazioneController {
     private BibliotecarioDao bibliotecarioDao;
     private BibliotecaDao bibliotecaDao = FactoryProducer.getFactory("file").createDaoBiblioteca();
 
-    public boolean registerUtente(UtenteBean utenteBean) throws Exception {
+    public boolean registerUtente(UtenteBean utenteBean) throws RegistrationException {
         boolean found = findUtente(utenteBean, utenteDaoMemory.loadAllUtenti());
         if(!found) {
             if(Session.isFull() && Session.isFile()){
@@ -53,7 +53,7 @@ public class RegistrazioneController {
         } else throw new RegistrationException("Utente già esistente");
     }
 
-    public boolean registerBibliotecario(BibliotecarioBean bibliotecarioBean, BibliotecaBean bibliotecaBean) throws Exception {
+    public boolean registerBibliotecario(BibliotecarioBean bibliotecarioBean, BibliotecaBean bibliotecaBean) throws RegistrationException {
         boolean foundBibliotecario = findBibliotecario(bibliotecarioBean, bibliotecarioDaoMemory.loadAll());
         Biblioteca biblioteca = findBiblioteca(bibliotecaBean, bibliotecaDaoMemory.loadAll());
         boolean foundBiblioteca = biblioteca != null;

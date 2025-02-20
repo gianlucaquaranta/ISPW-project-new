@@ -3,6 +3,7 @@ package com.example.hellofx.cli;
 import com.example.hellofx.bean.LoginBean;
 import com.example.hellofx.controller.LoginController;
 import com.example.hellofx.controllerfactory.LoginControllerFactory;
+import com.example.hellofx.exception.LoginException;
 
 import java.util.Scanner;
 
@@ -33,15 +34,16 @@ public class CliLogin implements ShowInterface{
                 loginBean.setUsername(scanner.nextLine());
                 System.out.print("\nPassword: ");
                 loginBean.setPassword(scanner.nextLine());
-                loginBean = loginController.authenticate(loginBean);
-                if (loginBean.getType() == null) {
+                try {
+                    loginBean = loginController.authenticate(loginBean);
+                } catch (LoginException e) {
                     System.out.println("\nLogin Fallito.\n");
-                } else {
+                    return this.show(scanner);
+                }
                     System.out.println("\nAutenticazione eseguita come " + loginBean.getUsername() + " con ruolo " + loginBean.getType() + ".\n");
                     return loginBean.getType();
-                }
-            } else {
-                System.out.println("\nInput inserito invalido. Riprova.\n");
+                } else {
+                    System.out.println("\nInput inserito invalido. Riprova.\n");
             }
 
         }

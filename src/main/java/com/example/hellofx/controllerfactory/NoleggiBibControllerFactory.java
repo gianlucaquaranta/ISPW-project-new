@@ -1,7 +1,5 @@
 package com.example.hellofx.controllerfactory;
 
-import com.example.hellofx.controller.NoleggiBibController;
-
 public class NoleggiBibControllerFactory {
     private static NoleggiBibControllerFactory instance = null;
 

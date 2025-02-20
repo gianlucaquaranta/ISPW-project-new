@@ -1,7 +1,6 @@
 package com.example.hellofx.cli;
 
 import com.example.hellofx.bean.NoleggioBean;
-import com.example.hellofx.controller.NoleggiBibController;
 import com.example.hellofx.controllerfactory.NoleggiBibControllerFactory;
 
 import java.util.List;
