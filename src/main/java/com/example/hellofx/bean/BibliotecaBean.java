@@ -8,7 +8,7 @@ public class BibliotecaBean {
     private String citta;
     private String provincia;
     private String url;
-    //private String usernameBibliotecario; ???
+    private String usernameBibliotecario;
 
     public BibliotecaBean(String nome, String indirizzo, String cap, String numeroCivico, String citta, String provincia, String url) {
         this.nome = nome;
@@ -22,6 +22,14 @@ public class BibliotecaBean {
 
     public BibliotecaBean() {
 
+    }
+
+    public String getUsernameBibliotecario() {
+        return usernameBibliotecario;
+    }
+
+    public void setUsernameBibliotecario(String usernameBibliotecario) {
+        this.usernameBibliotecario = usernameBibliotecario;
     }
 
     public String getNome() {

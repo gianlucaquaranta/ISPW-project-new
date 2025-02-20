@@ -5,6 +5,7 @@ import com.example.hellofx.entity.*;
 import java.util.List;
 
 public interface BibliotecaDao {
+    List<Biblioteca> loadAll();
     List<Biblioteca> loadFiltered(Filtri filtri);
     Biblioteca loadOne(String id);
     Biblioteca loadOneFromBibliotecario(String username);

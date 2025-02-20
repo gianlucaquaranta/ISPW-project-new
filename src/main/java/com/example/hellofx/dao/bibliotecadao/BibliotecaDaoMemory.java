@@ -23,6 +23,16 @@ public class BibliotecaDaoMemory implements BibliotecaDao {
     private BibliotecaDaoMemory() {}
 
     @Override
+    public List<Biblioteca> loadAll() {
+        List<Biblioteca> biblioteche = new ArrayList<>();
+        for (Map.Entry<String, Biblioteca> entry : bibliotecheMap.entrySet()) {
+            biblioteche.add(entry.getValue());
+        }
+        return biblioteche;
+    }
+
+
+    @Override
     public List<Biblioteca> loadFiltered(Filtri filtri) {
         return bibliotecheMap.values().stream()
                 .filter(b -> (filtri.getBiblioteca() == null || b.getNome().toLowerCase().contains(filtri.getBiblioteca().toLowerCase())))

@@ -3,17 +3,17 @@ package com.example.hellofx.entity;
 public class Posizione {
     String cap;
     String indirizzo;
-    int numeroCivico;
+    String numeroCivico;
+    String citta;
+    String provincia;
     float[] coordinate;
 
-
-    private Posizione() {}
-
-    public Posizione (String cap, String indirizzo, int numeroCivico, float[] coordinate) {
+    public Posizione (String cap, String indirizzo, String numeroCivico, String citta, String provincia) {
         this.cap = cap;
         this.indirizzo = indirizzo;
         this.numeroCivico = numeroCivico;
-        this.coordinate = coordinate; //se il numero civico e l'indirizzo non ci sono: cercare le coordinate del cap? prendendo il centro del paese con quel cap
+        this.citta = citta;
+        this.provincia = provincia;
     }
 
     public String getCap() {
@@ -32,11 +32,11 @@ public class Posizione {
         this.indirizzo = indirizzo;
     }
 
-    public int getNumeroCivico() {
+    public String getNumeroCivico() {
         return numeroCivico;
     }
 
-    public void setNumeroCivico(int numeroCivico) {
+    public void setNumeroCivico(String numeroCivico) {
         this.numeroCivico = numeroCivico;
     }
 
