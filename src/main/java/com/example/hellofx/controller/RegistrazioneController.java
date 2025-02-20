@@ -2,7 +2,6 @@ package com.example.hellofx.controller;
 
 import com.example.hellofx.bean.BibliotecarioBean;
 import com.example.hellofx.bean.BibliotecaBean;
-import com.example.hellofx.bean.LoginBean;
 import com.example.hellofx.bean.UtenteBean;
 import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
@@ -19,9 +18,6 @@ import com.example.hellofx.exception.RegistrationException;
 import com.example.hellofx.session.BibliotecarioSession;
 import com.example.hellofx.session.Session;
 import com.example.hellofx.session.UtenteSession;
-
-import javax.management.MBeanRegistrationException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrazioneController {

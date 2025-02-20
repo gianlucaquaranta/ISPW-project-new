@@ -17,9 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AggiornaCatController {
+    private static final String MEMORY = "memory";
     private Session session = BibliotecarioSession.getInstance();
     private LibroFactory libroFactory = LibroFactory.getInstance();
-    private LibroDao libroDaoMemory = FactoryProducer.getFactory("memory").createDaoLibro();
+    private LibroDao libroDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoLibro();
 
     public void delete(LibroBean libroBean){
         Biblioteca b = session.getBiblioteca();
@@ -74,8 +75,8 @@ public class AggiornaCatController {
 
         // Check in persistenza
         LibroDao libroDaoPers = null;
-        if (session.isFull() && !found) {
-            libroDaoPers = FactoryProducer.getFactory("daodbfactory").createDaoLibro();
+        if (Session.isFull() && !found) {
+            libroDaoPers = FactoryProducer.getFactory("db").createDaoLibro();
             for (Libro l : libroDaoPers.loadAll()) {
                 if (l.getIsbn().equals(libroBean.getIsbn())) {
                     found = true;
@@ -90,7 +91,7 @@ public class AggiornaCatController {
             libroAggiunto = this.beanToLibro(libroBean);
             libroDaoMemory.store(libroAggiunto);
 
-            if (session.isFull() && libroDaoPers != null) {
+            if (Session.isFull() && libroDaoPers != null) {
                 libroDaoPers.store(libroAggiunto);
             }
         }
@@ -100,13 +101,13 @@ public class AggiornaCatController {
     }
 
     public void save(){
-        BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory("memory").createDaoBiblioteca();
-        BibliotecarioDao bibliotecarioDaoMemory = FactoryProducer.getFactory("memory").createDaoBibliotecario();
+    BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBiblioteca();
+        BibliotecarioDao bibliotecarioDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBibliotecario();
 
         bibliotecaDaoMemory.store(session.getBiblioteca());
         bibliotecarioDaoMemory.store(session.getBibliotecario());
 
-        if(session.isFull()){
+        if(Session.isFull()){
             BibliotecaDao bibliotecaDaoPers = FactoryProducer.getFactory("db").createDaoBiblioteca();
             BibliotecarioDao bibliotecarioDaoPers = FactoryProducer.getFactory("db").createDaoBibliotecario();
 
