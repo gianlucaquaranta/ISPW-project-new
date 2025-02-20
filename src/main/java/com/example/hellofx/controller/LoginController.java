@@ -3,7 +3,6 @@ package com.example.hellofx.controller;
 import com.example.hellofx.bean.LoginBean;
 import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
-import com.example.hellofx.dao.bibliotecadao.BibliotecaDaoMemory;
 import com.example.hellofx.dao.bibliotecariodao.BibliotecarioDao;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.entity.Bibliotecario;
@@ -18,92 +17,89 @@ import com.example.hellofx.session.UtenteSession;
 import java.util.List;
 
 public class LoginController {
-    private UtenteDao utenteDaoMemory = FactoryProducer.getFactory("memory").createDaoUtente();
-    private BibliotecarioDao bibliotecarioDaoMemory = FactoryProducer.getFactory("memory").createDaoBibliotecario();
-    private BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory("memory").createDaoBiblioteca();
+    private static final String MEMORY = "memory";
+
+    private final UtenteDao utenteDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoUtente();
+    private final BibliotecarioDao bibliotecarioDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBibliotecario();
+    private final BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBiblioteca();
 
     public LoginBean authenticate(LoginBean loginBean) throws Exception {
-        Utente utente = this.userInList(loginBean, utenteDaoMemory.loadAllUtenti());
-        boolean utenteFound = utente != null;
-
-        if(Session.isFull() && !utenteFound) {
-            if(Session.isFile()){
-                UtenteDao utenteDaoFile = FactoryProducer.getFactory("file").createDaoUtente();
-                utente = this.userInList(loginBean, utenteDaoFile.loadAllUtenti());
-                utenteFound = utente != null;
-            } else{
-                UtenteDao utenteDaoDb = FactoryProducer.getFactory("db").createDaoUtente();
-                utente =  this.userInList(loginBean, utenteDaoDb.loadAllUtenti());
-                utenteFound = utente != null;
-            }
-        }
-
-        if(utenteFound) {
-            UtenteSession utenteSession = UtenteSession.getInstance();
-            if(Session.isFull()){
-                UtenteService utenteService = new UtenteService(utenteSession);
-                utente = utenteService.getUtente(utente.getUsername());
-            }
-            utenteSession.setUtente(utente);
+        // Prova autenticazione come utente
+        Utente utente = authenticateUtente(loginBean);
+        if (utente != null) {
+            setupUtenteSession(utente);
             loginBean.setType("utente");
             return loginBean;
         }
 
-        Bibliotecario bib = this.bibInList(loginBean, bibliotecarioDaoMemory.loadAll());
-        boolean bibFound = bib != null;
-        if(Session.isFull() && !bibFound) {
-            if(Session.isFile()){
-                BibliotecarioDao bibliotecarioDaoFile = FactoryProducer.getFactory("file").createDaoBibliotecario();
-                bib = this.bibInList(loginBean, bibliotecarioDaoFile.loadAll());
-                bibFound = bib != null;
-            } else{
-                BibliotecarioDao bibliotecarioDaoDb = FactoryProducer.getFactory("db").createDaoBibliotecario();
-                bib = this.bibInList(loginBean, bibliotecarioDaoDb.loadAll());
-                bibFound = bib != null;
-            }
-        }
-
-        if(bibFound) {
-            BibliotecarioSession bibliotecarioSession = BibliotecarioSession.getInstance();
-            bibliotecarioSession.setBibliotecario(bib);
-            bibl
-            if(Session.isFull()){
-                BibliotecaService bibliotecaService = new BibliotecaService(bibliotecarioSession);
-                bib = bibliotecarioSession.getUtente(utente.getUsername());
-            } else  {
-                bibliotecarioSession.setBiblioteca(bibliotecaDaoMemory.loadOneFromBibliotecario(bib.getUsername()));
-            }
-            utenteSession.setUtente(utente);
+        // Prova autenticazione come bibliotecario
+        Bibliotecario bibliotecario = authenticateBibliotecario(loginBean);
+        if (bibliotecario != null) {
+            setupBibliotecarioSession(bibliotecario);
             loginBean.setType("bibliotecario");
             return loginBean;
         }
 
-        if(!utenteFound && !bibFound) throw new LoginException("Credenziali errate.");
-        loginBean.setType(null);
-        return loginBean;
+        throw new LoginException("Credenziali errate.");
     }
 
-    private Utente findUtente(Utente utente){
-
-    }
-
-
-    private Utente userInList(LoginBean loginBean, List<Utente> list) {
-        for (Utente utente : list) {
-            if (loginBean.getUsername().equals(utente.getUsername()) && loginBean.getPassword().equals(utente.getPassword())) {
-                return utente; //utente caricato dal dao
-            }
+    private Utente authenticateUtente(LoginBean loginBean) {
+        Utente utente = findUtente(loginBean, utenteDaoMemory.loadAllUtenti());
+        if (utente == null && Session.isFull()) {
+            utente = findUtente(loginBean, getUtenteDao().loadAllUtenti());
         }
-        return null;
+        return utente;
     }
 
-    private Bibliotecario bibInList(LoginBean loginBean, List<Bibliotecario> list) {
-        for (Bibliotecario bib : list) {
-            if (loginBean.getUsername().equals(bib.getUsername()) && loginBean.getPassword().equals(bib.getPassword())) {
-                return bib;
-            }
+    private Bibliotecario authenticateBibliotecario(LoginBean loginBean) {
+        Bibliotecario bib = findBibliotecario(loginBean, bibliotecarioDaoMemory.loadAll());
+        if (bib == null && Session.isFull()) {
+            bib = findBibliotecario(loginBean, getBibliotecarioDao().loadAll());
         }
-        return null;
+        return bib;
     }
 
+    private void setupUtenteSession(Utente utente) {
+        UtenteSession utenteSession = UtenteSession.getInstance();
+        if (Session.isFull()) {
+            UtenteService utenteService = new UtenteService(utenteSession);
+            utente = utenteService.getUtente(utente.getUsername());
+        }
+        utenteSession.setUtente(utente);
+    }
+
+    private void setupBibliotecarioSession(Bibliotecario bib) {
+        BibliotecarioSession bibliotecarioSession = BibliotecarioSession.getInstance();
+        bibliotecarioSession.setBibliotecario(bib);
+        if (Session.isFull()) {
+            BibliotecaService bibliotecaService = new BibliotecaService(bibliotecarioSession);
+            bibliotecarioSession.setBiblioteca(bibliotecaService.getBiblioteca(bib.getUsername()));
+        } else {
+            bibliotecarioSession.setBiblioteca(bibliotecaDaoMemory.loadOneFromBibliotecario(bib.getUsername()));
+        }
+    }
+
+    private UtenteDao getUtenteDao() {
+        return Session.isFile() ? FactoryProducer.getFactory("file").createDaoUtente()
+                : FactoryProducer.getFactory("db").createDaoUtente();
+    }
+
+    private BibliotecarioDao getBibliotecarioDao() {
+        return Session.isFile() ? FactoryProducer.getFactory("file").createDaoBibliotecario()
+                : FactoryProducer.getFactory("db").createDaoBibliotecario();
+    }
+
+    private Utente findUtente(LoginBean loginBean, List<Utente> list) {
+        return list.stream()
+                .filter(u -> u.getUsername().equals(loginBean.getUsername()) && u.getPassword().equals(loginBean.getPassword()))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private Bibliotecario findBibliotecario(LoginBean loginBean, List<Bibliotecario> list) {
+        return list.stream()
+                .filter(b -> b.getUsername().equals(loginBean.getUsername()) && b.getPassword().equals(loginBean.getPassword()))
+                .findFirst()
+                .orElse(null);
+    }
 }

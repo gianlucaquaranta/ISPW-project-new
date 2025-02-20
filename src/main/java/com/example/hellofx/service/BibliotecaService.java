@@ -35,7 +35,17 @@ public class BibliotecaService {
 
     public Biblioteca getBiblioteca(String id){
         Biblioteca b = bibliotecaDao.loadOne(id);
+        this.createBiblioteca(b);
+        return b;
+    }
 
+    public Biblioteca getBibliotecaFromBibliotecario(String username){
+        Biblioteca b = bibliotecaDao.loadOneFromBibliotecario(username);
+        this.createBiblioteca(b);
+        return b;
+    }
+
+    private void createBiblioteca(Biblioteca b){
         //aggiungo le entity libro alla biblioteca
         List<Libro> catalogo = new ArrayList<>();
         for(Libro l : b.getCatalogo()){
@@ -50,7 +60,7 @@ public class BibliotecaService {
         }
         b.setBibliotecari(bibliotecari);
 
-
+        String id = b.getId();
         //aggiungo le entity noleggio alla biblioteca
         List<Noleggio> noleggi = noleggioDao.loadAllBiblioteca(id);
         b.setNoleggiAttivi(noleggi);
@@ -58,8 +68,6 @@ public class BibliotecaService {
         //aggiungo le entity prenotazione alla biblioteca
         List<Prenotazione> prenotazioni = prenotazioneDao.loadAllBiblioteca(id);
         b.setPrenotazioniAttive(prenotazioni);
-
-        return b;
     }
 
 }
