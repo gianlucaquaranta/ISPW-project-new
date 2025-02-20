@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class NoleggioDaoMemory implements NoleggioDao {
     private static Map<String, Noleggio> noleggiMap = new HashMap<>();
-    private static NoleggioDaoMemory instance;
+    private static NoleggioDaoMemory instance = null;
 
 
 
@@ -32,24 +32,18 @@ public class NoleggioDaoMemory implements NoleggioDao {
 
     @Override
     public List<Noleggio> loadAllUtente(String username) {
-        List<Noleggio> noleggi = new ArrayList<>();
-        for(String key : noleggiMap.keySet()) {
-            if(key.startsWith(username + "*")) {
-                noleggi.add(noleggiMap.get(key));
-            }
-        }
-        return noleggi;
+        return noleggiMap.entrySet().stream()
+                .filter(entry -> entry.getKey().startsWith(username + "*"))
+                .map(Map.Entry::getValue)
+                .toList();
     }
 
     @Override
     public List<Noleggio> loadAllBiblioteca(String id) {
-        List<Noleggio> noleggi = new ArrayList<>();
-        for(String key : noleggiMap.keySet()) {
-            if(key.contains("*" + id + "*")) {
-                noleggi.add(noleggiMap.get(key));
-            }
-        }
-        return noleggi;
+        return noleggiMap.entrySet().stream()
+                .filter(entry -> entry.getKey().contains("*" + id + "*"))
+                .map(Map.Entry::getValue)
+                .toList();
     }
 
     @Override

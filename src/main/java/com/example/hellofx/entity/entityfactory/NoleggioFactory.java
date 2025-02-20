@@ -4,7 +4,7 @@ import com.example.hellofx.entity.Noleggio;
 
 public class NoleggioFactory {
 
-        private static NoleggioFactory instance = new NoleggioFactory();
+        private static NoleggioFactory instance = null;
         public static NoleggioFactory getInstance() {
             if (instance == null) {
                 instance = new NoleggioFactory();

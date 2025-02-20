@@ -41,24 +41,18 @@ public class PrenotazioneDaoMemory implements PrenotazioneDao {
 
     @Override
     public List<Prenotazione> loadAllUtente(String username) {
-        List<Prenotazione> prenotazioni = new ArrayList<>();
-        for(String key : prenotazioniMap.keySet()) {
-            if(key.startsWith(username + "*")) {
-                prenotazioni.add(prenotazioniMap.get(key));
-            }
-        }
-        return prenotazioni;
+        return prenotazioniMap.entrySet().stream()
+                .filter(entry -> entry.getKey().startsWith(username + "*"))
+                .map(Map.Entry::getValue)
+                .toList();
     }
 
     @Override
     public List<Prenotazione> loadAllBiblioteca(String id) {
-        List<Prenotazione> prenotazioni = new ArrayList<>();
-        for(String key : prenotazioniMap.keySet()) {
-            if(key.contains("*" + id + "*")) {
-                prenotazioni.add(prenotazioniMap.get(key));
-            }
-        }
-        return prenotazioni;
+        return prenotazioniMap.entrySet().stream()
+                .filter(entry -> entry.getKey().contains("*" + id + "*"))
+                .map(Map.Entry::getValue)
+                .toList();
     }
 
 }

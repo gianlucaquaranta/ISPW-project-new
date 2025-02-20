@@ -10,7 +10,7 @@ import java.util.Map;
 public class FiltriDaoMemory implements FiltriDao {
     private Map<String, List<Filtri>> filtriMap= new HashMap<>();
 
-    private static FiltriDaoMemory instance;
+    private static FiltriDaoMemory instance = null;
 
     public static FiltriDaoMemory getInstance() {
         if (instance == null) {
@@ -24,7 +24,7 @@ public class FiltriDaoMemory implements FiltriDao {
     @Override
     public List<Filtri> loadAllUtente(String username) throws IllegalArgumentException {
         if(filtriMap.containsKey(username)){
-            return (List<Filtri>) filtriMap.get(username);
+            return filtriMap.get(username);
         } else throw new IllegalArgumentException("user not found");
     }
 
@@ -51,7 +51,7 @@ public class FiltriDaoMemory implements FiltriDao {
         if(filtriMap.containsKey(username)){
             if(i>=0 && i<= filtriMap.get(username).size()) {
                 List<Filtri> list = filtriMap.get(username);
-                list.remove(i);
+                list.remove(Integer.parseInt(i.toString()));
                 filtriMap.put(username, list);
             } else {
                 throw new IndexOutOfBoundsException();

@@ -13,6 +13,10 @@ public class Bibliotecario {
         this.password = password;
     }
 
+    public Bibliotecario() {
+        //factory
+    }
+
     public String getUsername() {
         return username;
     }

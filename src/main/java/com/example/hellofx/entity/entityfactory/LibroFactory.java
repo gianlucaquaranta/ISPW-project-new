@@ -4,7 +4,7 @@ package com.example.hellofx.entity.entityfactory;
 import com.example.hellofx.entity.Libro;
 
 public class LibroFactory {
-    private static LibroFactory instance = new LibroFactory();
+    private static LibroFactory instance = null;
     public static LibroFactory getInstance() {
         if (instance == null) {
             instance = new LibroFactory();

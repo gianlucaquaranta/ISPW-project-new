@@ -42,14 +42,14 @@ public class UtenteDaoMemory implements UtenteDao {
     public void storeUtente(Utente utente) {
         if (!utentiMap.containsKey(utente.getUsername())) {
             utentiMap.put(utente.getUsername(), utente);
-        } else throw new RuntimeException("utente già esistente");
+        } else throw new IllegalArgumentException("utente già esistente");
     }
 
     @Override
     public void updateUtente(Utente utente) {
         if (utentiMap.containsKey(utente.getUsername())) {
             utentiMap.replace(utente.getUsername(), utente);
-        } else throw new RuntimeException("utente non trovato");
+        } else throw new IllegalArgumentException("utente non trovato");
     }
 
     @Override

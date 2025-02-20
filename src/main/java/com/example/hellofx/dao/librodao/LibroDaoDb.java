@@ -9,10 +9,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibroDaoDb implements LibroDao {
     private LibroFactory libroFactory = LibroFactory.getInstance();
+    private static final String TITOLO = "titolo";
+    private static final String AUTORE = "autore";
+    private static final String EDITORE = "editore";
+    private static final String GENERE = "genere";
 
     @Override
     public Libro load(String isbn) {
@@ -26,10 +31,10 @@ public class LibroDaoDb implements LibroDao {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                libro.setTitolo(rs.getString("titolo"));
-                libro.setAutore(rs.getString("autore"));
-                libro.setEditore(rs.getString("editore"));
-                libro.setGenere(rs.getString("genere"));
+                libro.setTitolo(rs.getString(TITOLO));
+                libro.setAutore(rs.getString(AUTORE));
+                libro.setEditore(rs.getString(EDITORE));
+                libro.setGenere(rs.getString(GENERE));
                 libro.setAnnoPubblicazione(rs.getInt("anno"));
             }
         } catch (SQLException e) {
@@ -40,82 +45,77 @@ public class LibroDaoDb implements LibroDao {
     }
 
     @Override
-    public List<Libro> loadFilteredLibro(Filtri filtri) {
+    public List<Libro> loadAll() {
+        String query = "SELECT isbn, titolo, autore, genere, editore, anno FROM libri";
         List<Libro> libri = new ArrayList<>();
-        String baseQuery = "SELECT isbn, titolo, autore, genere, editore, anno FROM libri WHERE 1=1";
-
-        // Costruzione della query dinamica e dei parametri
-        QueryParams queryParams = buildQueryParams(filtri, baseQuery);
 
         try (Connection conn = DbConnection.getConnection();
-             PreparedStatement stmt = prepareStatement(conn, queryParams)) {
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
 
-            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                libri.add(mapResultSetToLibro(rs));
+                Libro libro = libroFactory.createLibro();
+                libro.setTitolo(rs.getString(TITOLO));
+                libro.setAutore(rs.getString(AUTORE));
+                libro.setGenere(rs.getString(GENERE));
+                libro.setEditore(rs.getString(EDITORE));
+                libro.setAnnoPubblicazione(rs.getInt("anno"));
+                libro.setIsbn(rs.getString("isbn"));
+                libri.add(libro);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return libri;
     }
 
-    /**
-     * Costruisce la query dinamicamente e raccoglie i parametri.
-     */
-    private QueryParams buildQueryParams(Filtri filtri, String baseQuery) {
-        StringBuilder query = new StringBuilder(baseQuery);
-        List<Object> parametri = new ArrayList<>();
+    @Override
+    public List<Libro> loadFilteredLibro(Filtri filtri) {
+        String query = "SELECT isbn, titolo, autore, genere, editore, anno FROM libri WHERE 1=1";
+        List<Object> params = new ArrayList<>();
 
-        addFilter(query, parametri, "titolo", filtri.getTitolo(), true);
-        addFilter(query, parametri, "autore", filtri.getAutore(), true);
-        addFilter(query, parametri, "genere", filtri.getGenere(), false);
-        addFilter(query, parametri, "isbn", filtri.getIsbn(), false);
-
-        return new QueryParams(query.toString(), parametri);
-    }
-
-    /**
-     * Aggiunge un filtro alla query se il valore non è nullo o vuoto.
-     */
-    private void addFilter(StringBuilder query, List<Object> parametri, String column, String value, boolean like) {
-        if (value != null && !value.isEmpty()) {
-            query.append(" AND ").append(column);
-            query.append(like ? " LIKE ?" : " = ?");
-            parametri.add(like ? "%" + value + "%" : value);
+        if (filtri.getTitolo() != null) {
+            query += " AND titolo LIKE ?";
+            params.add("%" + filtri.getTitolo() + "%");
         }
-    }
-
-    /**
-     * Prepara il PreparedStatement con i parametri raccolti.
-     */
-    private PreparedStatement prepareStatement(Connection conn, QueryParams queryParams) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement(queryParams.query());
-        for (int i = 0; i < queryParams.params().size(); i++) {
-            stmt.setObject(i + 1, queryParams.params().get(i));
+        if (filtri.getAutore() != null) {
+            query += " AND autore LIKE ?";
+            params.add("%" + filtri.getAutore() + "%");
         }
-        return stmt;
-    }
+        if (filtri.getGenere() != null) {
+            query += " AND genere = ?";
+            params.add(filtri.getGenere());
+        }
+        if (filtri.getIsbn() != null) {
+            query += " AND isbn = ?";
+            params.add(filtri.getIsbn());
+        }
 
-    /**
-     * Mappa un ResultSet in un oggetto Libro.
-     */
-    private Libro mapResultSetToLibro(ResultSet rs) throws SQLException {
-        return new Libro(
-                rs.getString("titolo"),
-                rs.getString("autore"),
-                rs.getString("editore"),
-                rs.getString("isbn"),
-                Genere.valueOf(rs.getString("genere")),
-                rs.getInt("anno")
-        );
-    }
+        List<Libro> libri = new ArrayList<>();
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-    /**
-     * Classe per incapsulare la query e i parametri.
-     */
-    private record QueryParams(String query, List<Object> params) {}
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Libro libro = libroFactory.createLibro();
+                    libro.setTitolo(rs.getString(TITOLO));
+                    libro.setAutore(rs.getString(AUTORE));
+                    libro.setGenere(rs.getString(GENERE));
+                    libro.setEditore(rs.getString(EDITORE));
+                    libro.setAnnoPubblicazione(rs.getInt("anno"));
+                    libro.setIsbn(rs.getString("isbn"));
+                    libri.add(libro);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return libri;
+    }
 
     @Override
     public void store(Libro libro) {

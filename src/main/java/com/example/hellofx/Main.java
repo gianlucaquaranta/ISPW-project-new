@@ -1,6 +1,13 @@
 package com.example.hellofx;
 
 //import com.example.hellofx.cli.CliManager;
+import com.example.hellofx.cli.CliManager;
+import com.example.hellofx.entity.Biblioteca;
+import com.example.hellofx.entity.Bibliotecario;
+import com.example.hellofx.entity.Utente;
+import com.example.hellofx.session.BibliotecarioSession;
+import com.example.hellofx.session.Session;
+import com.example.hellofx.session.UtenteSession;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,8 +31,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\gianl\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
         launch(args);
-/*
-        private CliManager = new CliManager();
+
+        CliManager manager = new CliManager();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Quale interfaccia desideri?\n1. CLI\n2. GUI\nInserisci 0 o 1 per effettuare la scelta e premi ENTER: ");
@@ -40,12 +47,14 @@ public class Main extends Application {
         boolean isFile = scanner.nextInt() != 0;
         scanner.nextLine();
 
+        Session.setFile(isFile);
+        Session.setFull(isFull);
+
         if(isGui) {
             launch(args);
         } else {
-
+            manager.start();
         }
-*/
     }
 
 }

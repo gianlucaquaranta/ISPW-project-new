@@ -1,31 +1,37 @@
 package com.example.hellofx.service;
 
+import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.bibliotecariodao.BibliotecarioDao;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.dao.noleggiodao.NoleggioDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
 import com.example.hellofx.entity.*;
+import com.example.hellofx.session.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BibliotecaService {
+
     private BibliotecaDao bibliotecaDao;
     private LibroDao libroDao;
     private NoleggioDao noleggioDao;
     private PrenotazioneDao prenotazioneDao;
     private BibliotecarioDao bibliotecarioDao;
 
-    public BibliotecaService(BibliotecaDao bibliotecaDao, LibroDao libroDao, NoleggioDao noleggioDao, PrenotazioneDao prenotazioneDao, BibliotecarioDao bibliotecarioDao) {
-        this.bibliotecaDao = bibliotecaDao;
-        this.libroDao = libroDao;
-        this.noleggioDao = noleggioDao;
-        this.prenotazioneDao = prenotazioneDao;
-        this.bibliotecarioDao = bibliotecarioDao;
-    }
+    public BibliotecaService(Session session) {
+        this.bibliotecaDao = FactoryProducer.getFactory("file").createDaoBiblioteca();
+        this.noleggioDao = FactoryProducer.getFactory("db").createDaoNoleggio();
+        this.libroDao = FactoryProducer.getFactory("db").createDaoLibro();
+        this.bibliotecarioDao = FactoryProducer.getFactory("db").createDaoBibliotecario();
 
-    private BibliotecaService(){}
+        if(session.isFile()) {
+            this.prenotazioneDao = FactoryProducer.getFactory("file").createDaoPrenotazione();
+        } else {
+            this.prenotazioneDao = FactoryProducer.getFactory("db").createDaoPrenotazione();
+        }
+    }
 
     public Biblioteca getBiblioteca(String id){
         Biblioteca b = bibliotecaDao.loadOne(id);

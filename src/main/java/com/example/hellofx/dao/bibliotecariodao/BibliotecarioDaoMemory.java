@@ -2,12 +2,14 @@ package com.example.hellofx.dao.bibliotecariodao;
 
 import com.example.hellofx.entity.Bibliotecario;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BibliotecarioDaoMemory implements BibliotecarioDao {
 
-    public static BibliotecarioDaoMemory instance = null;
+    private static BibliotecarioDaoMemory instance = null;
 
     public static BibliotecarioDao getInstance() {
         if (instance == null) {
@@ -21,8 +23,17 @@ public class BibliotecarioDaoMemory implements BibliotecarioDao {
     private static Map<String, Bibliotecario> bibliotecariMap = new HashMap<>();
 
     @Override
+    public List<Bibliotecario> loadAll() {
+        List<Bibliotecario> list = new ArrayList<>();
+        for(Map.Entry<String, Bibliotecario> entry : bibliotecariMap.entrySet()) {
+            list.add(entry.getValue());
+        }
+        return list;
+    }
+
+    @Override
     public Bibliotecario load(String username) {
-        if (bibliotecariMap.containsKey(username)) {
+        if(bibliotecariMap.containsKey(username)){
             return bibliotecariMap.get(username);
         } else throw new IllegalArgumentException("Bibliotecario non trovato");
     }

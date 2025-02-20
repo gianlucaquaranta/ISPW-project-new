@@ -1,17 +1,25 @@
 package com.example.hellofx.session;
 
+import com.example.hellofx.entity.Biblioteca;
+import com.example.hellofx.entity.Bibliotecario;
+import com.example.hellofx.entity.Utente;
+
 public abstract class Session {
-    private boolean isFile;
-    private boolean isFull;
+    private static boolean isFile;
+    private static boolean isFull;
 
-    public void setFile(boolean isFile) { this.isFile = isFile; }
-    public void setFull(boolean isFull) { this.isFull = isFull; }
-    public boolean isFile() {return isFile;}
-    public boolean isFull() {return isFull;}
+    public static void setFile(boolean isFile) { isFile = isFile; }
+    public static void setFull(boolean isFull) { isFull = isFull; }
+    public static boolean isFile() {return isFile;}
+    public static boolean isFull() {return isFull;}
 
-    public void close(){
-        this.isFile = false;
-        this.isFull = false;
-    }
+    public abstract void setUtente(Utente utente);
+    public abstract Utente getUtente();
+    public void setBiblioteca(Biblioteca biblioteca){}
+    public abstract Biblioteca getBiblioteca();
+    public void setBibliotecario(Bibliotecario bibliotecario){}
+    public abstract Bibliotecario getBibliotecario();
+
+    public void close(){}
 
 }

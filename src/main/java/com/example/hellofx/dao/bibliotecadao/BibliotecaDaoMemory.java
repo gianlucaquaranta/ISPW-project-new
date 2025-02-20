@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BibliotecaDaoMemory implements BibliotecaDao {
 
@@ -23,19 +24,11 @@ public class BibliotecaDaoMemory implements BibliotecaDao {
 
     @Override
     public List<Biblioteca> loadFiltered(Filtri filtri) {
-        List<Biblioteca> list = new ArrayList<>();
-        for(Biblioteca b : bibliotecheMap.values()) {
-            if(filtri.getCap() != "" && filtri.getRaggio() != "") {
-                if(b.getPosizione().getCap() == filtri.getCap()) { // && condizione sul raggio
-                    list.add(b);
-                }
-            } else if (filtri.getRaggio() == ""){
-                if(b.getPosizione().getCap() == filtri.getCap()) {
-                    list.add(b);
-                }
-            } //else se condizione sul raggio trasformato in float è verificata aggiungi la biblioteca alla lista
-        }
-        return list;
+        return bibliotecheMap.values().stream()
+                .filter(b -> (filtri.getBiblioteca() == null || b.getNome().toLowerCase().contains(filtri.getBiblioteca().toLowerCase())))
+                .filter(b -> (filtri.getCap() == null || b.getPosizione().getCap().equals(filtri.getCap())))
+                .filter(b -> (filtri.getIsbn() == null || b.isLibroInCatalogo(filtri.getIsbn())))
+                .toList();
     }
 
     @Override
@@ -46,11 +39,22 @@ public class BibliotecaDaoMemory implements BibliotecaDao {
     }
 
     @Override
+    public Biblioteca loadOneFromBibliotecario(String username) {
+        for (Map.Entry<String, Biblioteca> entry : bibliotecheMap.entrySet()) {
+            Biblioteca biblioteca = entry.getValue();
+            if (biblioteca.getBibliotecari().stream().anyMatch(b -> b.getUsername().equals(username))) {
+                return biblioteca;
+            }
+        }
+        throw new IllegalArgumentException("Nessuna biblioteca trovata per il bibliotecario con username: " + username);
+    }
+
+    @Override
     public void store(Biblioteca biblioteca) {
         String key = biblioteca.getId();
         if(!bibliotecheMap.containsKey(key)){
             bibliotecheMap.put(key, biblioteca);
-        } else throw new RuntimeException("biblioteca already exists");
+        } else throw new IllegalArgumentException("biblioteca already exists");
     }
 
     @Override

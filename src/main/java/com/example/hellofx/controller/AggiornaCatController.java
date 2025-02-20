@@ -11,14 +11,15 @@ import com.example.hellofx.entity.Libro;
 import com.example.hellofx.entity.entityfactory.LibroFactory;
 import com.example.hellofx.exception.LibroGiaPresenteException;
 import com.example.hellofx.session.BibliotecarioSession;
+import com.example.hellofx.session.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AggiornaCatController {
-    private BibliotecarioSession session = BibliotecarioSession.getInstance();
+    private Session session = BibliotecarioSession.getInstance();
     private LibroFactory libroFactory = LibroFactory.getInstance();
-    private LibroDao libroDaoMemory = FactoryProducer.getFactory("daomemory").createDaoLibro();
+    private LibroDao libroDaoMemory = FactoryProducer.getFactory("memory").createDaoLibro();
 
     public void delete(LibroBean libroBean){
         Biblioteca b = session.getBiblioteca();
@@ -73,7 +74,7 @@ public class AggiornaCatController {
 
         // Check in persistenza
         LibroDao libroDaoPers = null;
-        if (session.isFull()) {
+        if (session.isFull() && !found) {
             libroDaoPers = FactoryProducer.getFactory("daodbfactory").createDaoLibro();
             for (Libro l : libroDaoPers.loadAll()) {
                 if (l.getIsbn().equals(libroBean.getIsbn())) {
@@ -100,15 +101,17 @@ public class AggiornaCatController {
 
     public void save(){
         BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory("memory").createDaoBiblioteca();
-        BibliotecaDao bibliotecaDaoPers = FactoryProducer.getFactory("db").createDaoBiblioteca();
         BibliotecarioDao bibliotecarioDaoMemory = FactoryProducer.getFactory("memory").createDaoBibliotecario();
-        BibliotecarioDao bibliotecarioDaoPers = FactoryProducer.getFactory("db").createDaoBibliotecario();
 
         bibliotecaDaoMemory.store(session.getBiblioteca());
         bibliotecarioDaoMemory.store(session.getBibliotecario());
+
         if(session.isFull()){
+            BibliotecaDao bibliotecaDaoPers = FactoryProducer.getFactory("db").createDaoBiblioteca();
+            BibliotecarioDao bibliotecarioDaoPers = FactoryProducer.getFactory("db").createDaoBibliotecario();
+
             bibliotecaDaoPers.store(session.getBiblioteca());
-            bibliotecarioDaoMemory.store(session.getBibliotecario());
+            bibliotecarioDaoPers.store(session.getBibliotecario());
         }
     }
 

@@ -1,11 +1,11 @@
 package com.example.hellofx.entity;
 
 public class Filtri {
-    private final String titolo;
+    private final String titolo; //filtri per libri
     private final String autore;
     private final String genere;
     private final String isbn;
-    private final String biblioteca;
+    private final String biblioteca; //filtri per biblioteche
     private final String cap;
     private final String raggio;
 
