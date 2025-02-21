@@ -1,5 +1,6 @@
 package com.example.hellofx.dao.noleggiodao;
 
+import com.example.hellofx.converter.Converter;
 import com.example.hellofx.dao.DbConnection;
 import com.example.hellofx.entity.Noleggio;
 import com.example.hellofx.entity.entityfactory.NoleggioFactory;
@@ -113,8 +114,8 @@ public class NoleggioDaoDb implements NoleggioDao {
             stmt.setString(1, noleggio.getDatiUtente()[0]);
             stmt.setString(2, noleggio.getIdBiblioteca());
             stmt.setString(3, noleggio.getIsbn());
-            stmt.setTimestamp(4, noleggio.getDataInizio());
-            stmt.setTimestamp(5, noleggio.getDataScadenza());
+            stmt.setTimestamp(4, Converter.stringToTimestamp(noleggio.getDataInizio()));
+            stmt.setTimestamp(5, Converter.stringToTimestamp(noleggio.getDataScadenza()));
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -131,8 +132,8 @@ public class NoleggioDaoDb implements NoleggioDao {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setTimestamp(1, noleggio.getDataInizio());
-            stmt.setTimestamp(2, noleggio.getDataScadenza());
+            stmt.setTimestamp(1, Converter.stringToTimestamp(noleggio.getDataInizio()));
+            stmt.setTimestamp(2, Converter.stringToTimestamp(noleggio.getDataScadenza()));
             stmt.setString(3, noleggio.getDatiUtente()[0]);
             stmt.setString(4, noleggio.getIdBiblioteca());
             stmt.setString(5, noleggio.getIsbn());
@@ -149,8 +150,8 @@ public class NoleggioDaoDb implements NoleggioDao {
         String username = rs.getString("username");
         noleggio.setIdBiblioteca(rs.getString("idbiblioteca"));
         noleggio.setIsbn(rs.getString("isbn"));
-        noleggio.setDataInizio(rs.getTimestamp("datainizio"));
-        noleggio.setDataScadenza(rs.getTimestamp("datascadenza"));
+        noleggio.setDataInizio(Converter.timestampToString(rs.getTimestamp("datainizio")));
+        noleggio.setDataScadenza(Converter.timestampToString(rs.getTimestamp("datascadenza")));
         String email = rs.getString("email");
 
         noleggio.setDatiUtente(new String[] {username, email});

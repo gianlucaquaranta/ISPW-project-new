@@ -1,5 +1,7 @@
 package com.example.hellofx.entity;
 
+import com.example.hellofx.converter.Converter;
+
 import java.sql.Timestamp;
 
 public class Noleggio {
@@ -24,13 +26,10 @@ public class Noleggio {
 
     public String[] getIdNoleggio() {return idNoleggio;}
 
-    public Timestamp getDataScadenza() {return dataScadenza;}
-
-    public void setDataScadenza(Timestamp dataScadenza) {this.dataScadenza = dataScadenza;}
-
-    public Timestamp getDataInizio() {return dataInizio;}
-
-    public void setDataInizio(Timestamp dataInizio) {this.dataInizio = dataInizio;}
+    public String getDataInizio() { return Converter.timestampToString(this.dataInizio); }
+    public void setDataInizio(String date) { this.dataInizio = Converter.stringToTimestamp(date); } //date = "gg/MM/yyyy"
+    public String getDataScadenza() { return Converter.timestampToString(this.dataScadenza); }
+    public void setDataScadenza(String date){ this.dataScadenza = Converter.stringToTimestamp(date); }
 
     public String[] getDatiUtente() {return datiUtente;}
 

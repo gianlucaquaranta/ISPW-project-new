@@ -4,7 +4,6 @@ import com.example.hellofx.bean.BibliotecaBean;
 import com.example.hellofx.bean.BibliotecarioBean;
 import com.example.hellofx.bean.UtenteBean;
 import com.example.hellofx.controller.RegistrazioneController;
-import com.example.hellofx.controllerfactory.RegistrazioneControllerFactory;
 
 import java.util.Scanner;
 

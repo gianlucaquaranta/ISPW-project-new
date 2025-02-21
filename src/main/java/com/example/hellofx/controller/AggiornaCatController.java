@@ -1,7 +1,7 @@
 package com.example.hellofx.controller;
 
-import com.example.hellofx.bean.GenereBean;
 import com.example.hellofx.bean.LibroBean;
+import com.example.hellofx.converter.Converter;
 import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.bibliotecariodao.BibliotecarioDao;
@@ -19,7 +19,6 @@ import java.util.List;
 public class AggiornaCatController {
     private static final String MEMORY = "memory";
     private Session session = BibliotecarioSession.getInstance();
-    private LibroFactory libroFactory = LibroFactory.getInstance();
     private LibroDao libroDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoLibro();
 
     public void delete(LibroBean libroBean){
@@ -33,7 +32,7 @@ public class AggiornaCatController {
         for(Libro l : b.getCatalogo()){
             if(l.getIsbn().equals(libroBean.getIsbn())){
                 b.getCatalogo().removeIf(libro -> libro.getIsbn().equals(libroBean.getIsbn()));
-                b.getCatalogo().add(this.beanToLibro(libroBean));
+                b.getCatalogo().add(Converter.beanToLibro(libroBean));
                 Integer[] copie = {libroBean.getNumCopie()[0], libroBean.getNumCopie()[1]};
                 b.getCopie().replace(l.getIsbn(), copie);
                 break;
@@ -46,7 +45,7 @@ public class AggiornaCatController {
         List<LibroBean> list = new ArrayList<>();
         Biblioteca b = session.getBiblioteca();
         for(Libro l : b.getCatalogo()){
-            LibroBean bean = this.libroToBean(l);
+            LibroBean bean = Converter.libroToBean(l);
             Integer[] copie = b.getCopie().get(l.getIsbn());
             bean.setNumCopie(copie);
             list.add(bean);
@@ -88,7 +87,7 @@ public class AggiornaCatController {
 
         if (!found) {
             // Se il libro non esiste, lo creo e lo salvo
-            libroAggiunto = this.beanToLibro(libroBean);
+            libroAggiunto = Converter.beanToLibro(libroBean);
             libroDaoMemory.store(libroAggiunto);
 
             if (Session.isFull() && libroDaoPers != null) {
@@ -116,25 +115,4 @@ public class AggiornaCatController {
         }
     }
 
-    private Libro beanToLibro(LibroBean libroBean){
-        Libro l = libroFactory.createLibro();
-        l.setIsbn(libroBean.getIsbn());
-        l.setTitolo(libroBean.getTitolo());
-        l.setAutore(libroBean.getAutore());
-        l.setEditore(libroBean.getEditore());
-        l.setGenere(libroBean.getGenere().getNome());
-        l.setAnnoPubblicazione(libroBean.getAnnoPubblicazione());
-        return l;
-    }
-
-    private LibroBean libroToBean(Libro l){
-        LibroBean lb = new LibroBean();
-        lb.setIsbn(l.getIsbn());
-        lb.setTitolo(l.getTitolo());
-        lb.setAutore(l.getAutore());
-        lb.setEditore(l.getEditore());
-        lb.setAnnoPubblicazione(l.getAnnoPubblicazione());
-        lb.setGenere(GenereBean.fromString(l.getGenere()));
-        return lb;
-    }
 }

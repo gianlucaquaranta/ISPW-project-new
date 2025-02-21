@@ -50,5 +50,9 @@ public class UtenteService {
         return u;
     }
 
+    public void storeUtente(Utente u){
+        utenteDao.storeUtente(u);
+    }
+
 }
 

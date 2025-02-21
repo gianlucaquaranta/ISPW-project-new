@@ -73,7 +73,7 @@ public class LoginController {
         bibliotecarioSession.setBibliotecario(bib);
         if (Session.isFull()) {
             BibliotecaService bibliotecaService = new BibliotecaService(bibliotecarioSession);
-            bibliotecarioSession.setBiblioteca(bibliotecaService.getBiblioteca(bib.getUsername()));
+            bibliotecarioSession.setBiblioteca(bibliotecaService.getBibliotecaFromBibliotecario(bib.getUsername()));
         } else {
             bibliotecarioSession.setBiblioteca(bibliotecaDaoMemory.loadOneFromBibliotecario(bib.getUsername()));
         }

@@ -32,8 +32,17 @@ public class BibliotecaService {
             this.prenotazioneDao = FactoryProducer.getFactory("db").createDaoPrenotazione();
         }
     }
-
-    public Biblioteca getBiblioteca(String id){
+    
+    public List<Biblioteca> getFilteredBiblioteca(Filtri filtri){
+        List<Biblioteca> biblioteche = bibliotecaDao.loadFiltered(filtri);
+        for(Biblioteca b : biblioteche){
+            this.createBiblioteca(b);
+        }
+        return biblioteche;
+    }
+    
+    
+    public Biblioteca getBibliotecaFromId(String id){
         Biblioteca b = bibliotecaDao.loadOne(id);
         this.createBiblioteca(b);
         return b;
@@ -68,6 +77,10 @@ public class BibliotecaService {
         //aggiungo le entity prenotazione alla biblioteca
         List<Prenotazione> prenotazioni = prenotazioneDao.loadAllBiblioteca(id);
         b.setPrenotazioniAttive(prenotazioni);
+    }
+
+    public void storeBiblioteca(Biblioteca b) {
+        bibliotecaDao.store(b);
     }
 
 }

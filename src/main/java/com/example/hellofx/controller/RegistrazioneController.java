@@ -3,17 +3,14 @@ package com.example.hellofx.controller;
 import com.example.hellofx.bean.BibliotecarioBean;
 import com.example.hellofx.bean.BibliotecaBean;
 import com.example.hellofx.bean.UtenteBean;
+import com.example.hellofx.converter.Converter;
 import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.bibliotecariodao.BibliotecarioDao;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.entity.Biblioteca;
 import com.example.hellofx.entity.Bibliotecario;
-import com.example.hellofx.entity.Posizione;
 import com.example.hellofx.entity.Utente;
-import com.example.hellofx.entity.entityfactory.BibliotecaFactory;
-import com.example.hellofx.entity.entityfactory.BibliotecarioFactory;
-import com.example.hellofx.entity.entityfactory.UtenteFactory;
 import com.example.hellofx.exception.RegistrationException;
 import com.example.hellofx.session.BibliotecarioSession;
 import com.example.hellofx.session.Session;
@@ -43,7 +40,7 @@ public class RegistrazioneController {
         }
 
         if(!found) {
-            Utente utente = beanToUtente(utenteBean);
+            Utente utente = Converter.beanToUtente(utenteBean);
             utente.setPrenotazioniAttive(null);
             utente.setRicercheSalvate(null);
             utente.setNoleggiAttivi(null);
@@ -72,7 +69,7 @@ public class RegistrazioneController {
             throw new RegistrationException("Bibliotecario già esistente");
         }
 
-        Bibliotecario bibliotecario = beanToBibliotecario(bibliotecarioBean);
+        Bibliotecario bibliotecario = Converter.beanToBibliotecario(bibliotecarioBean);
         saveBibliotecario(bibliotecario);
 
         if (!foundBiblioteca) {
@@ -95,7 +92,7 @@ public class RegistrazioneController {
     }
 
     private Biblioteca createBiblioteca(BibliotecaBean bibliotecaBean, Bibliotecario bibliotecario) {
-        Biblioteca biblioteca = beanToBiblioteca(bibliotecaBean);
+        Biblioteca biblioteca = Converter.beanToBiblioteca(bibliotecaBean);
         biblioteca.getBibliotecari().add(bibliotecario);
         return biblioteca;
     }
@@ -117,38 +114,6 @@ public class RegistrazioneController {
         session.setBiblioteca(biblioteca);
     }
 
-    private Utente beanToUtente(UtenteBean utenteBean){
-        Utente u = UtenteFactory.getInstance().createUtente();
-        u.setUsername(utenteBean.getUsername());
-        u.setPassword(utenteBean.getPassword());
-        u.setEmail(utenteBean.getEmail());
-        return u;
-    }
-
-    private Bibliotecario beanToBibliotecario(BibliotecarioBean bibliotecarioBean){
-        Bibliotecario bibliotecario = BibliotecarioFactory.getInstance().createBibliotecario();
-        bibliotecario.setUsername(bibliotecarioBean.getUsername());
-        bibliotecario.setPassword(bibliotecarioBean.getPassword());
-        bibliotecario.setNome(bibliotecarioBean.getNome());
-        bibliotecario.setCognome(bibliotecarioBean.getCognome());
-        return bibliotecario;
-    }
-
-    private Biblioteca beanToBiblioteca(BibliotecaBean bibliotecaBean){
-        Biblioteca b = BibliotecaFactory.getInstance().createBiblioteca();
-        b.setNome(bibliotecaBean.getNome());
-        Posizione posizione = new Posizione(bibliotecaBean.getCap(), bibliotecaBean.getIndirizzo(), bibliotecaBean.getNumeroCivico(), bibliotecaBean.getCitta(), bibliotecaBean.getProvincia());
-        b.setPosizione(posizione);
-        b.setUrl(bibliotecaBean.getUrl());
-        //dopo aver settato nome e posizione è possibile creare l'id
-        b.setId();
-        b.setCatalogo(null);
-        b.setPrenotazioniAttive(null);
-        b.setCopie(null);
-        b.setNoleggiAttivi(null);
-        return b;
-    }
-
     private boolean findUtente(UtenteBean utenteBean, List<Utente> list) {
         return list.stream()
                 .map(Utente::getUsername)
@@ -168,6 +133,4 @@ public class RegistrazioneController {
                 .findFirst()
                 .orElse(null);
     }
-
-
 }
