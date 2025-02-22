@@ -6,14 +6,16 @@ import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.noleggiodao.NoleggioDao;
 import com.example.hellofx.dao.utentedao.UtenteDao;
-import com.example.hellofx.entity.Biblioteca;
 import com.example.hellofx.entity.Noleggio;
 import com.example.hellofx.entity.Utente;
+import com.example.hellofx.service.BibliotecaService;
 import com.example.hellofx.service.UtenteService;
 import com.example.hellofx.session.BibliotecarioSession;
 import com.example.hellofx.session.Session;
 import com.example.hellofx.session.UtenteSession;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +30,17 @@ public class GestNoleggiController {
 
     public List<NoleggioBean> getNoleggiBiblioteca(){
         if(!Session.isFull()) {
-            return this.searchForBiblioteca(noleggioDaoMemory);
+            return this.search(noleggioDaoMemory, bibliotecarioSession);
             } else {
-            return this.searchForBiblioteca(FactoryProducer.getFactory("db").createDaoNoleggio());
+            return this.search(FactoryProducer.getFactory("db").createDaoNoleggio(), bibliotecarioSession);
         }
     }
 
     public List<NoleggioBean> getNoleggiUtente(){
         if(!Session.isFull()) {
-            return this.searchForUtente(noleggioDaoMemory);
+            return this.search(noleggioDaoMemory, utenteSession);
         } else {
-            return this.searchForUtente(FactoryProducer.getFactory("db").createDaoNoleggio());
+            return this.search(FactoryProducer.getFactory("db").createDaoNoleggio(), utenteSession);
         }
     }
 
@@ -48,47 +50,61 @@ public class GestNoleggiController {
         noleggioDaoMemory.store(noleggio);
 
         //aggiungere alla lista di noleggi della biblioteca corrente
-        List<Noleggio> list = bibliotecarioSession.getBiblioteca().getNoleggiAttivi();
-        list.add(noleggio);
-        bibliotecarioSession.getBiblioteca().setNoleggiAttivi(list);
+        bibliotecarioSession.getBiblioteca().getNoleggiAttivi().add(noleggio);
 
-        Utente utente = utenteDaoMemory.loadUtente(noleggioBean.getDatiUtente()[0]);
+        Utente utente = utenteDaoMemory.loadUtente(noleggio.getDatiUtente()[0]);
         if(utente != null) {
             utente.getNoleggiAttivi().add(noleggio);
         } else if(Session.isFull()) {
             UtenteService utenteService = new UtenteService(bibliotecarioSession);
-            utente = utenteService.getUtente(noleggioBean.getDatiUtente()[0]);
+            utente = utenteService.getUtente(noleggio.getDatiUtente()[0]);
         }
 
+        utente.getNoleggiAttivi().add(noleggio);
 
+        utenteDaoMemory.storeUtente(utente);
+        bibliotecaDaoMemory.store(bibliotecarioSession.getBiblioteca());
 
-        //se l'utente non è null aggiungo il noleggio
-        //se sto in full e non c'è in mem vado nel db o nel file a seconda di isFile()
-        //faccio la get dell'utente tramite sessione e setto il noleggio
-        //update dell'utente in file/db
-        //update dell'utente in memory
-
-        //update della biblioteca
-        //Se sto in full anche nel file
+        if(Session.isFull()) {
+            UtenteService utenteService = new UtenteService(bibliotecarioSession);
+            BibliotecaService bibliotecaService = new BibliotecaService(bibliotecarioSession);
+            utenteService.updateUtente(utente);
+            bibliotecaService.updateBiblioteca(bibliotecarioSession.getBiblioteca());
+        }
     }
 
-    public void delete(NoleggioBean noleggioBean){
+    private void delete(List<Noleggio> toBeDeleted){
+        for(Noleggio noleggio : toBeDeleted) {
+            noleggioDaoMemory.delete(noleggio.getIdNoleggio());
+            if (Session.isFull()) {
+                FactoryProducer.getFactory("db").createDaoNoleggio().delete(noleggio.getIdNoleggio());
+            }
+        }
 
     }
 
-    private List<NoleggioBean> searchForBiblioteca(NoleggioDao dao){
+    private List<NoleggioBean> search(NoleggioDao dao, Session session){
         List<NoleggioBean> beanList = new ArrayList<>();
-        for(Noleggio n : noleggioDaoMemory.loadAllBiblioteca(bibliotecarioSession.getBiblioteca().getId())) {
-            beanList.add(Converter.noleggioToBean(n));
+        List<Noleggio> toBeDeleted = new ArrayList<>();
+        List<Noleggio> noleggi;
+
+        if (session instanceof BibliotecarioSession) {
+            noleggi = dao.loadAllBiblioteca(bibliotecarioSession.getBiblioteca().getId());
+        } else {
+            noleggi = dao.loadAllUtente(utenteSession.getUtente().getUsername());
         }
+
+        for (Noleggio n : noleggi) {
+            if (Timestamp.valueOf(LocalDateTime.now().plusDays(1))
+                    .after(Converter.stringToTimestamp(n.getDataScadenza()))) {
+                toBeDeleted.add(n);
+            } else {
+                beanList.add(Converter.noleggioToBean(n));
+            }
+        }
+
+        delete(toBeDeleted);
         return beanList;
     }
 
-    private List<NoleggioBean> searchForUtente(NoleggioDao dao){
-        List<NoleggioBean> beanList = new ArrayList<>();
-        for(Noleggio n : noleggioDaoMemory.loadAllUtente(utenteSession.getUtente().getUsername())) {
-            beanList.add(Converter.noleggioToBean(n));
-        }
-        return beanList;
-    }
 }

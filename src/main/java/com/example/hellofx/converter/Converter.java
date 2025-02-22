@@ -89,6 +89,28 @@ public class Converter {
         return n;
     }
 
+    public static Prenotazione beanToPrenotazione(PrenotazioneBean pb){
+        Prenotazione p = PrenotazioneFactory.getInstance().createPrenotazione();
+        p.setIdPrenotazione(pb.getIdPrenotazione());
+        p.setDataInizio(pb.getDataInizio());
+        p.setDataScadenza();
+        p.setIsbn(pb.getIsbn());
+        p.setDatiUtente(pb.getDatiUtente());
+        p.setIdBiblioteca(pb.getIdBiblioteca());
+        return p;
+    }
+
+    public static PrenotazioneBean prenotazioneToBean(Prenotazione p){
+        PrenotazioneBean pb = new PrenotazioneBean();
+        pb.setDataInizio(p.getDataInizio());
+        pb.setDataScadenza();
+        pb.setIsbn(p.getIsbn());
+        pb.setDatiUtente(p.getDatiUtente());
+        pb.setIdBiblioteca(p.getIdBiblioteca());
+        pb.setIdPrenotazione();
+        return pb;
+    }
+
     public static String timestampToString(Timestamp timestamp){
         LocalDateTime localDateTime = timestamp.toLocalDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -100,4 +122,5 @@ public class Converter {
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         return Timestamp.valueOf(localDate.atStartOfDay());
     }
+
 }

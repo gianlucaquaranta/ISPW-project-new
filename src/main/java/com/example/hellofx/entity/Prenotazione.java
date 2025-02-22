@@ -1,5 +1,7 @@
 package com.example.hellofx.entity;
 
+import com.example.hellofx.converter.Converter;
+
 import java.sql.Timestamp;
 
 public class Prenotazione {
@@ -31,20 +33,14 @@ public class Prenotazione {
         this.idPrenotazione[2] = this.isbn;
     }
 
-    public Timestamp getDataInizio() {
-        return dataInizio;
-    }
+    public void setIdPrenotazione(String[] idPrenotazione) { this.idPrenotazione = idPrenotazione; }
 
-    public void setDataInizio(Timestamp dataInizio) {
-        this.dataInizio = dataInizio;
-    }
 
-    public Timestamp getDataScadenza() {
-        return dataScadenza;
-    }
-
-    public void setDataScadenza(Timestamp dataScadenza) {
-        this.dataScadenza = dataScadenza;
+    public String getDataInizio() { return Converter.timestampToString(this.dataInizio); }
+    public void setDataInizio(String date) { this.dataInizio = Converter.stringToTimestamp(date); } //date = "gg/MM/yyyy"
+    public String getDataScadenza() { return Converter.timestampToString(this.dataScadenza); }
+    public void setDataScadenza() {
+        this.dataScadenza = Timestamp.valueOf(this.dataInizio.toLocalDateTime().plusDays(15));
     }
 
     public String getIdBiblioteca() {

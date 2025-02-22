@@ -83,4 +83,8 @@ public class BibliotecaService {
         bibliotecaDao.store(b);
     }
 
+    public void updateBiblioteca(Biblioteca b){
+        bibliotecaDao.update(b);
+    }
+
 }

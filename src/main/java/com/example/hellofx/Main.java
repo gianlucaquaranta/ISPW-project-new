@@ -43,9 +43,12 @@ public class Main extends Application {
         boolean isFull = scanner.nextInt() != 0;
         scanner.nextLine();
 
-        System.out.println("Quale tipo di persistenza desideri per gli utenti e le prenotazioni?\n1. DB\n2. File system \nInserisci 0 o 1 per effettuare la scelta e premi ENTER: ");
-        boolean isFile = scanner.nextInt() != 0;
-        scanner.nextLine();
+        boolean isFile;
+        if (isFull) {
+            System.out.println("Quale tipo di persistenza desideri per gli utenti e le prenotazioni?\n1. DB\n2. File system \nInserisci 0 o 1 per effettuare la scelta e premi ENTER: ");
+            isFile = scanner.nextInt() != 0;
+            scanner.nextLine();
+        } else isFile = false;
 
         Session.setFile(isFile);
         Session.setFull(isFull);

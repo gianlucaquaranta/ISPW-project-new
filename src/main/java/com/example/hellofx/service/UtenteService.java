@@ -54,5 +54,9 @@ public class UtenteService {
         utenteDao.storeUtente(u);
     }
 
+    public void updateUtente(Utente u){
+        utenteDao.updateUtente(u);
+    }
+
 }
 
