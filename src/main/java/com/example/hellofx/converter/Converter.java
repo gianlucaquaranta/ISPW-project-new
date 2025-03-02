@@ -1,6 +1,8 @@
 package com.example.hellofx.converter;
 
 import com.example.hellofx.bean.*;
+import com.example.hellofx.dao.FactoryProducer;
+import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.entity.*;
 import com.example.hellofx.entity.entityfactory.*;
 
@@ -10,10 +12,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Converter {
+    private static final String MEMORY = "memory";
+    private static final String DB = "db";
+    private static final LibroDao libroDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoLibro();;
 
     private Converter() {}
 
-    public static Libro beanToLibro(LibroBean libroBean){
+    public static Libro beanToLibro(LibroBean libroBean) {
         Libro l = LibroFactory.getInstance().createLibro();
         l.setIsbn(libroBean.getIsbn());
         l.setTitolo(libroBean.getTitolo());

@@ -2,16 +2,13 @@ package com.example.hellofx.service;
 
 import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.filtridao.FiltriDao;
-import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.dao.noleggiodao.NoleggioDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.entity.Noleggio;
 import com.example.hellofx.entity.Prenotazione;
 import com.example.hellofx.entity.Utente;
-import com.example.hellofx.session.Session;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UtenteService {
@@ -20,11 +17,11 @@ public class UtenteService {
     private PrenotazioneDao prenotazioneDao;
     private FiltriDao filtriDao;
 
-    public UtenteService(Session session) {
+    public UtenteService(boolean isFile) {
         this.noleggioDao = FactoryProducer.getFactory("db").createDaoNoleggio();
         this.filtriDao = FactoryProducer.getFactory("db").createDaoFiltri();
 
-        if(session.isFile()) {
+        if(isFile) {
             this.utenteDao = FactoryProducer.getFactory("file").createDaoUtente();
             this.prenotazioneDao = FactoryProducer.getFactory("file").createDaoPrenotazione();
         } else {

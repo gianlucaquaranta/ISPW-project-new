@@ -69,7 +69,7 @@ public class GestPrenotazioniController {
         bibliotecaDaoMemory.store(biblioteca);
 
         if(Session.isFull()) {
-            UtenteService utenteService = new UtenteService(utenteSession);
+            UtenteService utenteService = new UtenteService(utenteSession.isFile());
             BibliotecaService bibliotecaService = new BibliotecaService(utenteSession);
             utenteService.updateUtente(utenteSession.getUtente());
             bibliotecaService.updateBiblioteca(biblioteca);

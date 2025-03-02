@@ -56,7 +56,7 @@ public class GestNoleggiController {
         if(utente != null) {
             utente.getNoleggiAttivi().add(noleggio);
         } else if(Session.isFull()) {
-            UtenteService utenteService = new UtenteService(bibliotecarioSession);
+            UtenteService utenteService = new UtenteService(bibliotecarioSession.isFile());
             utente = utenteService.getUtente(noleggio.getDatiUtente()[0]);
         }
 
@@ -66,7 +66,7 @@ public class GestNoleggiController {
         bibliotecaDaoMemory.store(bibliotecarioSession.getBiblioteca());
 
         if(Session.isFull()) {
-            UtenteService utenteService = new UtenteService(bibliotecarioSession);
+            UtenteService utenteService = new UtenteService(bibliotecarioSession.isFile());
             BibliotecaService bibliotecaService = new BibliotecaService(bibliotecarioSession);
             utenteService.updateUtente(utente);
             bibliotecaService.updateBiblioteca(bibliotecarioSession.getBiblioteca());

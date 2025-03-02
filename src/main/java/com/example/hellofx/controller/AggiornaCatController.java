@@ -8,7 +8,6 @@ import com.example.hellofx.dao.bibliotecariodao.BibliotecarioDao;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.entity.Biblioteca;
 import com.example.hellofx.entity.Libro;
-import com.example.hellofx.entity.entityfactory.LibroFactory;
 import com.example.hellofx.exception.LibroGiaPresenteException;
 import com.example.hellofx.session.BibliotecarioSession;
 import com.example.hellofx.session.Session;
@@ -32,7 +31,7 @@ public class AggiornaCatController {
         for(Libro l : b.getCatalogo()){
             if(l.getIsbn().equals(libroBean.getIsbn())){
                 b.getCatalogo().removeIf(libro -> libro.getIsbn().equals(libroBean.getIsbn()));
-                b.getCatalogo().add(Converter.beanToLibro(libroBean));
+                b.getCatalogo().add(this.retrieveLibro(libroBean, session.isFull()));
                 Integer[] copie = {libroBean.getNumCopie()[0], libroBean.getNumCopie()[1]};
                 b.getCopie().replace(l.getIsbn(), copie);
                 break;
@@ -55,47 +54,14 @@ public class AggiornaCatController {
 
     public void add(LibroBean libroBean) throws Exception {
         Biblioteca b = session.getBiblioteca();
-        Libro libroAggiunto = null;
+
         // Controllo se il libro è già nel catalogo della biblioteca
         if (b.isLibroInCatalogo(libroBean.getIsbn())) {
             throw new LibroGiaPresenteException("Il libro con ISBN " + libroBean.getIsbn() + " è già presente nel catalogo.");
         }
 
-        boolean found = false;
-
-        // Check in memoria
-        for (Libro l : libroDaoMemory.loadAll()) {
-            if (l.getIsbn().equals(libroBean.getIsbn())) {
-                found = true;
-                libroAggiunto = l;
-                break;
-            }
-        }
-
-        // Check in persistenza
-        LibroDao libroDaoPers = null;
-        if (Session.isFull() && !found) {
-            libroDaoPers = FactoryProducer.getFactory("db").createDaoLibro();
-            for (Libro l : libroDaoPers.loadAll()) {
-                if (l.getIsbn().equals(libroBean.getIsbn())) {
-                    found = true;
-                    libroAggiunto = l;
-                    break;
-                }
-            }
-        }
-
-        if (!found) {
-            // Se il libro non esiste, lo creo e lo salvo
-            libroAggiunto = Converter.beanToLibro(libroBean);
-            libroDaoMemory.store(libroAggiunto);
-
-            if (Session.isFull() && libroDaoPers != null) {
-                libroDaoPers.store(libroAggiunto);
-            }
-        }
-
-        b.getCatalogo().add(libroAggiunto);
+        Libro l = this.retrieveLibro(libroBean, session.isFull());
+        b.getCatalogo().add(l);
         session.setBiblioteca(b);
     }
 
@@ -115,4 +81,24 @@ public class AggiornaCatController {
         }
     }
 
+    private Libro retrieveLibro(LibroBean libroBean, boolean isFull){
+        Libro l = libroDaoMemory.load(libroBean.getIsbn());
+        if(l != null){ // il libro è in memoria
+            return l;
+        } else if(isFull){
+            LibroDao libroDao = FactoryProducer.getFactory("db").createDaoLibro();
+            l = libroDao.load(libroBean.getIsbn());
+            if(l == null) { // il libro non è in memoria nè in persistenza
+                l = Converter.beanToLibro(libroBean);
+                libroDaoMemory.store(l);
+                libroDao.store(l);
+                return l;
+            } else return l; // il libro è in persistenza
+
+        } else { // il libro non è presente nel sistema (demo version)
+            l = Converter.beanToLibro(libroBean);
+            libroDaoMemory.store(l);
+        }
+        return l;
+    }
 }

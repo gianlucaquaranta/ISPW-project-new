@@ -62,7 +62,7 @@ public class LoginController {
     private void setupUtenteSession(Utente utente) {
         UtenteSession utenteSession = UtenteSession.getInstance();
         if (Session.isFull()) {
-            UtenteService utenteService = new UtenteService(utenteSession);
+            UtenteService utenteService = new UtenteService(utenteSession.isFile());
             utente = utenteService.getUtente(utente.getUsername());
         }
         utenteSession.setUtente(utente);
