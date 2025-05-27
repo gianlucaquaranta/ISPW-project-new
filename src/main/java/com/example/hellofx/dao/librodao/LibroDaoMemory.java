@@ -1,13 +1,12 @@
 package com.example.hellofx.dao.librodao;
 
-import com.example.hellofx.entity.Filtri;
-import com.example.hellofx.entity.Libro;
+import com.example.hellofx.model.Filtri;
+import com.example.hellofx.model.Libro;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class LibroDaoMemory implements LibroDao {
 
@@ -38,16 +37,6 @@ public class LibroDaoMemory implements LibroDao {
             list.add(libro);
         }
         return list;
-    }
-
-    @Override
-    public List<Libro> loadFilteredLibro(Filtri filtri) {
-        return libriMap.values().stream()
-                .filter(libro -> (filtri.getTitolo() == null || libro.getTitolo().toLowerCase().contains(filtri.getTitolo().toLowerCase())))
-                .filter(libro -> (filtri.getAutore() == null || libro.getAutore().toLowerCase().contains(filtri.getAutore().toLowerCase())))
-                .filter(libro -> (filtri.getGenere() == null || libro.getGenere().equalsIgnoreCase(filtri.getGenere())))
-                .filter(libro -> (filtri.getIsbn() == null || libro.getIsbn().equalsIgnoreCase(filtri.getIsbn())))
-                .toList();
     }
 
     @Override

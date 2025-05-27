@@ -1,4 +1,4 @@
-package com.example.hellofx.entity;
+package com.example.hellofx.model;
 
 import com.example.hellofx.converter.Converter;
 
@@ -10,7 +10,7 @@ public class Noleggio {
     private Timestamp dataScadenza;
     private String[] datiUtente; //username, email
     private String idBiblioteca;
-    private String[] idNoleggio = {this.datiUtente[0], this.idBiblioteca, this.isbn}; //username, idBiblioteca, isbn
+    private String[] idNoleggio; //username, idBiblioteca, isbn
 
     public Noleggio() {
         //factory
@@ -22,6 +22,7 @@ public class Noleggio {
         this.datiUtente = datiUtente;
         this.idBiblioteca = idBiblioteca;
         this.isbn = isbn;
+        setIdNoleggio();
     }
 
     public String[] getIdNoleggio() {return idNoleggio;}

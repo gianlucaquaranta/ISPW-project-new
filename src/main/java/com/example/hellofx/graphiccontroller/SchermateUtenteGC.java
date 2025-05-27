@@ -1,8 +1,11 @@
 package com.example.hellofx.graphiccontroller;
 
 import com.example.hellofx.bean.FiltriBean;
+import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.bean.TrovaPrezziBean;
+import com.example.hellofx.controller.PLController;
 import com.example.hellofx.controller.TrovaPrezziController;
+import com.example.hellofx.controllerfactory.PLControllerFactory;
 import com.example.hellofx.controllerfactory.TrovaPrezziControllerFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +30,8 @@ import java.util.List;
 public class SchermateUtenteGC {
     private Stage stage;
     private Parent root;
+
+    //Prenota libro FXML
     @FXML
     private TextField titoloTextField;
     @FXML
@@ -41,6 +46,19 @@ public class SchermateUtenteGC {
     private TextField capTextField;
     @FXML
     private TextField raggioTextField;
+    @FXML
+    private TableView<LibroBean> tableViewBooksPL;
+    @FXML
+    private TableColumn<LibroBean, String> titleColumnPL;
+    @FXML
+    private TableColumn<LibroBean, String> authorColumnPL;
+    @FXML
+    private TableColumn<LibroBean, String> editorColumnPL;
+    @FXML
+    private TableColumn<LibroBean, String> isbnColumnPL;
+    @FXML
+    private TableColumn<LibroBean, Void> optionColumnPL;
+
 
     //Trova prezzi FXML
     @FXML
@@ -60,6 +78,8 @@ public class SchermateUtenteGC {
     @FXML
     private TableColumn<TrovaPrezziBean, String> editorColumnTP;
     @FXML
+    private TableColumn<TrovaPrezziBean, String> annoPubblicazioneTP;
+    @FXML
     private TableColumn<TrovaPrezziBean, String> priceColumnTP;
     @FXML
     private TableColumn<TrovaPrezziBean, String> vendorColumnTP;
@@ -69,14 +89,61 @@ public class SchermateUtenteGC {
     //Inizializzazioni table view
     @FXML
     public void initialize() {
+        // Prenota libro tables view
+        titleColumnPL.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+        authorColumnPL.setCellValueFactory(new PropertyValueFactory<>("autore"));
+        editorColumnPL.setCellValueFactory(new PropertyValueFactory<>("editore"));
+        isbnColumnPL.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+
+        setupOptionColumnPL();
+
         // Trova prezzi table view
         titleColumnTP.setCellValueFactory(new PropertyValueFactory<>("titolo"));
         authorColumnTP.setCellValueFactory(new PropertyValueFactory<>("autore"));
         editorColumnTP.setCellValueFactory(new PropertyValueFactory<>("editore"));
+        annoPubblicazioneTP.setCellValueFactory(new PropertyValueFactory<>("annoPubblicazione"));
         priceColumnTP.setCellValueFactory(new PropertyValueFactory<>("prezzo"));
         vendorColumnTP.setCellValueFactory(new PropertyValueFactory<>("vendor"));
 
-        // Configurazione colonna opzioni per aggiungere bottoni a trova prezzi
+        setupOptionColumnTP();
+    }
+
+    private void setupOptionColumnPL(){
+        optionColumnPL.setCellFactory(param -> new TableCell<>() {
+            private Button button = new Button("Vedi biblioteche");
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    button.setOnAction(event -> {
+                        LibroBean bean = getTableView().getItems().get(getIndex());
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/risultatiBiblioteche.fxml"));
+                            root = loader.load(); // Carica la scena e istanzia il controller
+                            // Ottiene l'istanza del controller legata alla scena
+                            RisultatiBibliotecheGC risultatiBibliotecheGC = loader.getController();
+                            // Chiama il metodo sul controller effettivo
+                            risultatiBibliotecheGC.visualizzaBiblioteche(bean);
+                            // Cambia scena
+                            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            stage.setScene(new Scene(root));
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    button.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;");
+                    setGraphic(button);
+                }
+            }
+        });
+
+    }
+
+    private void setupOptionColumnTP(){
         optionColumnTP.setCellFactory(param -> new TableCell<>() {
             private Button button = new Button("Vai al sito");
 
@@ -105,9 +172,10 @@ public class SchermateUtenteGC {
     }
 
 
+
     //Prenota libro GC
     @FXML
-    void cercaLibro(ActionEvent event) throws IOException {
+    void visualizzaLibri(ActionEvent event) throws IOException {
 
         String titolo = titoloTextField.getText();
         String autore = autoreTextField.getText();
@@ -115,14 +183,28 @@ public class SchermateUtenteGC {
         String genere = genereSplitMenuButton.getText();
         String biblioteca = bibliotecaTextField.getText();
         String cap = capTextField.getText();
-        String raggio = raggioTextField.getText();
 
-        FiltriBean filtriBean = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap, raggio);
+        FiltriBean filtriBean = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
+        PLController plController = PLControllerFactory.getInstance().createPLController();
+        List<LibroBean> libriFiltrati = plController.filtraLibri(filtriBean);
+
+        ObservableList<LibroBean> data = FXCollections.observableArrayList(libriFiltrati);
+        tableViewBooksPL.setItems(data);
 
         
     }
-    
-    
+
+
+    @FXML
+    void salvaRicerca(ActionEvent event) throws IOException {
+
+    }
+
+    @FXML
+    void rimuoviFiltri(ActionEvent event) throws IOException {
+
+    }
+
     //Trova prezzi GC
     @FXML
     void cercaPrezzi(ActionEvent event) throws IOException {

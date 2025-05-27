@@ -1,5 +1,5 @@
 package com.example.hellofx.dao.utentedao;
-import com.example.hellofx.entity.Utente;
+import com.example.hellofx.model.Utente;
 import java.util.List;
 
 public interface UtenteDao {

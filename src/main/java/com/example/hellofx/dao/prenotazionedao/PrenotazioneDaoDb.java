@@ -2,8 +2,8 @@ package com.example.hellofx.dao.prenotazionedao;
 
 import com.example.hellofx.converter.Converter;
 import com.example.hellofx.dao.DbConnection;
-import com.example.hellofx.entity.Prenotazione;
-import com.example.hellofx.entity.entityfactory.PrenotazioneFactory;
+import com.example.hellofx.model.Prenotazione;
+import com.example.hellofx.model.modelfactory.PrenotazioneFactory;
 
 import java.sql.*;
 import java.util.ArrayList;

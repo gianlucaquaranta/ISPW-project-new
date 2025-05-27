@@ -2,26 +2,15 @@ package com.example.hellofx.bean;
 
 public class UtenteBean {
     private String username;
-    private String password;
     private String email;
 
     public UtenteBean(){
-        this.username = null;
-        this.password = null;
-        this.email = null;
+
     }
 
-    public UtenteBean(String username, String password, String email, String type) {
+    public UtenteBean(String username, String email) {
         this.username = username;
-        this.password = password;
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getUsername() {

@@ -1,4 +1,4 @@
-package com.example.hellofx.entity;
+package com.example.hellofx.model;
 
 public class Libro {
     private String titolo;

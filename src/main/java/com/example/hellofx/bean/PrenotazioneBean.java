@@ -1,57 +1,74 @@
 package com.example.hellofx.bean;
 
-import com.example.hellofx.converter.Converter;
-
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class PrenotazioneBean {
-    private Timestamp dataInizio;
-    private Timestamp dataScadenza;
-    private String[] datiUtente; //username, email
-    private String idBiblioteca;
-    private String isbn;
-    private String[] idPrenotazione = {this.datiUtente[0], this.idBiblioteca, this.isbn}; //username, idBiblioteca, isbn
+    private String dataInizio;
+    private String dataScadenza;
+    private UtenteBean utente;
+    private BibliotecaBean biblioteca;
+    private LibroBean libro;
 
-    public PrenotazioneBean(){}
-
-    public String[] getIdPrenotazione() {
-        return this.idPrenotazione;
+    public PrenotazioneBean(LocalDate dataInizioL, LocalDate dataScadenzaL, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.dataInizio = dataInizioL.format(formatter);;
+        this.dataScadenza = dataScadenzaL.format(formatter);
+        this.utente = utente;
+        this.biblioteca = biblioteca;
+        this.libro = libro;
     }
 
-    public void setIdPrenotazione() {
-        this.idPrenotazione[0] = this.datiUtente[0];
-        this.idPrenotazione[1] = this.idBiblioteca;
-        this.idPrenotazione[2] = this.isbn;
+    public PrenotazioneBean(Timestamp dataInizioT, Timestamp dataScadenzaT, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
+        this.dataInizio = dataInizioT.toString();
+        this.dataScadenza = dataScadenzaT.toString();
+        this.utente = utente;
+        this.biblioteca = biblioteca;
+        this.libro = libro;
     }
 
-    public String getDataInizio() { return Converter.timestampToString(this.dataInizio); }
-    public void setDataInizio(String date) { this.dataInizio = Converter.stringToTimestamp(date); } //date = "gg/MM/yyyy"
-    public String getDataScadenza() { return Converter.timestampToString(this.dataScadenza); }
-    public void setDataScadenza() {
-        this.dataScadenza = Timestamp.valueOf(this.dataInizio.toLocalDateTime().plusDays(15));
+    public PrenotazioneBean() {
+        //converter
     }
 
-    public String getIdBiblioteca() {
-        return this.idBiblioteca;
+    public String getDataInizioS() {
+        return dataInizio;
     }
 
-    public void setIdBiblioteca(String idBiblioteca) {
-        this.idBiblioteca = idBiblioteca;
+    public String getDataScadenzaS() {
+        return dataScadenza;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public Timestamp getDataInizioT() {
+        return Timestamp.valueOf(dataInizio);
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public Timestamp getDataScadenzaT() {
+        return Timestamp.valueOf(dataScadenza);
     }
 
-    public String[] getDatiUtente() {
-        return datiUtente;
+    public UtenteBean getUtente() {
+        return utente;
     }
 
-    public void setDatiUtente(String[] datiUtente) {
-        this.datiUtente = datiUtente;
+    public void setUtente(UtenteBean utente) {
+        this.utente = utente;
+    }
+
+    public BibliotecaBean getBiblioteca() {
+        return biblioteca;
+    }
+
+    public void setBiblioteca(BibliotecaBean biblioteca) {
+        this.biblioteca = biblioteca;
+    }
+
+    public LibroBean getLibro() {
+        return libro;
+    }
+
+    public void setLibro(LibroBean libro) {
+        this.libro = libro;
     }
 }

@@ -1,8 +1,8 @@
 package com.example.hellofx.dao.filtridao;
 
 import com.example.hellofx.dao.DbConnection;
-import com.example.hellofx.entity.Filtri;
-import com.example.hellofx.entity.entityfactory.FiltriFactory;
+import com.example.hellofx.model.Filtri;
+import com.example.hellofx.model.modelfactory.FiltriFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

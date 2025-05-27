@@ -69,12 +69,7 @@
             </Label>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="71.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../../../../Downloads/58dbfa9b3c4f3b306117b81cd2e1188f.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="71.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Images/Google%20little%20logo.png" />
+                  <Image url="@Images/google_logo.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER" layoutX="94.0" layoutY="212.0" onMouseClicked="#indietro" text="Torna al log in" textAlignment="CENTER" textFill="#0b6b75" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="650.0">

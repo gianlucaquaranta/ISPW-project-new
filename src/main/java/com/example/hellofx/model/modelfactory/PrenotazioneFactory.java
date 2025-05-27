@@ -1,7 +1,7 @@
-package com.example.hellofx.entity.entityfactory;
+package com.example.hellofx.model.modelfactory;
 
 
-import com.example.hellofx.entity.Prenotazione;
+import com.example.hellofx.model.Prenotazione;
 
 public class PrenotazioneFactory {
     private static PrenotazioneFactory instance = null;

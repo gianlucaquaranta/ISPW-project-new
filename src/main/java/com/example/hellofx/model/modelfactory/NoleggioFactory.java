@@ -1,6 +1,6 @@
-package com.example.hellofx.entity.entityfactory;
+package com.example.hellofx.model.modelfactory;
 
-import com.example.hellofx.entity.Noleggio;
+import com.example.hellofx.model.Noleggio;
 
 public class NoleggioFactory {
 

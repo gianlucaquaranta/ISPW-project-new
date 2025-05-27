@@ -8,18 +8,9 @@ public class LibroBean {
     private String isbn;
     private int annoPubblicazione;
     private Integer[] numCopie; //copie totali, copie non prenotate
-    private String imageUrl;
 
-    public LibroBean() {}
-
-    public LibroBean(String titolo, String autore, String editore, GenereBean genere, String isbn, Integer[] numCopie, String imageUrl) {
-        this.titolo = titolo;
-        this.autore = autore;
-        this.editore = editore;
-        this.genere = genere;
-        this.isbn = isbn;
-        this.numCopie = numCopie;
-        this.imageUrl = imageUrl;
+    public LibroBean() {
+        //factory
     }
 
     public int getAnnoPubblicazione() {
@@ -78,12 +69,5 @@ public class LibroBean {
         this.isbn = isbn;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
 }
