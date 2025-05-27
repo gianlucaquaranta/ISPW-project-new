@@ -2,7 +2,6 @@ package com.example.hellofx.dao;
 
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDaoFile;
-import com.example.hellofx.dao.bibliotecariodao.BibliotecarioDao;
 import com.example.hellofx.dao.filtridao.FiltriDao;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.dao.noleggiodao.NoleggioDao;
@@ -22,10 +21,6 @@ public class DaoFileFactory implements DaoFactory {
         return instance;
     }
 
-    @Override
-    public BibliotecarioDao createDaoBibliotecario() {
-        return null;
-    }
 
     @Override
     public UtenteDao createDaoUtente() {

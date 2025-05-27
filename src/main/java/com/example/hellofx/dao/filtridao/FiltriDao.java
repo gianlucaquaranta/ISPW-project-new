@@ -1,6 +1,6 @@
 package com.example.hellofx.dao.filtridao;
 
-import com.example.hellofx.entity.Filtri;
+import com.example.hellofx.model.Filtri;
 
 import java.util.List;
 

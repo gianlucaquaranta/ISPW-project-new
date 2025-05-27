@@ -1,4 +1,4 @@
-package com.example.hellofx.entity;
+package com.example.hellofx.model;
 
 public class Filtri {
     private final String titolo; //filtri per libri

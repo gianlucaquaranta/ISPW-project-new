@@ -1,35 +1,24 @@
 package com.example.hellofx.bean;
 
 public class BibliotecaBean {
+    private String idBiblioteca;
     private String nome;
     private String indirizzo;
     private String cap;
     private String numeroCivico;
     private String citta;
     private String provincia;
-    private String url;
-    private String usernameBibliotecario;
 
-    public BibliotecaBean(String nome, String indirizzo, String cap, String numeroCivico, String citta, String provincia, String url) {
-        this.nome = nome;
-        this.indirizzo = indirizzo;
-        this.cap = cap;
-        this.numeroCivico = numeroCivico;
-        this.citta = citta;
-        this.provincia = provincia;
-        this.url = url;
+    public String getIdBiblioteca() {
+        return idBiblioteca;
+    }
+
+    public void setIdBiblioteca(String idBiblioteca) {
+        this.idBiblioteca = idBiblioteca;
     }
 
     public BibliotecaBean() {
-
-    }
-
-    public String getUsernameBibliotecario() {
-        return usernameBibliotecario;
-    }
-
-    public void setUsernameBibliotecario(String usernameBibliotecario) {
-        this.usernameBibliotecario = usernameBibliotecario;
+        //factory
     }
 
     public String getNome() {
@@ -80,11 +69,4 @@ public class BibliotecaBean {
         this.provincia = provincia;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

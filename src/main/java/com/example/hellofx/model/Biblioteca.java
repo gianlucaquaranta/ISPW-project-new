@@ -1,4 +1,4 @@
-package com.example.hellofx.entity;
+package com.example.hellofx.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,19 +11,15 @@ public class Biblioteca {
     private List<Libro> catalogo;
     private Map<String, Integer[]> copie = new HashMap<>();
     private Posizione posizione;
-    private String url;
     private List<Prenotazione> prenotazioniAttive;
     private List<Noleggio> noleggiAttivi;
-    private List<Bibliotecario> bibliotecari;
 
-    public Biblioteca(String nome, List<Libro> catalogo, Posizione posizione, String url) {
+    public Biblioteca(String nome, List<Libro> catalogo, Posizione posizione) {
         this.nome = nome;
-        this.catalogo = catalogo;
+        this.catalogo = catalogo; //= new ArrayList<>() ??
         this.posizione = posizione;
-        this.url = url;
         prenotazioniAttive = new ArrayList<>();
         noleggiAttivi = new ArrayList<>();
-        bibliotecari = new ArrayList<>();
         this.id = this.nome.replace(" ", "")+this.posizione.getIndirizzo().replace(" ", "")+ this.posizione.getCap();
     }
 
@@ -46,14 +42,6 @@ public class Biblioteca {
 
     public void setCopie(Map<String, Integer[]> copie) {
         this.copie = copie;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getId() {
@@ -98,14 +86,6 @@ public class Biblioteca {
         this.prenotazioniAttive = prenotazioniAttive;
     }
 
-    public List<Bibliotecario> getBibliotecari() {
-        return bibliotecari;
-    }
-
-    public void setBibliotecari(List<Bibliotecario> bibliotecari) {
-        this.bibliotecari = bibliotecari;
-    }
-
     public void setId(){
         this.id = this.nome.replace(" ", "")+this.posizione.getIndirizzo().replace(" ", "")+ this.posizione.getCap();
     }
@@ -113,4 +93,5 @@ public class Biblioteca {
     public void setId(String s){
         this.id = s;
     }
+
 }

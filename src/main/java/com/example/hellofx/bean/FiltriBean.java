@@ -7,16 +7,14 @@ public class FiltriBean {
     private String isbn;
     private String biblioteca;
     private String cap;
-    private String raggio;
 
-    public FiltriBean(String titolo, String autore, String genere, String isbn, String biblioteca, String cap, String raggio) {
+    public FiltriBean(String titolo, String autore, String genere, String isbn, String biblioteca, String cap) {
         this.titolo = titolo;
         this.autore = autore;
         this.genere = genere;
         this.isbn = isbn;
         this.biblioteca = biblioteca;
         this.cap = cap;
-        this.raggio = raggio;
     }
 
     public FiltriBean() {
@@ -61,14 +59,6 @@ public class FiltriBean {
 
     public void setCap(String cap) {
         this.cap = cap;
-    }
-
-    public String getRaggio() {
-        return raggio;
-    }
-
-    public void setRaggio(String raggio) {
-        this.raggio = raggio;
     }
 
     public String getBiblioteca() {

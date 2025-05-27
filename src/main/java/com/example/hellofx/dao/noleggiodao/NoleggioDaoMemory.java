@@ -1,8 +1,7 @@
 package com.example.hellofx.dao.noleggiodao;
 
-import com.example.hellofx.entity.Noleggio;
+import com.example.hellofx.model.Noleggio;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

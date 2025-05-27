@@ -1,7 +1,7 @@
-package com.example.hellofx.entity.entityfactory;
+package com.example.hellofx.model.modelfactory;
 
 
-import com.example.hellofx.entity.Libro;
+import com.example.hellofx.model.Libro;
 
 public class LibroFactory {
     private static LibroFactory instance = null;

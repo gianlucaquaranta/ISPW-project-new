@@ -1,6 +1,6 @@
 package com.example.hellofx.dao.noleggiodao;
 
-import com.example.hellofx.entity.Noleggio;
+import com.example.hellofx.model.Noleggio;
 
 import java.util.List;
 

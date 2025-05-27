@@ -1,6 +1,6 @@
 package com.example.hellofx.dao.prenotazionedao;
 
-import com.example.hellofx.entity.Prenotazione;
+import com.example.hellofx.model.Prenotazione;
 
 import java.util.*;
 

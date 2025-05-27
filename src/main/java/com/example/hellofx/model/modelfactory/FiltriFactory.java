@@ -1,6 +1,6 @@
-package com.example.hellofx.entity.entityfactory;
+package com.example.hellofx.model.modelfactory;
 
-import com.example.hellofx.entity.Filtri;
+import com.example.hellofx.model.Filtri;
 
 public class FiltriFactory {
     private static FiltriFactory instance = null;

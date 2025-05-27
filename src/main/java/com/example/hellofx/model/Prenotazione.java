@@ -1,4 +1,4 @@
-package com.example.hellofx.entity;
+package com.example.hellofx.model;
 
 import java.sql.Timestamp;
 
@@ -9,7 +9,7 @@ public class Prenotazione {
     private String[] datiUtente; //username, email
     private String idBiblioteca;
     private String isbn;
-    private String[] idPrenotazione = {this.datiUtente[0], this.idBiblioteca, this.isbn}; //username, idBiblioteca, isbn
+    private String[] idPrenotazione; //username, idBiblioteca, isbn
 
     public Prenotazione(Timestamp dataInizio, Timestamp dataScadenza, String[] datiUtente, String idBiblioteca, String isbn){
         this.dataInizio = dataInizio;

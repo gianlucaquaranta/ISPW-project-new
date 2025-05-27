@@ -1,8 +1,8 @@
 package com.example.hellofx.dao.utentedao;
 
 import com.example.hellofx.dao.DbConnection;
-import com.example.hellofx.entity.Utente;
-import com.example.hellofx.entity.entityfactory.UtenteFactory;
+import com.example.hellofx.model.Utente;
+import com.example.hellofx.model.modelfactory.UtenteFactory;
 
 import java.sql.*;
 import java.util.ArrayList;

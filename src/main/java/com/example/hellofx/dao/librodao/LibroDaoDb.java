@@ -1,9 +1,9 @@
 package com.example.hellofx.dao.librodao;
 
 import com.example.hellofx.dao.DbConnection;
-import com.example.hellofx.entity.Filtri;
-import com.example.hellofx.entity.Libro;
-import com.example.hellofx.entity.entityfactory.LibroFactory;
+import com.example.hellofx.model.Filtri;
+import com.example.hellofx.model.Libro;
+import com.example.hellofx.model.modelfactory.LibroFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,54 +62,6 @@ public class LibroDaoDb implements LibroDao {
                 libro.setAnnoPubblicazione(rs.getInt("anno"));
                 libro.setIsbn(rs.getString("isbn"));
                 libri.add(libro);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return libri;
-    }
-
-    @Override
-    public List<Libro> loadFilteredLibro(Filtri filtri) {
-        String query = "SELECT isbn, titolo, autore, genere, editore, anno FROM libri WHERE 1=1";
-        List<Object> params = new ArrayList<>();
-
-        if (filtri.getTitolo() != null) {
-            query += " AND titolo LIKE ?";
-            params.add("%" + filtri.getTitolo() + "%");
-        }
-        if (filtri.getAutore() != null) {
-            query += " AND autore LIKE ?";
-            params.add("%" + filtri.getAutore() + "%");
-        }
-        if (filtri.getGenere() != null) {
-            query += " AND genere = ?";
-            params.add(filtri.getGenere());
-        }
-        if (filtri.getIsbn() != null) {
-            query += " AND isbn = ?";
-            params.add(filtri.getIsbn());
-        }
-
-        List<Libro> libri = new ArrayList<>();
-        try (Connection conn = DbConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            for (int i = 0; i < params.size(); i++) {
-                stmt.setObject(i + 1, params.get(i));
-            }
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Libro libro = libroFactory.createLibro();
-                    libro.setTitolo(rs.getString(TITOLO));
-                    libro.setAutore(rs.getString(AUTORE));
-                    libro.setGenere(rs.getString(GENERE));
-                    libro.setEditore(rs.getString(EDITORE));
-                    libro.setAnnoPubblicazione(rs.getInt("anno"));
-                    libro.setIsbn(rs.getString("isbn"));
-                    libri.add(libro);
-                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

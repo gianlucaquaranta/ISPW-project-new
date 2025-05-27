@@ -1,6 +1,6 @@
-package com.example.hellofx.entity.entityfactory;
+package com.example.hellofx.model.modelfactory;
 
-import com.example.hellofx.entity.Utente;
+import com.example.hellofx.model.Utente;
 
 public class UtenteFactory {
     private static UtenteFactory instance = null;

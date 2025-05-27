@@ -1,4 +1,4 @@
-package com.example.hellofx.entity;
+package com.example.hellofx.model;
 
 public class Posizione {
     String cap;
@@ -6,7 +6,6 @@ public class Posizione {
     String numeroCivico;
     String citta;
     String provincia;
-    float[] coordinate;
 
     public Posizione (String cap, String indirizzo, String numeroCivico, String citta, String provincia) {
         this.cap = cap;
@@ -40,12 +39,19 @@ public class Posizione {
         this.numeroCivico = numeroCivico;
     }
 
-    public float[] getCoordinate() {
-        return coordinate;
+    public String getCitta() {
+        return citta;
     }
 
-    public void setCoordinate(float[] coordinate) {
-        this.coordinate = coordinate;
+    public void setCitta(String citta) {
+        this.citta = citta;
     }
 
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
 }

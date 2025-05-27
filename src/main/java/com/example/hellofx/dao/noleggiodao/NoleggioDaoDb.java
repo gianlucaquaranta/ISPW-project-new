@@ -2,8 +2,8 @@ package com.example.hellofx.dao.noleggiodao;
 
 import com.example.hellofx.converter.Converter;
 import com.example.hellofx.dao.DbConnection;
-import com.example.hellofx.entity.Noleggio;
-import com.example.hellofx.entity.entityfactory.NoleggioFactory;
+import com.example.hellofx.model.Noleggio;
+import com.example.hellofx.model.modelfactory.NoleggioFactory;
 
 import java.sql.*;
 import java.util.ArrayList;

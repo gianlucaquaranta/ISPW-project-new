@@ -1,8 +1,8 @@
 package com.example.hellofx.converter;
 
 import com.example.hellofx.bean.*;
-import com.example.hellofx.entity.*;
-import com.example.hellofx.entity.entityfactory.*;
+import com.example.hellofx.model.*;
+import com.example.hellofx.model.modelfactory.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -43,27 +43,29 @@ public class Converter {
         return u;
     }
 
-    public static Bibliotecario beanToBibliotecario(BibliotecarioBean bibliotecarioBean){
-        Bibliotecario bibliotecario = BibliotecarioFactory.getInstance().createBibliotecario();
-        bibliotecario.setUsername(bibliotecarioBean.getUsername());
-        bibliotecario.setPassword(bibliotecarioBean.getPassword());
-        bibliotecario.setNome(bibliotecarioBean.getNome());
-        bibliotecario.setCognome(bibliotecarioBean.getCognome());
-        return bibliotecario;
-    }
-
     public static Biblioteca beanToBiblioteca(BibliotecaBean bibliotecaBean){
         Biblioteca b = BibliotecaFactory.getInstance().createBiblioteca();
         b.setNome(bibliotecaBean.getNome());
         Posizione posizione = new Posizione(bibliotecaBean.getCap(), bibliotecaBean.getIndirizzo(), bibliotecaBean.getNumeroCivico(), bibliotecaBean.getCitta(), bibliotecaBean.getProvincia());
         b.setPosizione(posizione);
-        b.setUrl(bibliotecaBean.getUrl());
         //dopo aver settato nome e posizione è possibile creare l'id
         b.setId();
         b.setCatalogo(null);
         b.setPrenotazioniAttive(null);
         b.setCopie(null);
         b.setNoleggiAttivi(null);
+        return b;
+    }
+
+    public static BibliotecaBean bibliotecaToBean(Biblioteca biblioteca){
+        BibliotecaBean b = new BibliotecaBean();
+        b.setNome(biblioteca.getNome());
+        b.setIndirizzo(biblioteca.getPosizione().getIndirizzo());
+        b.setCap(biblioteca.getPosizione().getCap());
+        b.setNumeroCivico(biblioteca.getPosizione().getNumeroCivico());
+        b.setCitta(biblioteca.getPosizione().getCitta());
+        b.setProvincia(biblioteca.getPosizione().getProvincia());
+
         return b;
     }
 
@@ -89,10 +91,28 @@ public class Converter {
         return n;
     }
 
+    public static Prenotazione beanToPrenotazione(PrenotazioneBean pb){
+        Prenotazione p = PrenotazioneFactory.getInstance().createPrenotazione();
+
+        p.setDataInizio(pb.getDataInizioT());
+        p.setDataScadenza(pb.getDataScadenzaT());
+
+        String[] datiUtente = new String[2];
+        datiUtente[0] = pb.getUtente().getUsername();
+        datiUtente[1] = pb.getUtente().getEmail();
+
+        p.setDatiUtente(datiUtente);
+        p.setIsbn(pb.getLibro().getIsbn());
+        p.setIdBiblioteca(pb.getBiblioteca().getIdBiblioteca());
+        p.setIdPrenotazione();
+        return p;
+
+    }
+
     public static String timestampToString(Timestamp timestamp){
         LocalDateTime localDateTime = timestamp.toLocalDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-       return localDateTime.format(formatter);
+        return localDateTime.format(formatter);
     }
 
     public static Timestamp stringToTimestamp(String dateString) {
@@ -100,4 +120,6 @@ public class Converter {
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         return Timestamp.valueOf(localDate.atStartOfDay());
     }
+
+
 }
