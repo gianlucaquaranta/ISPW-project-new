@@ -45,13 +45,6 @@ public class BibliotecaDaoFile implements BibliotecaDao {
         // Salva una nuova biblioteca
         private void store(Biblioteca biblioteca) {
             List<Biblioteca> biblioteche = loadAll();
-
-            /*// Verifica se esiste già una biblioteca con lo stesso ID
-            if (loadOne(biblioteca.getId()) != null) {
-                System.out.println("Biblioteca con ID " + biblioteca.getId() + " già esistente.");
-                return;
-            }*/
-
             biblioteche.add(biblioteca);
             saveAll(biblioteche);
         }
