@@ -1,11 +1,12 @@
 package com.example.hellofx.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Biblioteca {
+public class Biblioteca implements Serializable {
     private String id;
     private String nome;
     private List<Libro> catalogo;
