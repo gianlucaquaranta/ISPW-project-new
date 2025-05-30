@@ -42,7 +42,7 @@ public class BibliotecaDaoFile implements BibliotecaDao {
                     .orElse(null);
         }
 
-        // Salva una nuova biblioteca
+        // Salva la nuova biblioteca
         private void store(Biblioteca biblioteca) {
             List<Biblioteca> biblioteche = loadAll();
             biblioteche.add(biblioteca);
