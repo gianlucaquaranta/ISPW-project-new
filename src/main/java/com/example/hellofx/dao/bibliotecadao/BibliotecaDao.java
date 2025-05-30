@@ -7,6 +7,5 @@ import java.util.List;
 public interface BibliotecaDao {
     List<Biblioteca> loadAll();
     Biblioteca loadOne(String id);
-    void store(Biblioteca biblioteca);
     void update(Biblioteca biblioteca);
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 public class BibliotecaDaoFile implements BibliotecaDao {
 
-    private BibliotecaDaoMemory bibliotecaDaoMemory = BibliotecaDaoMemory.getInstance();
     private static final String FILE_PATH = "biblioteche.dat"; // Percorso del file di persistenza
 
         @Override
@@ -43,25 +42,15 @@ public class BibliotecaDaoFile implements BibliotecaDao {
                     .orElse(null);
         }
 
-        @Override
-        // Carica una biblioteca tramite il nome di un bibliotecario
-        public Biblioteca loadOneFromBibliotecario(String username) {
-            return loadAll().stream()
-                    .filter(b -> b.getBibliotecari().stream().anyMatch(bib -> bib.getUsername().equals(username)))
-                    .findFirst()
-                    .orElse(null);
-        }
-
-        @Override
         // Salva una nuova biblioteca
-        public void store(Biblioteca biblioteca) {
+        private void store(Biblioteca biblioteca) {
             List<Biblioteca> biblioteche = loadAll();
 
-            // Verifica se esiste già una biblioteca con lo stesso ID
+            /*// Verifica se esiste già una biblioteca con lo stesso ID
             if (loadOne(biblioteca.getId()) != null) {
                 System.out.println("Biblioteca con ID " + biblioteca.getId() + " già esistente.");
                 return;
-            }
+            }*/
 
             biblioteche.add(biblioteca);
             saveAll(biblioteche);
@@ -79,7 +68,7 @@ public class BibliotecaDaoFile implements BibliotecaDao {
                 biblioteche.add(b);
                 saveAll(biblioteche);
             } else {
-                System.out.println("Biblioteca con ID " + updatedBiblioteca.getId() + " non trovata.");
+                this.store(updatedBiblioteca);
             }
         }
 

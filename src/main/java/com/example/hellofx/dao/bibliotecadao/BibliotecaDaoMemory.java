@@ -34,15 +34,12 @@ public class BibliotecaDaoMemory implements BibliotecaDao {
     public Biblioteca loadOne(String id) {
         if(bibliotecheMap.containsKey(id)) {
             return bibliotecheMap.get(id);
-        } else throw new IllegalArgumentException("Id " + id + " non trovato");
+        } else return null;
     }
 
-    @Override
-    public void store(Biblioteca biblioteca) {
+    private void store(Biblioteca biblioteca) { // viene chiamata solo se non c'è la biblioteca nella Map
         String key = biblioteca.getId();
-        if(!bibliotecheMap.containsKey(key)){
-            bibliotecheMap.put(key, biblioteca);
-        } else throw new IllegalArgumentException("biblioteca already exists");
+        bibliotecheMap.put(key, biblioteca);
     }
 
     @Override
@@ -50,6 +47,6 @@ public class BibliotecaDaoMemory implements BibliotecaDao {
         String key = biblioteca.getId();
         if(bibliotecheMap.containsKey(key)) {
             bibliotecheMap.replace(key, biblioteca);
-        } else throw new IllegalArgumentException("id not found");
+        } else this.store(biblioteca);
     }
 }

@@ -74,3 +74,24 @@
     -fx-border-radius: 0 7 7 0;
     -fx-pref-width: 50;
 }
+
+.split-menu-button.filter-split {
+    -fx-background-color: #0b6b75;
+    -fx-border-color: #0b6b75;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+
+.split-menu-button.filter-split .label {
+    -fx-text-fill: gray;
+    -fx-padding: 0 10 0 10;
+}
+
+.split-menu-button.filter-split .arrow-button {
+    -fx-background-color: #0b6b75;
+    -fx-shape: "M0,0 L5,5 L10,0 Z";
+}
+
+.split-menu-button.filter-split .arrow {
+    -fx-background-color: white;
+}

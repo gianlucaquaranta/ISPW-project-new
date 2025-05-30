@@ -13,7 +13,7 @@ public class UtenteDaoDb implements UtenteDao {
 
     @Override
     public Utente loadUtente(String username) {
-        String query = "SELECT username, email, password FROM utenti WHERE username = ?";
+        String query = "SELECT username, email FROM utenti WHERE username = ?";
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
@@ -21,7 +21,6 @@ public class UtenteDaoDb implements UtenteDao {
             if (rs.next()) {
                 Utente utente = utenteFactory.createUtente();
                 utente.setUsername(rs.getString("username"));
-                utente.setPassword(rs.getString("password"));
                 utente.setEmail(rs.getString("email"));
                 return utente;
             }
@@ -35,15 +34,14 @@ public class UtenteDaoDb implements UtenteDao {
     @Override
     public List<Utente> loadAllUtenti() {
         List<Utente> utenti = new ArrayList<>();
-        String query = "SELECT username, email, password FROM utenti";
+        String query = "SELECT username, email FROM utenti";
         try (Connection conn = DbConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 utenti.add(new Utente(
                         rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password")
+                        rs.getString("email")
                 ));
             }
         } catch (SQLException e) {
@@ -54,12 +52,11 @@ public class UtenteDaoDb implements UtenteDao {
 
     @Override
     public void storeUtente(Utente utente) {
-        String query = "INSERT INTO utenti (username, email, password) VALUES (?, ?, ?)";
+        String query = "INSERT INTO utenti (username, email) VALUES (?, ?)";
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, utente.getUsername());
             stmt.setString(2, utente.getEmail());
-            stmt.setString(3, utente.getPassword());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,11 +66,10 @@ public class UtenteDaoDb implements UtenteDao {
 
     @Override
     public void updateUtente(Utente utente) {
-        String query = "UPDATE utenti SET email = ?, password = ? WHERE username = ?";
+        String query = "UPDATE utenti SET email = ? WHERE username = ?";
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, utente.getEmail());
-            stmt.setString(2, utente.getPassword());
             stmt.setString(3, utente.getUsername());
             stmt.executeUpdate();
         } catch (SQLException e) {

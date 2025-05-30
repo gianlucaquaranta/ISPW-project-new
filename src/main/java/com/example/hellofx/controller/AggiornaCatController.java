@@ -4,16 +4,18 @@ import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.converter.Converter;
 import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
-import com.example.hellofx.dao.bibliotecariodao.BibliotecarioDao;
 import com.example.hellofx.dao.librodao.LibroDao;
-import com.example.hellofx.entity.Biblioteca;
-import com.example.hellofx.entity.Libro;
+import com.example.hellofx.model.Biblioteca;
+import com.example.hellofx.model.Libro;
 import com.example.hellofx.exception.LibroGiaPresenteException;
 import com.example.hellofx.session.BibliotecarioSession;
 import com.example.hellofx.session.Session;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 public class AggiornaCatController {
     private static final String MEMORY = "memory";
@@ -23,7 +25,7 @@ public class AggiornaCatController {
     public void delete(LibroBean libroBean){
         Biblioteca b = session.getBiblioteca();
         b.getCatalogo().removeIf(l -> l.getIsbn().equals(libroBean.getIsbn()));
-        session.setBiblioteca(b);
+        b.getCopie().remove(libroBean.getIsbn());
     }
 
     public void update(LibroBean libroBean){
@@ -37,10 +39,9 @@ public class AggiornaCatController {
                 break;
             }
         }
-        session.setBiblioteca(b);
     }
 
-    public List<LibroBean> getCatalogo(){
+    public List<LibroBean> getCatalogo(String order){
         List<LibroBean> list = new ArrayList<>();
         Biblioteca b = session.getBiblioteca();
         for(Libro l : b.getCatalogo()){
@@ -49,35 +50,66 @@ public class AggiornaCatController {
             bean.setNumCopie(copie);
             list.add(bean);
         }
+        this.orderByIsbn(list, order);
         return list;
     }
 
     public void add(LibroBean libroBean) throws Exception {
         Biblioteca b = session.getBiblioteca();
 
-        // Controllo se il libro è già nel catalogo della biblioteca
+        // Controlla se il libro è già nel catalogo della biblioteca
         if (b.isLibroInCatalogo(libroBean.getIsbn())) {
             throw new LibroGiaPresenteException("Il libro con ISBN " + libroBean.getIsbn() + " è già presente nel catalogo.");
         }
 
         Libro l = this.retrieveLibro(libroBean, session.isFull());
         b.getCatalogo().add(l);
-        session.setBiblioteca(b);
+        Integer[] copie = {libroBean.getNumCopie()[0], libroBean.getNumCopie()[1]};
+        b.getCopie().replace(l.getIsbn(), copie);
+    }
+
+    public List<LibroBean> searchByField(String field, String fieldType, String order) {
+        List<Libro> list = session.getBiblioteca().getCatalogo();
+        List<LibroBean> results = new ArrayList<>();
+
+        Map<String, Function<Libro, String>> fieldExtractors = Map.of(
+                "isbn", Libro::getIsbn,
+                "autore", Libro::getAutore,
+                "titolo", Libro::getTitolo,
+                "genere", Libro::getGenere,
+                "editore", Libro::getEditore
+        );
+
+        Function<Libro, String> extractor = fieldExtractors.get(fieldType.toLowerCase());
+
+        if (extractor == null) return results; // fieldType non valido
+
+        for (Libro l : list) {
+            if (extractor.apply(l).equals(field)) {
+                results.add(Converter.libroToBean(l));
+            }
+        }
+
+        this.orderByIsbn(results, order);
+        return results;
     }
 
     public void save(){
-    BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBiblioteca();
-        BibliotecarioDao bibliotecarioDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBibliotecario();
-
-        bibliotecaDaoMemory.store(session.getBiblioteca());
-        bibliotecarioDaoMemory.store(session.getBibliotecario());
+        Biblioteca b = session.getBiblioteca();
+        BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBiblioteca();
+        bibliotecaDaoMemory.update(b);
 
         if(Session.isFull()){
             BibliotecaDao bibliotecaDaoPers = FactoryProducer.getFactory("db").createDaoBiblioteca();
-            BibliotecarioDao bibliotecarioDaoPers = FactoryProducer.getFactory("db").createDaoBibliotecario();
+            bibliotecaDaoPers.update(session.getBiblioteca());
+        }
+    }
 
-            bibliotecaDaoPers.store(session.getBiblioteca());
-            bibliotecarioDaoPers.store(session.getBibliotecario());
+    private void orderByIsbn(List<LibroBean> catalogo, String order){ //fallo lavorare col cat di model
+        if(order.equalsIgnoreCase("decrescente")) {
+            catalogo.sort(Comparator.comparing(LibroBean::getIsbn).reversed());
+        } else { //default: ordine crescente
+            catalogo.sort(Comparator.comparing(LibroBean::getIsbn));
         }
     }
 
@@ -86,12 +118,12 @@ public class AggiornaCatController {
         if(l != null){ // il libro è in memoria
             return l;
         } else if(isFull){
-            LibroDao libroDao = FactoryProducer.getFactory("db").createDaoLibro();
-            l = libroDao.load(libroBean.getIsbn());
-            if(l == null) { // il libro non è in memoria nè in persistenza
+            LibroDao libroDaoPers = FactoryProducer.getFactory("db").createDaoLibro();
+            l = libroDaoPers.load(libroBean.getIsbn());
+            if(l == null) { // il libro non è in memoria né in persistenza
                 l = Converter.beanToLibro(libroBean);
                 libroDaoMemory.store(l);
-                libroDao.store(l);
+                libroDaoPers.store(l);
                 return l;
             } else return l; // il libro è in persistenza
 
@@ -101,4 +133,5 @@ public class AggiornaCatController {
         }
         return l;
     }
+
 }

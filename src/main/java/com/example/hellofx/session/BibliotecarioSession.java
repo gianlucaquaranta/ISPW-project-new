@@ -1,11 +1,10 @@
 package com.example.hellofx.session;
 
-import com.example.hellofx.entity.Biblioteca;
-import com.example.hellofx.entity.Bibliotecario;
-import com.example.hellofx.entity.Utente;
+import com.example.hellofx.model.Biblioteca;
+import com.example.hellofx.model.Bibliotecario;
+import com.example.hellofx.model.Utente;
 
 public class BibliotecarioSession extends Session {
-    private Bibliotecario bibliotecario;
     private Biblioteca biblioteca;
     private static BibliotecarioSession instance = null;
 
@@ -17,11 +16,9 @@ public class BibliotecarioSession extends Session {
     }
 
     private BibliotecarioSession() { }
-
-    public Bibliotecario getBibliotecario() { return bibliotecario; }
-    public void setBibliotecario(Bibliotecario bibliotecario) { this.bibliotecario = bibliotecario; }
-
     public Biblioteca getBiblioteca() { return biblioteca; }
+
+    public void setBiblioteca(Biblioteca biblioteca) { this.biblioteca = biblioteca; }
 
     @Override
     public void setUtente(Utente utente) {
@@ -33,12 +30,9 @@ public class BibliotecarioSession extends Session {
         return null;
     }
 
-    public void setBiblioteca(Biblioteca biblioteca) { this.biblioteca = biblioteca; }
-
     @Override
     public void close(){
         biblioteca = null;
-        bibliotecario = null;
     }
 
 }

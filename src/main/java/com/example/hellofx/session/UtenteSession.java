@@ -1,8 +1,8 @@
 package com.example.hellofx.session;
 
-import com.example.hellofx.entity.Biblioteca;
-import com.example.hellofx.entity.Bibliotecario;
-import com.example.hellofx.entity.Utente;
+import com.example.hellofx.model.Biblioteca;
+import com.example.hellofx.model.Bibliotecario;
+import com.example.hellofx.model.Utente;
 
 public class UtenteSession extends Session {
     private Utente utente;
@@ -22,11 +22,6 @@ public class UtenteSession extends Session {
 
     @Override
     public Biblioteca getBiblioteca() {
-        return null;
-    }
-
-    @Override
-    public Bibliotecario getBibliotecario() {
         return null;
     }
 

@@ -2,11 +2,10 @@ package com.example.hellofx.service;
 
 import com.example.hellofx.dao.FactoryProducer;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
-import com.example.hellofx.dao.bibliotecariodao.BibliotecarioDao;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.dao.noleggiodao.NoleggioDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
-import com.example.hellofx.entity.*;
+import com.example.hellofx.model.*;
 import com.example.hellofx.session.Session;
 
 import java.util.ArrayList;
@@ -18,13 +17,11 @@ public class BibliotecaService {
     private LibroDao libroDao;
     private NoleggioDao noleggioDao;
     private PrenotazioneDao prenotazioneDao;
-    private BibliotecarioDao bibliotecarioDao;
 
     public BibliotecaService(Session session) {
         this.bibliotecaDao = FactoryProducer.getFactory("file").createDaoBiblioteca();
         this.noleggioDao = FactoryProducer.getFactory("db").createDaoNoleggio();
         this.libroDao = FactoryProducer.getFactory("db").createDaoLibro();
-        this.bibliotecarioDao = FactoryProducer.getFactory("db").createDaoBibliotecario();
 
         if(session.isFile()) {
             this.prenotazioneDao = FactoryProducer.getFactory("file").createDaoPrenotazione();
@@ -61,13 +58,6 @@ public class BibliotecaService {
             catalogo.add(libroDao.load(l.getIsbn()));
         }
         b.setCatalogo(catalogo);
-
-        //aggiungo le entity bibliotecario alla biblioteca
-        List<Bibliotecario> bibliotecari = new ArrayList<>();
-        for(Bibliotecario u : b.getBibliotecari()){
-            bibliotecari.add(bibliotecarioDao.load(u.getUsername()));
-        }
-        b.setBibliotecari(bibliotecari);
 
         String id = b.getId();
         //aggiungo le entity noleggio alla biblioteca

@@ -5,9 +5,9 @@ import com.example.hellofx.dao.filtridao.FiltriDao;
 import com.example.hellofx.dao.noleggiodao.NoleggioDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
 import com.example.hellofx.dao.utentedao.UtenteDao;
-import com.example.hellofx.entity.Noleggio;
-import com.example.hellofx.entity.Prenotazione;
-import com.example.hellofx.entity.Utente;
+import com.example.hellofx.model.Noleggio;
+import com.example.hellofx.model.Prenotazione;
+import com.example.hellofx.model.Utente;
 
 import java.util.List;
 
