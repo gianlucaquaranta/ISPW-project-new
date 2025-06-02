@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.paint.Color?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="parent" stylesheets="@Login_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ModificaCatalogoGC">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="parent" stylesheets="@Login_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hellofx.graphiccontroller.ModificaCatalogoGC">
    <center>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1260.0" styleClass="pane" stylesheets="@tableView_Stylesheet.css" BorderPane.alignment="BOTTOM_CENTER">
          <effect>
@@ -29,30 +29,30 @@
             <Insets left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="home" layoutX="963.4" layoutY="30.4" mnemonicParsing="false" onAction="#goHome" prefHeight="46.0" prefWidth="73.0" text="Home" AnchorPane.rightAnchor="223.0" AnchorPane.topAnchor="30.0" />
-            <Button fx:id="salvaModifica" layoutX="853.0" layoutY="31.2" mnemonicParsing="false" onAction="#salva" prefHeight="46.0" prefWidth="142.0" text="Salva modifica" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="30.0" />
+            <Button layoutX="963.4" layoutY="30.4" mnemonicParsing="false" onAction="#goHome" prefHeight="46.0" prefWidth="73.0" text="Home" AnchorPane.rightAnchor="223.0" AnchorPane.topAnchor="30.0" />
+            <Button layoutX="853.0" layoutY="31.2" mnemonicParsing="false" onAction="#salva" prefHeight="46.0" prefWidth="142.0" text="Salva modifiche" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="30.0" />
             <Label fx:id="titolo" layoutX="65.8" layoutY="23.2" styleClass="titolo" text="Catalogo - opzioni di modifica" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="23.2" />
-            <TableView layoutX="71.2" layoutY="148.0" prefHeight="452.0" prefWidth="1199.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="150.0">
+            <TableView fx:id="tableView" layoutX="71.2" layoutY="148.0" prefHeight="452.0" prefWidth="1199.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="150.0">
                <columns>
-                  <TableColumn prefWidth="120.0" text="Titolo" />
-                  <TableColumn prefWidth="120.0" text="Autore" />
-                  <TableColumn prefWidth="120.0" text="Editore" />
-                  <TableColumn prefWidth="120.0" text="Genere" />
-                  <TableColumn id="colonneGrandi" prefWidth="180.0" text="Anno di pubblicazione" />
-                  <TableColumn prefWidth="144.53326416015625" text="ISBN" />
-                  <TableColumn id="colonneGrandi" prefWidth="107.46685791015625" text="Num. copie" />
-                  <TableColumn id="colonneGrandi" prefWidth="184.2666015625" text="Num. copie disponibili" />
-                  <TableColumn prefWidth="98.40007324218732" text="Opzioni" />
+                  <TableColumn fx:id="titoloCol" prefWidth="120.0" text="Titolo" />
+                  <TableColumn fx:id="autoreCol" prefWidth="120.0" text="Autore" />
+                  <TableColumn fx:id="editoreCol" prefWidth="120.0" text="Editore" />
+                  <TableColumn fx:id="genereCol" prefWidth="120.0" text="Genere" />
+                  <TableColumn id="colonneGrandi" fx:id="annoCol" prefWidth="180.0" text="Anno di pubblicazione" />
+                  <TableColumn fx:id="isbnCol" prefWidth="144.53326416015625" text="ISBN" />
+                  <TableColumn id="colonneGrandi" fx:id="copieCol" prefWidth="107.46685791015625" text="Num. copie" />
+                  <TableColumn id="colonneGrandi" fx:id="copieDispCol" prefWidth="184.2666015625" text="Num. copie disponibili" />
+                  <TableColumn fx:id="opzioniCol" prefWidth="98.40007324218732" text="Opzioni" />
                </columns>
             </TableView>
-            <Button fx:id="aggiungiLibro" layoutX="563.0" layoutY="625.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="161.0" text="Aggiungi libro" />
-            <SplitMenuButton fx:id="orderSplitMenu" layoutX="761.0" layoutY="32.8" mnemonicParsing="false" prefHeight="43.0" prefWidth="190.0" stylesheets="@form_Stylesheet.css" text="Ordinamento" AnchorPane.rightAnchor="308.6" AnchorPane.topAnchor="33.0">
+            <Button layoutX="563.0" layoutY="625.0" mnemonicParsing="false" onAction="#aggiungiLibro" prefHeight="46.0" prefWidth="161.0" text="Aggiungi libro" />
+            <SplitMenuButton fx:id="orderSplit" layoutX="761.0" layoutY="32.8" mnemonicParsing="false" prefHeight="43.0" prefWidth="190.0" stylesheets="@form_Stylesheet.css" text="Ordinamento" AnchorPane.rightAnchor="308.6" AnchorPane.topAnchor="33.0">
                <items>
                   <MenuItem mnemonicParsing="false" text="Crescente" />
                   <MenuItem mnemonicParsing="false" text="Decrescente" />
                </items>
             </SplitMenuButton>
-            <Button fx:id="searchButton" layoutX="802.0" layoutY="90.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="73.0" styleClass="searchButton" stylesheets="@form_Stylesheet.css" AnchorPane.leftAnchor="629.0" AnchorPane.topAnchor="90.0">
+            <Button layoutX="677.4" layoutY="90.4" mnemonicParsing="false" onAction="#search" prefHeight="47.0" prefWidth="73.0" styleClass="searchButton" stylesheets="@form_Stylesheet.css" AnchorPane.leftAnchor="677.4" AnchorPane.topAnchor="90.4">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 30; -fx-fit-width: 30;">
                      <image>
@@ -61,14 +61,15 @@
                   </ImageView>
                </graphic>
             </Button>
-            <TextField fx:id="searchBar" layoutX="379.0" layoutY="90.4" prefHeight="47.0" prefWidth="422.0" style="-fx-border-radius: 0;" styleClass="searchBar" stylesheets="@form_Stylesheet.css" AnchorPane.leftAnchor="208.0" AnchorPane.topAnchor="90.0" />
-            <SplitMenuButton fx:id="filterSplit" mnemonicParsing="false" prefHeight="47.0" prefWidth="140.0" style="-fx-border-radius: 7 0 0 7; -fx-background-radius: 7 0 0 7;" styleClass="filter-split" stylesheets="@form_Stylesheet.css" text="Filtra per" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="90.0">
+            <TextField fx:id="searchBar" layoutX="222.6" layoutY="90.4" prefHeight="47.0" prefWidth="422.0" style="-fx-border-radius: 0;" styleClass="searchBar" stylesheets="@form_Stylesheet.css" AnchorPane.leftAnchor="258.0" AnchorPane.topAnchor="90.0" />
+            <SplitMenuButton fx:id="filterSplit" layoutX="71.2" mnemonicParsing="false" prefHeight="47.0" prefWidth="190.0" style="-fx-border-radius: 7 0 0 7; -fx-background-radius: 7 0 0 7;" styleClass="filter-split" stylesheets="@form_Stylesheet.css" text="Filtra per" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="90.0">
                <items>
                   <MenuItem mnemonicParsing="false" text="Titolo" />
                   <MenuItem mnemonicParsing="false" text="Autore" />
                   <MenuItem mnemonicParsing="false" text="Editore" />
                   <MenuItem mnemonicParsing="false" text="Genere" />
                   <MenuItem mnemonicParsing="false" text="Isbn" />
+                  <MenuItem mnemonicParsing="false" text="Mostra tutti" />
                </items>
             </SplitMenuButton>
          </children>

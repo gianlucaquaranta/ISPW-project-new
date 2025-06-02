@@ -55,10 +55,9 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label layoutX="118.0" layoutY="49.0" prefWidth="1064.0" text="Nome:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
-            <Label layoutX="96.0" layoutY="129.0" prefWidth="1064.0" text="Indirizzo:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0" />
-            <Label layoutX="106.0" layoutY="139.0" prefWidth="1064.0" text="Bibliotecario:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="200.0" />
-            <Label layoutX="297.0" layoutY="72.0" styleClass="titolo" stylesheets="@buttonList_Stylesheet.css" text="Dati della biblioteca" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+            <Label layoutX="118.0" layoutY="49.0" prefWidth="1064.0" text="Nome:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
+            <Label layoutX="96.0" layoutY="129.0" prefWidth="1064.0" text="Indirizzo:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0" />
+            <Label layoutY="23.4" styleClass="titolo" stylesheets="@buttonList_Stylesheet.css" text="Home - La tua biblioteca" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
             <Button layoutX="20.0" layoutY="459.0" mnemonicParsing="false" onAction="#visualizzaPrenotazioni" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci Prenotazioni" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="435.5">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">

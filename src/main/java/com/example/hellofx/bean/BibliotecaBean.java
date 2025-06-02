@@ -1,5 +1,4 @@
 package com.example.hellofx.bean;
-
 public class BibliotecaBean {
     private String idBiblioteca;
     private String nome;

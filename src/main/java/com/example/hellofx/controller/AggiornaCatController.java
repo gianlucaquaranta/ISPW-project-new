@@ -42,7 +42,7 @@ public class AggiornaCatController {
         }
     }
 
-    public List<LibroBean> getCatalogo(String order){
+    public List<LibroBean> getCatalogo(){
         List<LibroBean> list = new ArrayList<>();
         Biblioteca b = ((BibliotecarioSession)session).getBiblioteca();
         for(Libro l : b.getCatalogo()){
@@ -51,7 +51,6 @@ public class AggiornaCatController {
             bean.setNumCopie(copie);
             list.add(bean);
         }
-        this.orderByIsbn(list, order);
         return list;
     }
 
@@ -69,7 +68,7 @@ public class AggiornaCatController {
         b.getCopie().replace(l.getIsbn(), copie);
     }
 
-    public List<LibroBean> searchByField(String field, String fieldType, String order) {
+    public List<LibroBean> searchByField(String field, String fieldType) {
         List<Libro> list = ((BibliotecarioSession)session).getBiblioteca().getCatalogo();
         List<LibroBean> results = new ArrayList<>();
 
@@ -83,16 +82,22 @@ public class AggiornaCatController {
 
         Function<Libro, String> extractor = fieldExtractors.get(fieldType.toLowerCase());
 
-        if (extractor == null) return results; // fieldType non valido
+        if (extractor == null) return this.getCatalogo(); // fieldType Mostra tutti
 
         for (Libro l : list) {
             if (extractor.apply(l).equals(field)) {
                 results.add(Converter.libroToBean(l));
             }
         }
-
-        this.orderByIsbn(results, order);
         return results;
+    }
+
+    public void orderByIsbn(List<LibroBean> catalogo, String order){
+        if(order.equalsIgnoreCase("decrescente")) {
+            catalogo.sort(Comparator.comparing(LibroBean::getIsbn).reversed());
+        } else { //default: ordine crescente
+            catalogo.sort(Comparator.comparing(LibroBean::getIsbn));
+        }
     }
 
     public void save(){
@@ -103,14 +108,6 @@ public class AggiornaCatController {
         if(Session.isFull()){
             BibliotecaDao bibliotecaDaoPers = FactoryProducer.getFactory("db").createDaoBiblioteca();
             bibliotecaDaoPers.update(((BibliotecarioSession)session).getBiblioteca());
-        }
-    }
-
-    private void orderByIsbn(List<LibroBean> catalogo, String order){ //fallo lavorare col cat di model
-        if(order.equalsIgnoreCase("decrescente")) {
-            catalogo.sort(Comparator.comparing(LibroBean::getIsbn).reversed());
-        } else { //default: ordine crescente
-            catalogo.sort(Comparator.comparing(LibroBean::getIsbn));
         }
     }
 

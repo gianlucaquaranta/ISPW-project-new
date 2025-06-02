@@ -10,7 +10,8 @@ public enum GenereBean {
     NARRATIVA("Narrativa"),
     FANTASCIENZA_SCI_FI("Fantascienza/Sci-Fi"),
     SAGGISTICA("Saggistica"),
-    HORROR("Horror");
+    HORROR("Horror"),
+    VARIE("Varie");
 
     private String nome;
 
