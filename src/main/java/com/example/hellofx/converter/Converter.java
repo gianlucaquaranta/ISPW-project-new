@@ -38,8 +38,15 @@ public class Converter {
     public static Utente beanToUtente(UtenteBean utenteBean){
         Utente u = UtenteFactory.getInstance().createUtente();
         u.setUsername(utenteBean.getUsername());
-        u.setPassword(utenteBean.getPassword());
         u.setEmail(utenteBean.getEmail());
+        return u;
+    }
+
+
+    public static UtenteBean utenteTobean(Utente utente){
+        UtenteBean u = new UtenteBean();
+        u.setUsername(utente.getUsername());
+        u.setEmail(utente.getEmail());
         return u;
     }
 
@@ -69,28 +76,6 @@ public class Converter {
         return b;
     }
 
-    public static NoleggioBean noleggioToBean(Noleggio n){
-        NoleggioBean nb = new NoleggioBean();
-        nb.setIdNoleggio(n.getIdNoleggio());
-        nb.setDataInizio(n.getDataInizio());
-        nb.setDataScadenza(n.getDataInizio());
-        nb.setIsbn(n.getIsbn());
-        nb.setDatiUtente(n.getDatiUtente());
-        nb.setIdBiblioteca(n.getIdBiblioteca());
-        return nb;
-    }
-
-    public static Noleggio beanToNoleggio(NoleggioBean nb){
-        Noleggio n = NoleggioFactory.getInstance().createNoleggio();
-        n.setDataInizio(nb.getDataInizio());
-        n.setDataScadenza(nb.getDataInizio());
-        n.setIsbn(n.getIsbn());
-        n.setDatiUtente(nb.getDatiUtente());
-        n.setIdBiblioteca(nb.getIdBiblioteca());
-        n.setIdNoleggio();
-        return n;
-    }
-
     public static Prenotazione beanToPrenotazione(PrenotazioneBean pb){
         Prenotazione p = PrenotazioneFactory.getInstance().createPrenotazione();
 
@@ -103,7 +88,7 @@ public class Converter {
 
         p.setDatiUtente(datiUtente);
         p.setIsbn(pb.getLibro().getIsbn());
-        p.setIdBiblioteca(pb.getBiblioteca().getIdBiblioteca());
+        p.setIdBiblioteca(pb.getBibliotecaB().getIdBiblioteca());
         p.setIdPrenotazione();
         return p;
 

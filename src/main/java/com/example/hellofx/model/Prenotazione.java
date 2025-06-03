@@ -11,7 +11,7 @@ public class Prenotazione {
     private String[] datiUtente; //username, email
     private String idBiblioteca;
     private String isbn;
-    private String[] idPrenotazione; //username, idBiblioteca, isbn
+    private String idPrenotazione; //username, idBiblioteca, isbn
 
     public Prenotazione(Timestamp dataInizio, Timestamp dataScadenza, String[] datiUtente, String idBiblioteca, String isbn){
         this.dataInizio = dataInizio;
@@ -23,17 +23,13 @@ public class Prenotazione {
 
     public Prenotazione(){}
 
-    public String[] getIdPrenotazione() {
+    public String getIdPrenotazione() {
         return this.idPrenotazione;
     }
 
     public void setIdPrenotazione() {
-        this.idPrenotazione[0] = this.datiUtente[0];
-        this.idPrenotazione[1] = this.idBiblioteca;
-        this.idPrenotazione[2] = this.isbn;
+        this.idPrenotazione = this.datiUtente[0]+this.idBiblioteca+this.isbn;
     }
-
-    public void setIdPrenotazione(String[] idPrenotazione) { this.idPrenotazione = idPrenotazione; }
 
 
     public Timestamp getDataInizio() { return this.dataInizio; }

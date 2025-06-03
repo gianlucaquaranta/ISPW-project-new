@@ -5,13 +5,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class PrenotazioneBean {
+
+    private String id;
     private String dataInizio;
     private String dataScadenza;
     private UtenteBean utente;
     private BibliotecaBean biblioteca;
     private LibroBean libro;
 
-    public PrenotazioneBean(LocalDate dataInizioL, LocalDate dataScadenzaL, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
+
+    public PrenotazioneBean(String id, LocalDate dataInizioL, LocalDate dataScadenzaL, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
+        this.id = id;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.dataInizio = dataInizioL.format(formatter);
         this.dataScadenza = dataScadenzaL.format(formatter);
@@ -20,7 +24,8 @@ public class PrenotazioneBean {
         this.libro = libro;
     }
 
-    public PrenotazioneBean(Timestamp dataInizioT, Timestamp dataScadenzaT, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
+    public PrenotazioneBean(String id, Timestamp dataInizioT, Timestamp dataScadenzaT, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
+        this.id = id;
         this.dataInizio = dataInizioT.toString();
         this.dataScadenza = dataScadenzaT.toString();
         this.utente = utente;
@@ -32,11 +37,11 @@ public class PrenotazioneBean {
         //converter
     }
 
-    public String getDataInizioS() {
+    public String getDataInizio() {
         return dataInizio;
     }
 
-    public String getDataScadenzaS() {
+    public String getDataScadenza() {
         return dataScadenza;
     }
 
@@ -83,5 +88,10 @@ public class PrenotazioneBean {
     public String getBiblioteca() { return biblioteca.getNome(); }
 
     public String getIndirizzo() { return biblioteca.getIndirizzoCompleto(); }
+
+    public String getId() {return id;}
+
+    public void setId(String id) {this.id = id;}
+
 
 }
