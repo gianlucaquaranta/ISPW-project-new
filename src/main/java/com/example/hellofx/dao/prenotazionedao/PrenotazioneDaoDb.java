@@ -97,8 +97,8 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
             stmt.setString(1, p.getDatiUtente()[0]);
             stmt.setString(2, p.getIdBiblioteca());
             stmt.setString(3, p.getIsbn());
-            stmt.setTimestamp(4, Converter.stringToTimestamp(p.getDataInizio()));
-            stmt.setTimestamp(5, Converter.stringToTimestamp(p.getDataScadenza()));
+            stmt.setTimestamp(4, p.getDataInizio());
+            stmt.setTimestamp(5, p.getDataScadenza());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -129,8 +129,8 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
         String username = rs.getString("username");
         prenotazione.setIdBiblioteca(rs.getString("idbiblioteca"));
         prenotazione.setIsbn(rs.getString("isbn"));
-        prenotazione.setDataInizio(Converter.timestampToString(rs.getTimestamp("datainizio")));
-        prenotazione.setDataScadenza();
+        prenotazione.setDataInizio(rs.getTimestamp("datainizio"));
+        prenotazione.setDataScadenza(rs.getTimestamp("dataScadenza"));
         String email = rs.getString("email");
 
         prenotazione.setDatiUtente(new String[] {username, email});

@@ -64,7 +64,7 @@ public class PrenotazioneBean {
         this.biblioteca = biblioteca;
     }
 
-    public LibroBean getLibroB() {
+    public LibroBean getLibro() {
         return libro;
     }
 

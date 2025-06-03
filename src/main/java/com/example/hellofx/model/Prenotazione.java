@@ -36,12 +36,10 @@ public class Prenotazione {
     public void setIdPrenotazione(String[] idPrenotazione) { this.idPrenotazione = idPrenotazione; }
 
 
-    public String getDataInizio() { return Converter.timestampToString(this.dataInizio); }
-    public void setDataInizio(String date) { this.dataInizio = Converter.stringToTimestamp(date); } //date = "gg/MM/yyyy"
-    public String getDataScadenza() { return Converter.timestampToString(this.dataScadenza); }
-    public void setDataScadenza() {
-        this.dataScadenza = Timestamp.valueOf(this.dataInizio.toLocalDateTime().plusDays(15));
-    }
+    public Timestamp getDataInizio() { return this.dataInizio; }
+    public void setDataInizio(Timestamp date) { this.dataInizio = date;}
+    public Timestamp getDataScadenza() { return this.dataScadenza; }
+    public void setDataScadenza(Timestamp date) { this.dataScadenza = date; }
 
     public String getIdBiblioteca() {
         return this.idBiblioteca;
