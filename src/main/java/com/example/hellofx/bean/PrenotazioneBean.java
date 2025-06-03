@@ -13,7 +13,7 @@ public class PrenotazioneBean {
 
     public PrenotazioneBean(LocalDate dataInizioL, LocalDate dataScadenzaL, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.dataInizio = dataInizioL.format(formatter);;
+        this.dataInizio = dataInizioL.format(formatter);
         this.dataScadenza = dataScadenzaL.format(formatter);
         this.utente = utente;
         this.biblioteca = biblioteca;
@@ -56,7 +56,7 @@ public class PrenotazioneBean {
         this.utente = utente;
     }
 
-    public BibliotecaBean getBiblioteca() {
+    public BibliotecaBean getBibliotecaB() {
         return biblioteca;
     }
 
@@ -64,11 +64,24 @@ public class PrenotazioneBean {
         this.biblioteca = biblioteca;
     }
 
-    public LibroBean getLibro() {
+    public LibroBean getLibroB() {
         return libro;
     }
 
     public void setLibro(LibroBean libro) {
         this.libro = libro;
     }
+
+    public String getTitolo() { return libro.getTitolo(); }
+
+    public String getAutore() { return libro.getAutore(); }
+
+    public String getEditore() { return libro.getEditore(); }
+
+    public String getIsbn() { return libro.getIsbn(); }
+
+    public String getBiblioteca() { return biblioteca.getNome(); }
+
+    public String getIndirizzo() { return biblioteca.getIndirizzoCompleto(); }
+
 }
