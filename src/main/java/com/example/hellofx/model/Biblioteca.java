@@ -28,13 +28,13 @@ public class Biblioteca implements Serializable {
         //factory
     }
 
-    public boolean isLibroInCatalogo(String isbn) {
+    public Libro getLibroByIsbn(String isbn) {
         for(Libro l: this.catalogo) {
             if(l.getIsbn().equals(isbn)) {
-                return true;
+                return l;
             }
         }
-        return false;
+        return null;
     }
 
     public Map<String, Integer[]> getCopie() {
