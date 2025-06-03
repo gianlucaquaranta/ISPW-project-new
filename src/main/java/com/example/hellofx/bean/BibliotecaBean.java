@@ -36,6 +36,11 @@ public class BibliotecaBean {
         this.indirizzo = indirizzo;
     }
 
+    public String getIndirizzoCompleto(){
+        return (indirizzo+","+numeroCivico+" "+citta+"("+provincia+")"+" "+cap);
+    }
+
+
     public String getCap() {
         return cap;
     }
