@@ -11,11 +11,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class NoleggiBibGC {
-    private Stage stage;
-    private Parent root;
 
     @FXML
     void home(ActionEvent event) {
+        Stage stage;
+        Parent root;
 
         try {
             root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/homeBibliotecario.fxml"));

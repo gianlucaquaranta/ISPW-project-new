@@ -1,9 +1,13 @@
 package com.example.hellofx.cli;
 
 import com.example.hellofx.bean.LibroBean;
+import com.example.hellofx.bean.PrenotazioneBean;
 import com.example.hellofx.controller.AggiornaCatController;
 import com.example.hellofx.controller.Logout;
+import com.example.hellofx.controller.PrenotazioniBibController;
 import com.example.hellofx.controllerfactory.AggiornaCatControllerFactory;
+import com.example.hellofx.controllerfactory.PrenotazioniBibControllerFactory;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -89,7 +93,7 @@ public class CliHomeBibliotecario {
         }
     }
 
-    private void askForModification() {
+    private void askForModification() throws Exception {
         System.out.println("\nCosa vuoi fare?");
         System.out.println("1. Modifica catalogo");
         System.out.println("2. Torna al menu principale");
@@ -116,14 +120,9 @@ public class CliHomeBibliotecario {
         scanner.nextLine(); // wait for enter
     }
 
-    private void visualizzaPrenotazioni() {
-        System.out.println("\n=== Prenotazioni ===");
-
-        System.out.println("Funzionalità di visualizzazione prenotazioni non ancora implementata.");
-
-        System.out.println("\nPremi Invio per continuare...");
-        scanner.nextLine(); // consume newline
-        scanner.nextLine(); // wait for enter
+    private void visualizzaPrenotazioni() throws Exception {
+        CliPrenotazioniBibliotecario cliPrenotazioniBibliotecario = new CliPrenotazioniBibliotecario(this.scanner);
+        cliPrenotazioniBibliotecario.start();
     }
 
     private void logout() {

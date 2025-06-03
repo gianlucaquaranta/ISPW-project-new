@@ -58,7 +58,7 @@ public class AggiornaCatController {
         Biblioteca b = ((BibliotecarioSession)session).getBiblioteca();
 
         // Controlla se il libro è già nel catalogo della biblioteca
-        if (b.isLibroInCatalogo(libroBean.getIsbn())) {
+        if (b.getLibroByIsbn(libroBean.getIsbn()) != null) {
             throw new LibroGiaPresenteException("Il libro con ISBN " + libroBean.getIsbn() + " è già presente nel catalogo.");
         }
 

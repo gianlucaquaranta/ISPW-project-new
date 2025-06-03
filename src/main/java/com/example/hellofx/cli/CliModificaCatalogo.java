@@ -19,7 +19,7 @@ public class CliModificaCatalogo {
         this.aggiornaCatController = AggiornaCatControllerFactory.getInstance().createAggiornaCatController();
     }
 
-    public void start() {
+    public void start() throws Exception {
         boolean running = true;
 
         while (running) {
