@@ -37,7 +37,7 @@ public class RegistrazioneUtenteGC {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("Credenziali non valide!");
+            alert.setContentText("Username già esistente!");
             alert.showAndWait();
         }
     }
