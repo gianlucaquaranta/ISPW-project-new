@@ -32,15 +32,6 @@ public class Prenotazione implements Serializable {
         this.idPrenotazione = this.datiUtente[0]+"/"+this.idBiblioteca+"/"+this.isbn;
     }
 
-    public String[] idToArrayString(){
-        if (this.idPrenotazione == null || !this.idPrenotazione.contains("/")) {
-            // Gestione opzionale di id nulli o malformati
-            return new String[] {"", "", ""};
-        }
-
-        return this.idPrenotazione.split("/");
-    }
-
     public Timestamp getDataInizio() { return this.dataInizio; }
     public void setDataInizio(Timestamp date) { this.dataInizio = date;}
     public Timestamp getDataScadenza() { return this.dataScadenza; }

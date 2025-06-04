@@ -13,7 +13,7 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
     PrenotazioneFactory prenotazioneFactory = PrenotazioneFactory.getInstance();
 
     @Override
-    public Prenotazione loadOne(String[] idPrenotazione) {
+    public Prenotazione loadOne(String idPrenotazione) {
         // idPrenotazione: [0] = username, [1] = idbiblioteca, [2] = isbn
         Prenotazione prenotazione = null;
         String query = "SELECT p.username, p.idbiblioteca, p.isbn, p.datainizio, p.datascadenza, u.email " +
@@ -24,9 +24,11 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, idPrenotazione[0]);
-            stmt.setString(2, idPrenotazione[1]);
-            stmt.setString(3, idPrenotazione[2]);
+            String[] id = idPrenotazione.split("/");
+
+            stmt.setString(1, id[0]);
+            stmt.setString(2, id[1]);
+            stmt.setString(3, id[2]);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -107,15 +109,17 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
     }
 
     @Override
-    public void delete(String[] idPrenotazione) {
+    public void delete(String idPrenotazione) {
         String query = "DELETE FROM prenotazioni WHERE username = ? AND idbiblioteca = ? AND isbn = ?";
 
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, idPrenotazione[0]);
-            stmt.setString(2, idPrenotazione[1]);
-            stmt.setString(3, idPrenotazione[2]);
+            String[] id = idPrenotazione.split("/");
+
+            stmt.setString(1, id[0]);
+            stmt.setString(2, id[1]);
+            stmt.setString(3, id[2]);
 
             stmt.executeUpdate();
         } catch (SQLException e) {

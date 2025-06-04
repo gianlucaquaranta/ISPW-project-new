@@ -10,7 +10,7 @@ public class PrenotazioneDaoFile implements PrenotazioneDao{
 
     private static final String FILE_PATH = "prenotazioni.dat";
 
-    public Prenotazione loadOne(String[] idPrenotazione) {
+    public Prenotazione loadOne(String idPrenotazione) {
         List<Prenotazione> prenotazioni = loadAll();
         for (Prenotazione p : prenotazioni) {
             if (matchesId(p, idPrenotazione)) {
@@ -49,7 +49,7 @@ public class PrenotazioneDaoFile implements PrenotazioneDao{
         saveAll(prenotazioni);
     }
 
-    public void delete(String[] idPrenotazione) {
+    public void delete(String idPrenotazione) {
         List<Prenotazione> prenotazioni = loadAll();
         prenotazioni.removeIf(p -> matchesId(p, idPrenotazione));
         saveAll(prenotazioni);
@@ -74,10 +74,9 @@ public class PrenotazioneDaoFile implements PrenotazioneDao{
         }
     }
 
-    private boolean matchesId(Prenotazione p, String[] idPrenotazione) {
-        return p.getDatiUtente()[0].equals(idPrenotazione[0]) &&
-                p.getIdBiblioteca().equals(idPrenotazione[1]) &&
-                p.getIsbn().equals(idPrenotazione[2]);
+    private boolean matchesId(Prenotazione p, String idPrenotazione) {
+        return p.getDatiUtente()[0].equals(idPrenotazione.split("/")[0]) &&
+                p.getIdBiblioteca().equals(idPrenotazione.split("/")[1]) &&
+                p.getIsbn().equals(idPrenotazione.split("/")[2]);
     }
 }
-

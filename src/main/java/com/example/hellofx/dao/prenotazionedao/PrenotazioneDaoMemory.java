@@ -18,31 +18,28 @@ public class PrenotazioneDaoMemory implements PrenotazioneDao {
     private PrenotazioneDaoMemory() {}
 
     @Override
-    public void delete(String[] idPrenotazione) {
-        String key = idPrenotazione[0] +"*"+ idPrenotazione[1] +"*"+ idPrenotazione[2];
-        if(prenotazioniMap.containsKey(key)) {
-            prenotazioniMap.remove(key);
+    public void delete(String idPrenotazione) {
+        if(prenotazioniMap.containsKey(idPrenotazione)) {
+            prenotazioniMap.remove(idPrenotazione);
         } else throw new IllegalArgumentException("Prenotazione non trovata");
     }
 
     @Override
-    public Prenotazione loadOne(String[] idPrenotazione) {
-        String key = idPrenotazione[0] +"*"+ idPrenotazione[1] +"*"+ idPrenotazione[2];
-        if(prenotazioniMap.containsKey(key)) {
-            return prenotazioniMap.get(key);
+    public Prenotazione loadOne(String idPrenotazione) {
+        if(prenotazioniMap.containsKey(idPrenotazione)) {
+            return prenotazioniMap.get(idPrenotazione);
         } else throw new IllegalArgumentException("Prenotazione non trovata");
     }
 
     @Override
     public void store(Prenotazione p) {
-        String[] keyList = p.getIdPrenotazione();
-        prenotazioniMap.put(keyList[0] +"*"+ keyList[1] +"*"+ keyList[2], p);
+        prenotazioniMap.put(p.getIdPrenotazione(), p);
     }
 
     @Override
     public List<Prenotazione> loadAllUtente(String username) {
         return prenotazioniMap.entrySet().stream()
-                .filter(entry -> entry.getKey().startsWith(username + "*"))
+                .filter(entry -> entry.getKey().startsWith(username + "/"))
                 .map(Map.Entry::getValue)
                 .toList();
     }
@@ -50,7 +47,7 @@ public class PrenotazioneDaoMemory implements PrenotazioneDao {
     @Override
     public List<Prenotazione> loadAllBiblioteca(String id) {
         return prenotazioniMap.entrySet().stream()
-                .filter(entry -> entry.getKey().contains("*" + id + "*"))
+                .filter(entry -> entry.getKey().contains("/" + id + "/"))
                 .map(Map.Entry::getValue)
                 .toList();
     }
