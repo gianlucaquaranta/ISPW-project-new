@@ -2,6 +2,7 @@ package com.example.hellofx.controller;
 
 import com.example.hellofx.bean.RegistrazioneBibliotecaBean;
 import com.example.hellofx.bean.RegistrazioneUtenteBean;
+import com.example.hellofx.dao.registrazionedao.RegistrazioneDao;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class RegistrazioneController {
             }
         }
 
-        rd.store(username);
+        rd.store(type, username);
         return true;
 
     }
