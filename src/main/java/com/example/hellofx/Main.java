@@ -23,7 +23,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\gianl\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-        launch(args);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -32,7 +31,9 @@ public class Main extends Application {
         scanner.nextLine();
 
         System.out.println("Quale versione desideri?\n1. Demo\n2. Full mode\nInserisci 0 o 1 per effettuare la scelta e premi ENTER: ");
-        boolean isFull = scanner.nextInt() != 0;
+        boolean isFull = scanner.nextInt() != 1;
+        String value = isFull ? "1" : "0";
+        System.out.println(value);
         scanner.nextLine();
 
         boolean isFile;

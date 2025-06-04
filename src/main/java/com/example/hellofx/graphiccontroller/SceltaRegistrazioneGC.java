@@ -15,7 +15,7 @@ public class SceltaRegistrazioneGC {
 
     @FXML
     void registrazioneBibliotecario(ActionEvent event) throws IOException {
-        sceneChanger.changeScene("/com/example/hellofx/registrazioneBibliotecario.fxml", event);
+        sceneChanger.changeScene("/com/example/hellofx/registrazioneBiblioteca.fxml", event);
     }
 
     @FXML

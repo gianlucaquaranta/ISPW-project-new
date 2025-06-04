@@ -53,7 +53,7 @@ public class RegistrazioneBibGC {
         RegistrazioneBibliotecaBean regBean = new RegistrazioneBibliotecaBean(nome, password, indirizzo, cap, numCivico, citta, provincia);
         boolean success = registrazioneController.registraBiblioteca(regBean);
         if(success) {
-            sceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
+            sceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);

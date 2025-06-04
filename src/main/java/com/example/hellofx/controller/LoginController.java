@@ -11,8 +11,6 @@ import com.example.hellofx.session.Session;
 import com.example.hellofx.session.SessionManager;
 import com.example.hellofx.session.UtenteSession;
 
-import java.util.List;
-
 public class LoginController {
     private static final String MEMORY = "memory";
     private final UtenteDao utenteDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoUtente();
@@ -22,7 +20,8 @@ public class LoginController {
         String username = loginBean.getUsername();
         String password = loginBean.getPassword();
 
-        if ("u".equals(password)) {
+        if (password.equals("u")) {
+            System.out.println("here1");
             Utente u = utenteDaoMemory.loadUtente(username);
             if (u == null && Session.isFull()) {
                 if (Session.isFile()) {
@@ -42,7 +41,8 @@ public class LoginController {
                 return LoginResult.UTENTE;
             }
 
-        } else if ("b".equals(password)) {
+        } else if (password.equals("b")) {
+            System.out.println("here2");
             Biblioteca b = bibliotecaDaoMemory.loadOne(username);
             if (b == null && Session.isFull()) {
                 BibliotecaDao bibliotecaDaoFile = FactoryProducer.getFactory("file").createDaoBiblioteca();
@@ -53,7 +53,7 @@ public class LoginController {
                 BibliotecarioSession session = BibliotecarioSession.getInstance();
                 session.setBiblioteca(b);
                 SessionManager.setSession(session);
-                return LoginResult.UTENTE;
+                return LoginResult.BIBLIOTECARIO;
             }
         }
 
