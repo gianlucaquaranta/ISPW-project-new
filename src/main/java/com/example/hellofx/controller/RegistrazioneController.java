@@ -8,15 +8,15 @@ import java.util.List;
 
 public class RegistrazioneController {
 
-    public Boolean registraBiblioteca(RegistrazioneBibliotecaBean rbb){
+    public boolean registraBiblioteca(RegistrazioneBibliotecaBean rbb){
         return checkCredenziali(rbb.getNome(), "bib");
     }
 
-    public Boolean registraUtente(RegistrazioneUtenteBean rub){
+    public boolean registraUtente(RegistrazioneUtenteBean rub){
         return checkCredenziali(rub.getUsername(), "utente");
     }
 
-    private Boolean checkCredenziali(String username, String type){
+    private boolean checkCredenziali(String username, String type){
         RegistrazioneDao rd = new RegistrazioneDao();
         List<String> usernames = rd.loadAll(type);
 

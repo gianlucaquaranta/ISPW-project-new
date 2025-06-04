@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-public class DaoRegistrazioneFile {
+public class RegistrazioneDao {
 
     // Percorsi fissi ai file
     private static final String FILE_PATH_UTENTI = "utenti.txt";
