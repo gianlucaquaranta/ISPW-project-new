@@ -2,9 +2,10 @@ package com.example.hellofx.model;
 
 import com.example.hellofx.converter.Converter;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Prenotazione {
+public class Prenotazione implements Serializable {
 
     private Timestamp dataInizio;
     private Timestamp dataScadenza;
@@ -28,9 +29,17 @@ public class Prenotazione {
     }
 
     public void setIdPrenotazione() {
-        this.idPrenotazione = this.datiUtente[0]+this.idBiblioteca+this.isbn;
+        this.idPrenotazione = this.datiUtente[0]+"/"+this.idBiblioteca+"/"+this.isbn;
     }
 
+    public String[] idToArrayString(){
+        if (this.idPrenotazione == null || !this.idPrenotazione.contains("/")) {
+            // Gestione opzionale di id nulli o malformati
+            return new String[] {"", "", ""};
+        }
+
+        return this.idPrenotazione.split("/");
+    }
 
     public Timestamp getDataInizio() { return this.dataInizio; }
     public void setDataInizio(Timestamp date) { this.dataInizio = date;}

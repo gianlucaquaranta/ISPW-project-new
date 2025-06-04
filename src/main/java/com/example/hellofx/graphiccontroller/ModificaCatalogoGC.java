@@ -117,6 +117,8 @@ public class ModificaCatalogoGC {
                             aggiornaCatController.delete(bean);
                         }
                     });
+                    modificaBtn.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;");
+                    eliminaBtn.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;");
                     setGraphic(buttonBox);
                 }
 
