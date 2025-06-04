@@ -5,6 +5,7 @@ import com.example.hellofx.controller.RegistrazioneController;
 import com.example.hellofx.controllerfactory.RegistrazioneControllerFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -30,9 +31,14 @@ public class RegistrazioneUtenteGC {
     @FXML
     void register(ActionEvent event) throws IOException {
         RegistrazioneUtenteBean regBean = new RegistrazioneUtenteBean(usernameTextField.getText(), emailTextField.getText(), passwordTextField.getText());
-        Boolean success = registrazioneController.register(regBean);
+        boolean success = registrazioneController.registraUtente(regBean);
         if(success) {
             sceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Credenziali non valide!");
+            alert.showAndWait();
         }
     }
 
