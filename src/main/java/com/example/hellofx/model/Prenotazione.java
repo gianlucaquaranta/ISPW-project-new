@@ -1,7 +1,5 @@
 package com.example.hellofx.model;
 
-import com.example.hellofx.converter.Converter;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 
