@@ -10,7 +10,7 @@ public class Biblioteca implements Serializable {
     private String id;
     private String nome;
     private List<Libro> catalogo;
-    private Map<String, Integer[]> copie = new HashMap<>();
+    private Map<String, Integer[]> copie = new HashMap<>(); //Totali, disponibili
     private Posizione posizione;
     private List<Prenotazione> prenotazioniAttive;
     private List<Noleggio> noleggiAttivi;
