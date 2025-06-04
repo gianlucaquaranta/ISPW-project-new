@@ -8,6 +8,7 @@ import com.example.hellofx.controllerfactory.LoginControllerFactory;
 import com.example.hellofx.controllerfactory.RegistrazioneControllerFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -52,13 +53,12 @@ public class RegistrazioneBibGC {
         RegistrazioneBibliotecaBean regBean = new RegistrazioneBibliotecaBean(nome, password, indirizzo, cap, numCivico, citta, provincia);
         boolean success = registrazioneController.registraBiblioteca(regBean);
         if(success) {
-            LoginBean loginBean = new LoginBean();
-            loginBean.setUsername(nome);
-            loginBean.setPassword("b");
-            loginController.authenticate(loginBean);
             sceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
         } else {
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Username già esistente!");
+            alert.showAndWait();
         }
     }
 }
