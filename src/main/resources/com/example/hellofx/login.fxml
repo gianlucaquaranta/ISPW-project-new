@@ -46,12 +46,12 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Button fx:id="accediButton" layoutX="50.4" layoutY="380.6" mnemonicParsing="false" onAction="#login" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Accedi" textFill="WHITE" AnchorPane.leftAnchor="50.4" AnchorPane.rightAnchor="50.39999999999998" AnchorPane.topAnchor="373.0">
+                <Button layoutX="50.4" layoutY="380.6" mnemonicParsing="false" onAction="#login" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Accedi" textFill="WHITE" AnchorPane.leftAnchor="50.4" AnchorPane.rightAnchor="50.39999999999998" AnchorPane.topAnchor="373.0">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Button fx:id="accediGoogleButton" layoutX="50.4" layoutY="481.4" mnemonicParsing="false" onAction="#loginGoogle" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Accedi con Google" textFill="WHITE" AnchorPane.leftAnchor="50.4" AnchorPane.rightAnchor="50.39999999999998" AnchorPane.topAnchor="481.4">
+                <Button layoutX="50.4" layoutY="481.4" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Accedi con Google" textFill="WHITE" AnchorPane.leftAnchor="50.4" AnchorPane.rightAnchor="50.39999999999998" AnchorPane.topAnchor="481.4">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
@@ -61,17 +61,7 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-            <Label layoutX="50.4" layoutY="559.0" text="Non hai un account?" textAlignment="CENTER" textFill="#565656" AnchorPane.leftAnchor="50.4">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="registratiOraLabel" layoutX="246.0" layoutY="559.0" onMouseClicked="#registratiOra" text="Registrati ora" textAlignment="CENTER" textFill="#0b6b75" underline="true">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="noAccessoLabel" layoutX="50.4" layoutY="600.0" onMouseClicked="#noAccesso" text="Non effettuare l'accesso (per utenti lettori)" textAlignment="CENTER" textFill="#0b6b75" underline="true" AnchorPane.leftAnchor="50.4">
+            <Label layoutX="113.0" layoutY="559.0" text="Non hai un account?" textAlignment="CENTER" textFill="#565656" AnchorPane.leftAnchor="113.0">
                <font>
                   <Font size="20.0" />
                </font>
@@ -81,6 +71,16 @@
                   <Image url="@Images/google_logo.png" />
                </image>
             </ImageView>
+            <Button layoutX="299.0" layoutY="549.0" mnemonicParsing="false" onAction="#registerNow" prefHeight="50.0" prefWidth="159.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: #0b6b75; -fx-font-weight: normal;" text="Registrati ora" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="96.0" layoutY="599.0" mnemonicParsing="false" onAction="#loginSenzaAccount" prefHeight="50.0" prefWidth="406.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: #0b6b75; -fx-font-weight: normal;" text="Non effettuare l'accesso (per utenti lettori)" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </center>

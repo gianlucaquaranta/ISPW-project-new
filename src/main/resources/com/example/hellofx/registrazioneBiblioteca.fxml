@@ -29,12 +29,12 @@
                </image>
             </ImageView>
             <Label layoutX="299.0" layoutY="168.0" />
-            <Label alignment="CENTER" layoutX="239.0" layoutY="146.0" text="Registrati" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Label alignment="CENTER" layoutX="239.0" layoutY="146.0" text="Registrata la tua biblioteca" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
-            <Button layoutX="50.0" layoutY="560.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Registrati" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.799999999999955" AnchorPane.topAnchor="560.0">
+            <Button layoutX="50.0" layoutY="560.0" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Registrati" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.799999999999955" AnchorPane.topAnchor="560.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -44,53 +44,53 @@
                   <Image url="@../../../../../../../../../../../Downloads/58dbfa9b3c4f3b306117b81cd2e1188f.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutY="627.0" onMouseClicked="#indietro" text="Torna al log in" textAlignment="CENTER" textFill="#0b6b75" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.7999999999999545" AnchorPane.topAnchor="627.0">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
             <Label layoutX="61.0" layoutY="211.0" prefHeight="30.0" prefWidth="209.0" text="Nome" textAlignment="CENTER" textFill="#0b6b75">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="60.0" layoutY="241.0" prefHeight="30.0" prefWidth="428.0" promptText="Inserisci il nome della biblioteca" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
+            <TextField fx:id="nomeTextField" layoutX="60.0" layoutY="241.0" prefHeight="30.0" prefWidth="428.0" promptText="Inserisci il nome della biblioteca" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
             <Label layoutX="61.0" layoutY="286.0" text="Indirizzo" textAlignment="CENTER" textFill="#0b6b75">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="60.0" layoutY="317.0" prefHeight="30.0" prefWidth="351.0" promptText="Inserisci l'indirizzo della biblioteca" AnchorPane.leftAnchor="60.0" />
+            <TextField fx:id="indirizzoTextField" layoutX="60.0" layoutY="317.0" prefHeight="30.0" prefWidth="351.0" promptText="Inserisci l'indirizzo della biblioteca" AnchorPane.leftAnchor="60.0" />
             <Label layoutX="423.0" layoutY="317.0" text="n°" textAlignment="CENTER" textFill="#565656">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="452.0" layoutY="317.0" prefHeight="30.0" prefWidth="68.0" />
+            <TextField fx:id="numCivicoTextField" layoutX="452.0" layoutY="317.0" prefHeight="30.0" prefWidth="68.0" />
             <Label layoutX="60.0" layoutY="364.0" text="Città" textAlignment="CENTER" textFill="#0b6b75">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="60.0" layoutY="394.0" prefHeight="30.0" prefWidth="218.0" promptText="Inserisci la città di ubicazione" />
+            <TextField fx:id="cittaTextField" layoutX="60.0" layoutY="394.0" prefHeight="30.0" prefWidth="218.0" promptText="Inserisci la città di ubicazione" />
             <Label layoutX="292.0" layoutY="364.0" text="C.A.P." textAlignment="CENTER" textFill="#0b6b75">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="292.0" layoutY="394.0" prefHeight="30.0" prefWidth="100.0" />
+            <TextField fx:id="capTextField" layoutX="292.0" layoutY="394.0" prefHeight="30.0" prefWidth="100.0" />
             <Label layoutX="405.0" layoutY="364.0" text="Provincia" textAlignment="CENTER" textFill="#0b6b75">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="404.0" layoutY="394.0" prefHeight="30.0" prefWidth="114.0" AnchorPane.rightAnchor="60.80000000000007" />
-            <PasswordField layoutX="60.0" layoutY="467.0" prefHeight="30.0" prefWidth="459.0" AnchorPane.rightAnchor="60.0" />
+            <TextField fx:id="provinciaTextField" layoutX="404.0" layoutY="394.0" prefHeight="30.0" prefWidth="114.0" AnchorPane.rightAnchor="60.80000000000007" />
+            <PasswordField fx:id="passwordTextField" layoutX="60.0" layoutY="467.0" prefHeight="30.0" prefWidth="459.0" AnchorPane.rightAnchor="60.0" />
             <Label layoutX="60.0" layoutY="437.0" text="Password" textAlignment="CENTER" textFill="#0b6b75">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
+            <Button layoutX="210.0" layoutY="624.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="50.0" prefWidth="159.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: #0b6b75; -fx-font-weight: normal;" text="Torna al log in" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </center>

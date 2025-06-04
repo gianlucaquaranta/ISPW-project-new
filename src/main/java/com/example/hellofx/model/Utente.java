@@ -1,9 +1,10 @@
 package com.example.hellofx.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Utente {
+public class Utente implements Serializable {
     private String username;
     private String email;
     private List<Noleggio> noleggiAttivi;

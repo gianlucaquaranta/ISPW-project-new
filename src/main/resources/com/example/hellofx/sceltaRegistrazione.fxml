@@ -47,11 +47,11 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-            <Label alignment="CENTER" layoutX="109.0" layoutY="565.0" onMouseClicked="#indietro" prefHeight="30.0" prefWidth="361.0" text="Torna al log in" textAlignment="CENTER" textFill="#0b6b75" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Button layoutX="210.0" layoutY="574.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="50.0" prefWidth="159.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: #0b6b75; -fx-font-weight: normal;" text="Torna al log in" textFill="WHITE">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
-            </Label>
+            </Button>
             </children>
         </AnchorPane>
     </center>

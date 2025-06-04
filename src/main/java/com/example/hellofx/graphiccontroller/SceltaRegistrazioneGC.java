@@ -2,54 +2,25 @@ package com.example.hellofx.graphiccontroller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class SceltaRegistrazioneGC {
-    private Stage stage;
-    private Parent root;
-
+    SceneChanger sceneChanger = new SceneChanger();
 
     @FXML
-    void indietro(MouseEvent event) {
-        try{
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/login.fxml"));
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void backToLogin(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
     }
 
     @FXML
-    void registrazioneBibliotecario(ActionEvent event) {
-        try{
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/registrazioneBibliotecario.fxml"));
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void registrazioneBibliotecario(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/com/example/hellofx/registrazioneBibliotecario.fxml", event);
     }
 
     @FXML
-    void registrazioneUtente(ActionEvent event) {
-        try{
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/registrazioneUtente.fxml"));
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void registrazioneUtente(ActionEvent event) throws IOException {
+        sceneChanger.changeScene("/com/example/hellofx/registrazioneUtente.fxml", event);
     }
 
 }

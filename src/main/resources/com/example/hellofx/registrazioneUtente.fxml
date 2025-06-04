@@ -23,8 +23,8 @@
             </DropShadow>
          </effect>
          <children>
-            <TextField layoutX="84.0" layoutY="238.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il tuo username" AnchorPane.leftAnchor="85.0" />
-            <PasswordField layoutX="102.0" layoutY="406.0" prefHeight="30.0" prefWidth="400.0" AnchorPane.leftAnchor="85.0" />
+            <TextField fx:id="usernameTextField" layoutX="84.0" layoutY="238.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci il tuo username" AnchorPane.leftAnchor="85.0" />
+            <PasswordField fx:id="passwordTextField" layoutX="102.0" layoutY="406.0" prefHeight="30.0" prefWidth="400.0" AnchorPane.leftAnchor="85.0" />
             <ImageView fitHeight="150.0" fitWidth="420.0" layoutX="90.6" layoutY="50.4" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="79.6" AnchorPane.rightAnchor="79.20000000000005" AnchorPane.topAnchor="50.0">
                <image>
                   <Image url="@Images/BOOKISH_login.png" />
@@ -46,13 +46,13 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="89.0" layoutY="321.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci la tua email" AnchorPane.leftAnchor="85.0" />
+            <TextField fx:id="emailTextField" layoutX="89.0" layoutY="321.0" prefHeight="30.0" prefWidth="400.0" promptText="Inserisci la tua email" AnchorPane.leftAnchor="85.0" />
             <Label layoutX="101.0" layoutY="376.0" text="La tua password" textAlignment="CENTER" textFill="#0b6b75" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="370.0">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="36.0" layoutY="462.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Registrati" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="462.0">
+            <Button layoutX="36.0" layoutY="462.0" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: #0b6b75; -fx-background-radius: 15;" text="Registrati" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="462.0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -72,11 +72,11 @@
                   <Image url="@Images/google_logo.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="94.0" layoutY="212.0" onMouseClicked="#indietro" text="Torna al log in" textAlignment="CENTER" textFill="#0b6b75" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="650.0">
+            <Button layoutX="210.0" layoutY="643.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="50.0" prefWidth="159.0" style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-text-fill: #0b6b75; -fx-font-weight: normal;" text="Torna al log in" textFill="WHITE">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
-            </Label>
+            </Button>
          </children>
       </AnchorPane>
    </center>
