@@ -86,7 +86,7 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="capTextField" layoutX="459.0" layoutY="51.0" prefHeight="30.0" prefWidth="120.0" />
-                                    <Label layoutX="459.0" layoutY="25.0" text="Città/CAP" textFill="#0b6b75">
+                                    <Label layoutX="459.0" layoutY="25.0" text="CAP" textFill="#0b6b75">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -123,7 +123,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button contentDisplay="CENTER" layoutX="692.0" layoutY="133.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#visualizzaLibri" prefHeight="30.0" prefWidth="30.0" styleClass="buttons" stylesheets="@SchermateUtente_Stylesheet.css">
+                                    <Button contentDisplay="CENTER" layoutX="692.0" layoutY="133.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cercaLibri" prefHeight="30.0" prefWidth="30.0" styleClass="buttons" stylesheets="@SchermateUtente_Stylesheet.css">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>

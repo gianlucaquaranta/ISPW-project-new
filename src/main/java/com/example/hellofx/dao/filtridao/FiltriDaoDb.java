@@ -17,7 +17,7 @@ public class FiltriDaoDb implements FiltriDao{
     @Override
     public List<Filtri> loadAllUtente(String username) {
         List<Filtri> filtriList = new ArrayList<>();
-        String query = "SELECT titolo, autore, genere, isbn, nomebiblioteca, cap, raggio FROM filtri WHERE username = ?";
+        String query = "SELECT titolo, autore, genere, isbn, nomebiblioteca, cap FROM filtri WHERE username = ?";
 
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -29,7 +29,6 @@ public class FiltriDaoDb implements FiltriDao{
                         rs.getString("autore"),
                         rs.getString("genere"),
                         rs.getString("nomebiblioteca"),
-                        rs.getString("raggio"),
                         rs.getString("isbn"),
                         rs.getString("cap")
                 ));
@@ -42,7 +41,7 @@ public class FiltriDaoDb implements FiltriDao{
 
     @Override
     public void storeOne(Filtri filtri, String username) {
-        String query = "INSERT INTO filtri (username, titolo, autore, genere, isbn, nomebiblioteca, cap, raggio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO filtri (username, titolo, autore, genere, isbn, nomebiblioteca, cap) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -53,7 +52,6 @@ public class FiltriDaoDb implements FiltriDao{
             stmt.setString(5, filtri.getIsbn());
             stmt.setString(6, filtri.getBiblioteca());
             stmt.setString(7, filtri.getCap());
-            stmt.setString(8, filtri.getRaggio());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.paint.Color?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="parent" stylesheets="@Login_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="parent" stylesheets="@Login_Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hellofx.graphiccontroller.PrenotazioniUtenteGC">
    <center>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1260.0" styleClass="pane" stylesheets="@tableView_Stylesheet.css" BorderPane.alignment="BOTTOM_CENTER">
          <effect>
@@ -24,18 +24,18 @@
             <Insets left="10.0" right="10.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Button layoutX="853.0" layoutY="31.2" mnemonicParsing="false" prefHeight="46.0" prefWidth="96.0" text="Indietro" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="31.0" />
+            <Button layoutX="853.0" layoutY="31.2" mnemonicParsing="false" onAction="#indietro" prefHeight="46.0" prefWidth="96.0" text="Indietro" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="31.0" />
             <Label fx:id="titolo" layoutX="65.8" layoutY="23.2" styleClass="titolo" text="Prenotazioni attive" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="23.2" />
-            <TableView layoutX="71.2" layoutY="128.0" prefHeight="570.0" prefWidth="1159.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="100.0">
+            <TableView fx:id="tableView" layoutX="71.2" layoutY="128.0" prefHeight="570.0" prefWidth="1159.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="100.0">
                <columns>
-                  <TableColumn prefWidth="170.0" text="Titolo" />
-                  <TableColumn prefWidth="150.0" text="Autore" />
-                  <TableColumn prefWidth="150.0" text="Editore" />
-                  <TableColumn prefWidth="180.0" text="ISBN" />
-                  <TableColumn prefWidth="100.0" text="Data di inizio" />
-                  <TableColumn prefWidth="100.0" text="Scadenza" />
-                  <TableColumn id="colonneGrandi" prefWidth="170.0" text="Biblioteca" />
-                  <TableColumn prefWidth="190.0" text="Indirizzo" />
+                  <TableColumn fx:id="titoloCol" prefWidth="171.99998742341995" text="Titolo" />
+                  <TableColumn fx:id="autoreCol" prefWidth="156.00003051757812" text="Autore" />
+                  <TableColumn fx:id="editoreCol" prefWidth="155.19998168945312" text="Editore" />
+                  <TableColumn fx:id="isbnCol" prefWidth="186.4000244140625" text="ISBN" />
+                  <TableColumn fx:id="scadenzaCol" prefWidth="94.40008544921875" text="Scadenza" />
+                  <TableColumn id="colonneGrandi" fx:id="bibliotecaCol" prefWidth="159.20001220703125" text="Biblioteca" />
+                  <TableColumn fx:id="indirizzoCol" prefWidth="179.199951171875" text="Indirizzo" />
+                  <TableColumn fx:id="opzioneCol" prefWidth="109.59995117187509" text="Opzione" />
                </columns>
             </TableView>
          </children>

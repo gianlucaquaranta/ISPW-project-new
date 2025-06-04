@@ -7,14 +7,12 @@ public class Filtri {
     private final String isbn;
     private final String biblioteca; //filtri per biblioteche
     private final String cap;
-    private final String raggio;
 
-    public Filtri(String titolo, String autore, String genere, String biblioteca, String raggio, String isbn, String cap) {
+    public Filtri(String titolo, String autore, String genere, String biblioteca, String isbn, String cap) {
         this.titolo = titolo;
         this.autore = autore;
         this.genere = genere;
         this.biblioteca = biblioteca;
-        this.raggio = raggio;
         this.isbn = isbn;
         this.cap = cap;
     }
@@ -38,8 +36,6 @@ public class Filtri {
     public String getIsbn() {
         return this.isbn;
     }
-
-    public String getRaggio() { return raggio; }
 
     public String getBiblioteca() {
         return biblioteca;

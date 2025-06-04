@@ -1,9 +1,6 @@
 package com.example.hellofx.cli;
 
-import com.example.hellofx.bean.BibliotecaBean;
-import com.example.hellofx.bean.FiltriBean;
-import com.example.hellofx.bean.LibroBean;
-import com.example.hellofx.bean.PrenotazioneBean;
+import com.example.hellofx.bean.*;
 import com.example.hellofx.controller.PLController;
 import com.example.hellofx.controllerfactory.PLControllerFactory;
 
@@ -14,7 +11,6 @@ public class CliPrenotaLibro {
 
     private Scanner scanner;
     private PLController plController = PLControllerFactory.getInstance().createPLController();
-    private CliSchermataInizialeUtente csu;
     private List<LibroBean> datiTemp;  // Mantiene lo stato tra le schermate
     static final String SEPARATOR = "+----+--------------------------------+----------------------+----------------------+---------------+";
     static final String CHOICE = "Scelta: ";
@@ -87,23 +83,23 @@ public class CliPrenotaLibro {
     private String richiediGenere() {
 
         System.out.println("Generi disponibili:");
-        System.out.println("1. Narrativa");
-        System.out.println("2. Saggistica");
-        System.out.println("3. Fantascienza");
-        System.out.println("4. Horror");
-        System.out.println("5. Ignora genere");
-        System.out.print(CHOICE);
+        // Stampa elenco puntato
+        GenereBean[] generi = GenereBean.values();
+        System.out.println("0. Non modificare il genere");
+        for (int i = 0; i < generi.length; i++) {
+            System.out.println((i + 1) + ". " + generi[i].getNome());
+        }
 
         int scelta = scanner.nextInt();
         scanner.nextLine();
 
-        switch (scelta) {
-            case 1: return "Narrativa";
-            case 2: return "Saggistica";
-            case 3: return "Fantascienza";
-            case 4: return "Horror";
-            default: return null;
+        // Validazione input
+        if (scelta < 1 || scelta > generi.length) {
+            System.out.println("Indice non valido.");
+            return null;
         }
+
+        return generi[scelta - 1].getNome();
     }
 
     private void rimuoviFiltri() {
@@ -150,13 +146,7 @@ public class CliPrenotaLibro {
                 LibroBean libroSelezionato = libri.get(scelta - 1);
                 datiTemp = libri;// Salva per eventuale ritorno indietro
                 List<BibliotecaBean> biblioteche = plController.getBiblioteche(libroSelezionato);
-/*
-                if (biblioteche.isEmpty()) {
-                    System.out.println("\nNessuna biblioteca disponibile per questo libro.");
-                    return 1;
-                }
 
- */
                 stampaBiblioteche(biblioteche);
                 int result = gestisciSelezioneBiblioteca(biblioteche);
 
@@ -186,7 +176,7 @@ public class CliPrenotaLibro {
 
             switch (scelta) {
                 case 1:
-                    int result = prenotaLibro(biblioteche);
+                    int result = visualizzaRiepilogo(biblioteche);
                     if(result == 1){
                         break;
                     } else {
@@ -223,7 +213,7 @@ public class CliPrenotaLibro {
     }
 
 
-    private int prenotaLibro(List<BibliotecaBean> biblioteche) { //Creare confermaPrenotazione() a parte
+    private int visualizzaRiepilogo(List<BibliotecaBean> biblioteche) {
 
         System.out.print("\nSeleziona biblioteca (1-" + biblioteche.size() + "): ");
         int scelta = scanner.nextInt();
@@ -240,10 +230,10 @@ public class CliPrenotaLibro {
                 System.out.println("Autore: " + pb.getLibro().getAutore());
                 System.out.println("Editore: " + pb.getLibro().getEditore());
                 System.out.println("ISBN: " + pb.getLibro().getIsbn());
-                System.out.println("\nBiblioteca: " + pb.getBiblioteca().getNome());
-                System.out.println("Indirizzo: " + pb.getBiblioteca().getIndirizzoCompleto());
-                System.out.println("\nData inizio: " + pb.getDataInizioS());
-                System.out.println("Data scadenza: " + pb.getDataScadenzaS());
+                System.out.println("\nBiblioteca: " + pb.getBibliotecaB().getNome());
+                System.out.println("Indirizzo: " + pb.getBibliotecaB().getIndirizzoCompleto());
+                System.out.println("\nData inizio: " + pb.getDataInizio());
+                System.out.println("Data scadenza: " + pb.getDataScadenza());
 
                 int result = confermaPrenotazione();
 
@@ -272,14 +262,9 @@ public class CliPrenotaLibro {
 
             switch (opzione) {
                 case 1:
-                    boolean success = plController.registraPrenotazione();
-                    if (success) {
-                        System.out.println("\nPRENOTAZIONE REGISTRATA CON SUCCESSO!");
-                        return 0;
-                    } else {
-                        System.out.println("\nERRORE durante la registrazione!");
-                        break;
-                    }
+                    plController.registraPrenotazione();
+                    System.out.println("\nPRENOTAZIONE REGISTRATA CON SUCCESSO!");
+                    return 0;
                 case 2:
                     System.out.println("Prenotazione annullata.");
                     return 1;

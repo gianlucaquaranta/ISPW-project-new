@@ -25,20 +25,20 @@
             <Insets left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="home" layoutX="1126.0" layoutY="42.0" mnemonicParsing="false" onAction="#home" prefHeight="0.0" prefWidth="103.0" text="Indietro" AnchorPane.rightAnchor="30.799999999999955" AnchorPane.topAnchor="42.0" />
+            <Button layoutX="1126.0" layoutY="42.0" mnemonicParsing="false" onAction="#indietro" prefHeight="0.0" prefWidth="103.0" text="Indietro" AnchorPane.rightAnchor="30.799999999999955" AnchorPane.topAnchor="42.0" />
             <Label layoutX="30.0" layoutY="52.0" text="Biblioteche in cui puoi prenotare il tuo libro:" textFill="#0b6b75" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="52.0">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font></Label>
-            <TableView fx:id="tableViewBibPL" layoutX="71.2" layoutY="128.0" prefHeight="563.0" prefWidth="1118.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
+            <TableView fx:id="tableViewBib" layoutX="71.2" layoutY="128.0" prefHeight="563.0" prefWidth="1118.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
                <columns>
-                  <TableColumn fx:id="nomeColumnPL" prefWidth="171.4" text="Nome" />
-                  <TableColumn fx:id="indirizzoColumnPL" prefWidth="171.4" text="Indirizzo" />
-                  <TableColumn fx:id="civicoColumnPL" prefWidth="171.4" text="Numero civico" />
-                  <TableColumn fx:id="cittaColumnPL" prefWidth="171.4" text="Città" />
-                  <TableColumn id="colonneGrandi" fx:id="capColumnPL" prefWidth="171.4" text="CAP" />
-                  <TableColumn fx:id="provinciaColumnPL" prefWidth="171.4" text="Provincia" />
-                  <TableColumn fx:id="opzioniColumnPL" prefWidth="171.4" text="Opzioni" />
+                  <TableColumn fx:id="nomeColumn" prefWidth="171.4" text="Nome" />
+                  <TableColumn fx:id="indirizzoColumn" prefWidth="171.4" text="Indirizzo" />
+                  <TableColumn fx:id="civicoColumn" prefWidth="171.4" text="Numero civico" />
+                  <TableColumn fx:id="cittaColumn" prefWidth="171.4" text="Città" />
+                  <TableColumn id="colonneGrandi" fx:id="capColumn" prefWidth="171.4" text="CAP" />
+                  <TableColumn fx:id="provinciaColumn" prefWidth="171.4" text="Provincia" />
+                  <TableColumn fx:id="opzioniColumn" prefWidth="171.4" text="Opzioni" />
                </columns>
             </TableView>
          </children>

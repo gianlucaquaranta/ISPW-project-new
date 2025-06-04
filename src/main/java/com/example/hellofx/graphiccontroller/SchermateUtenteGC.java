@@ -110,7 +110,7 @@ public class SchermateUtenteGC {
 
     private void setupOptionColumnPL(){
         optionColumnPL.setCellFactory(param -> new TableCell<>() {
-            private Button button = new Button("Vedi biblioteche");
+            private Button button = new Button("Visualizza biblioteche");
 
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -124,9 +124,10 @@ public class SchermateUtenteGC {
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/risultatiBiblioteche.fxml"));
                             root = loader.load(); // Carica la scena e istanzia il controller
                             // Ottiene l'istanza del controller legata alla scena
-                            RisultatiBibliotecheGC risultatiBibliotecheGC = loader.getController();
+                            RisultatiBibliotecheGC rbGC = loader.getController();
+                            rbGC.setDatiTemp(getTableView().getItems());
                             // Chiama il metodo sul controller effettivo
-                            risultatiBibliotecheGC.visualizzaBiblioteche(bean);
+                            rbGC.visualizzaBiblioteche(bean);
                             // Cambia scena
                             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                             stage.setScene(new Scene(root));
@@ -173,9 +174,9 @@ public class SchermateUtenteGC {
 
 
 
-    //Prenota libro GC
+    //Prenota libro
     @FXML
-    void visualizzaLibri(ActionEvent event) throws IOException {
+    void cercaLibri(ActionEvent event) throws IOException {
 
         String titolo = titoloTextField.getText();
         String autore = autoreTextField.getText();
@@ -186,8 +187,14 @@ public class SchermateUtenteGC {
 
         FiltriBean filtriBean = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
         PLController plController = PLControllerFactory.getInstance().createPLController();
-        List<LibroBean> libriFiltrati = plController.filtraLibri(filtriBean);
+        List<LibroBean> libriFiltrati = plController.filtra(filtriBean);
 
+        if(libriFiltrati.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null); // nessun header
+            alert.setContentText("Nessun risultato disponibile");
+            alert.showAndWait();
+        }
         ObservableList<LibroBean> data = FXCollections.observableArrayList(libriFiltrati);
         tableViewBooksPL.setItems(data);
 
@@ -197,15 +204,22 @@ public class SchermateUtenteGC {
 
     @FXML
     void salvaRicerca(ActionEvent event) throws IOException {
-
+        //TODO
     }
 
     @FXML
-    void rimuoviFiltri(ActionEvent event) throws IOException {
+    void rimuoviFiltri(ActionEvent event) {
+
+        titoloTextField.clear();
+        autoreTextField.clear();
+        isbnTextField.clear();
+        genereSplitMenuButton.setText("Scegli un genere");
+        bibliotecaTextField.clear();
+        capTextField.clear();
 
     }
 
-    //Trova prezzi GC
+    //Trova prezzi
     @FXML
     void cercaPrezzi(ActionEvent event) throws IOException {
 
@@ -260,7 +274,10 @@ public class SchermateUtenteGC {
     void visualizzaPrenotazioni(ActionEvent event) {
 
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/prenotazioniUtente.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/prenotazioniUtente.fxml"));
+            root = loader.load();
+            PrenotazioniUtenteGC puGC = loader.getController();
+            puGC.getPrenotazioni();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -269,6 +286,7 @@ public class SchermateUtenteGC {
         }
     }
 
-
+    @FXML
+    void caricaDati(ObservableList<LibroBean> lblist){ tableViewBooksPL.setItems(lblist); }
 
 }

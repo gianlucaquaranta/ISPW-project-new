@@ -12,7 +12,7 @@ public class FiltriFactory {
     }
     private FiltriFactory() {}
 
-    public Filtri createFiltri(String titolo, String autore, String genere, String biblioteca, String raggio, String isbn, String cap) {
-        return new Filtri(titolo, autore, genere, biblioteca, raggio, isbn, cap);
+    public Filtri createFiltri(String titolo, String autore, String genere, String biblioteca, String isbn, String cap) {
+        return new Filtri(titolo, autore, genere, biblioteca, isbn, cap);
     }
 }
