@@ -173,10 +173,9 @@ public class PLController {
                 pUtente.add(p);
                 u.setPrenotazioniAttive(pUtente);
 
-                //aggiungo la nuova prenotazione tra le prenotazioni attive della biblioteca
-                List<Prenotazione> pBiblioteca = bibliotecaSelezionata.getPrenotazioniAttive();
-                pBiblioteca.add(p);
-                bibliotecaSelezionata.setPrenotazioniAttive(pBiblioteca); //Non serve
+                //aggiungo la nuova prenotazione tra le prenotazioni attive della biblioteca e decremento il numero di copie disponibili del libro prenotato
+                bibliotecaSelezionata.getPrenotazioniAttive().add(p);
+                (bibliotecaSelezionata.getCopie().get(libroSelezionato.getIsbn()))[1] --;
 
                 PrenotazioneDao prenotazioneDao;
                 UtenteDao utenteDao;
@@ -244,11 +243,9 @@ public class PLController {
 
         private boolean isBookValid(Libro l, Biblioteca b) {
 
-                Map<String, Integer[]> copie = b.getCopie();
-                int totali = copie.get(l.getIsbn())[0];
-                int prenotate = copie.get(l.getIsbn())[1];
+                int disponibili = b.getCopie().get(l.getIsbn())[1];
 
-                if(totali - prenotate > 0){
+                if(disponibili > 0){
                         return isLibroCorrispondente(l);
                 }
 
