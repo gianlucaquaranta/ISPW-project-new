@@ -1,6 +1,4 @@
-package com.example.hellofx.controller;
-
-import com.example.hellofx.bean.TrovaPrezziBean;
+package com.example.hellofx.trovaprezzi;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

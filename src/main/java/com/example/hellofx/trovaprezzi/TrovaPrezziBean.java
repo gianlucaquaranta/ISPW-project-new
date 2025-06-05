@@ -1,4 +1,4 @@
-package com.example.hellofx.bean;
+package com.example.hellofx.trovaprezzi;
 
 import java.util.List;
 

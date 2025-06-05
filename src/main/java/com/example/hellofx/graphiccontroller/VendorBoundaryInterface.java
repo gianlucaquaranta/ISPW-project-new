@@ -1,6 +1,6 @@
 package com.example.hellofx.graphiccontroller;
 
-import com.example.hellofx.bean.TrovaPrezziBean;
+import com.example.hellofx.trovaprezzi.TrovaPrezziBean;
 
 import java.util.List;
 

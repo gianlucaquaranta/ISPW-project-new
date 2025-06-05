@@ -1,6 +1,6 @@
-package com.example.hellofx.graphiccontroller;
+package com.example.hellofx.trovaprezzi;
 
-import com.example.hellofx.bean.TrovaPrezziBean;
+import com.example.hellofx.graphiccontroller.VendorBoundaryInterface;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,16 +10,16 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IBSBoundary implements VendorBoundaryInterface {
+public class FeltrinelliBoundary implements VendorBoundaryInterface {
 
-    private static final String URL = "https://www.ibs.it";
+    private static final String URL = "https://www.lafeltrinelli.it";
     private static final String SEARCHBOXSELECTOR = "inputSearch";
     private static final String ELEMENTSELECTOR = ".cc-product-list-item";
     private static final String TITLESELECTOR = ".cc-title";
     private static final String AUTHORSELECTOR = ".cc-author";
     private static final String EDITORDATESELECTOR = ".cc-publisher";
     private static final String PRICESELECTOR = ".cc-price";
-    private static final String NAME = "IBS";
+    private static final String NAME = "Feltrinelli";
 
     public List<TrovaPrezziBean> fetchResults(TrovaPrezziBean trovaPrezziBean) {
 
@@ -30,7 +30,6 @@ public class IBSBoundary implements VendorBoundaryInterface {
 
         // Connessione al sito
         driver.get(URL);
-
         // Trovo la searchbox e inserisco il titolo del libro
         WebElement searchBox = driver.findElement(By.id(SEARCHBOXSELECTOR));
         searchBox.sendKeys(trovaPrezziBean.getRicerca());
@@ -50,6 +49,7 @@ public class IBSBoundary implements VendorBoundaryInterface {
         // Iterazione sui risultati
         for (WebElement element : bookElements) {
             TrovaPrezziBean bean = new TrovaPrezziBean();
+
             // Estrazione prezzo
             if (element.findElements(By.cssSelector(PRICESELECTOR)).isEmpty()) {
                 continue;
@@ -78,6 +78,7 @@ public class IBSBoundary implements VendorBoundaryInterface {
 
             bean.setVendor(NAME);
             books.add(bean);
+
 
         }
 
@@ -110,6 +111,5 @@ public class IBSBoundary implements VendorBoundaryInterface {
         }
         return new String[]{editore, anno};
     }
-
 
 }

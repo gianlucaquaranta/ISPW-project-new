@@ -1,6 +1,4 @@
-package com.example.hellofx.controllerfactory;
-
-import com.example.hellofx.controller.TrovaPrezziController;
+package com.example.hellofx.trovaprezzi;
 
 public class TrovaPrezziControllerFactory {
     private static TrovaPrezziControllerFactory instance = null;

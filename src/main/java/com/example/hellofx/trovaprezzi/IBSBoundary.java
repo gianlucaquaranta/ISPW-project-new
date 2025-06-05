@@ -1,6 +1,6 @@
-package com.example.hellofx.graphiccontroller;
+package com.example.hellofx.trovaprezzi;
 
-import com.example.hellofx.bean.TrovaPrezziBean;
+import com.example.hellofx.graphiccontroller.VendorBoundaryInterface;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,17 +10,16 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MondadoriBoundary implements VendorBoundaryInterface {
+public class IBSBoundary implements VendorBoundaryInterface {
 
-    private static final String URL = "https://www.mondadoristore.it";
-    private static final String SEARCHBOXSELECTOR = "search-input";
-    private static final String ELEMENTSELECTOR = "div.info-data-product";
-    private static final String TITLESELECTOR = "h3.title a";
-    private static final String AUTHORSELECTOR = "a.nti-author";
-    private static final String EDITOR = "a.nti-editor";
-    private static final String DATE = "anno";
-    private static final String PRICESELECTOR = "span.new-price, span.new-price.no-discount";
-    private static final String NAME = "Mondadori";
+    private static final String URL = "https://www.ibs.it";
+    private static final String SEARCHBOXSELECTOR = "inputSearch";
+    private static final String ELEMENTSELECTOR = ".cc-product-list-item";
+    private static final String TITLESELECTOR = ".cc-title";
+    private static final String AUTHORSELECTOR = ".cc-author";
+    private static final String EDITORDATESELECTOR = ".cc-publisher";
+    private static final String PRICESELECTOR = ".cc-price";
+    private static final String NAME = "IBS";
 
     public List<TrovaPrezziBean> fetchResults(TrovaPrezziBean trovaPrezziBean) {
 
@@ -44,29 +43,25 @@ public class MondadoriBoundary implements VendorBoundaryInterface {
             System.out.println("Errore: L'elemento non è visibile dopo il timeout.");
             e.printStackTrace();
         }
-
         // Tutti gli elementi trovati
         List<WebElement> bookElements = driver.findElements(By.cssSelector(ELEMENTSELECTOR));
         List<TrovaPrezziBean> books = new ArrayList<>();
+        String[] editoreAnno;
         // Iterazione sui risultati
         for (WebElement element : bookElements) {
             TrovaPrezziBean bean = new TrovaPrezziBean();
-
             // Estrazione prezzo
             if (element.findElements(By.cssSelector(PRICESELECTOR)).isEmpty()) {
                 continue;
             } else {
                 WebElement priceElement = element.findElement(By.cssSelector(PRICESELECTOR));
-                WebElement decimals = priceElement.findElement(By.cssSelector("span.decimals"));
-                String price = priceElement.getText().replace(decimals.getText(), "") + decimals.getText();
-                bean.setPrezzo(price);
-
+                bean.setPrezzo(priceElement.getText());
             }
 
             // Estrazione titolo
             WebElement titleElement = element.findElement(By.cssSelector(TITLESELECTOR));
             bean.setTitolo(titleElement.getText());
-            bean.setLink(titleElement.getDomAttribute("href"));
+            bean.setLink(URL+titleElement.getDomAttribute("href"));
 
             // Estrazione autore
             if (element.findElements(By.cssSelector(AUTHORSELECTOR)).isEmpty()) {
@@ -76,21 +71,11 @@ public class MondadoriBoundary implements VendorBoundaryInterface {
                 bean.setAutore(authorElement.getText());
             }
 
-            // Estrazione editore
-            if (element.findElements(By.cssSelector(EDITOR)).isEmpty()) {
-                bean.setEditore("");
-            } else {
-                WebElement editorElement = element.findElement(By.cssSelector(EDITOR));
-                bean.setEditore(editorElement.getText());
-            }
+            // Estrazione editore e data
+            editoreAnno = estraiEditoreAnno(element);
+            bean.setEditore(editoreAnno[0]);
+            bean.setAnnoPubblicazione(editoreAnno[1]);
 
-            // Estrazione anno
-            if (element.findElements(By.cssSelector(DATE)).isEmpty()) {
-                bean.setAnnoPubblicazione("");
-            } else {
-                WebElement dateElement = element.findElement(By.cssSelector(DATE));
-                bean.setAnnoPubblicazione(dateElement.getText());
-            }
             bean.setVendor(NAME);
             books.add(bean);
 
@@ -100,4 +85,31 @@ public class MondadoriBoundary implements VendorBoundaryInterface {
         driver.quit();
         return books;
     }
+
+
+    private String[] estraiEditoreAnno(WebElement element){
+        String editore;
+        String anno;
+        if (element.findElements(By.cssSelector(EDITORDATESELECTOR)).isEmpty()) {
+            editore = "";
+            anno = "";
+        } else {
+            WebElement publisherElement = element.findElement(By.cssSelector(EDITORDATESELECTOR));
+            String fullText = publisherElement.getText();
+            if(fullText.contains(",")){
+                String[] parts = fullText.split(","); // Divideremo in base alla virgola
+                editore = parts[0].trim();
+                anno = parts[1].trim();
+            } else if(fullText.matches(".*\\d{4}.*")){
+                editore = "";
+                anno = fullText;
+            }else{
+                editore = fullText;
+                anno = "";
+            }
+        }
+        return new String[]{editore, anno};
+    }
+
+
 }
