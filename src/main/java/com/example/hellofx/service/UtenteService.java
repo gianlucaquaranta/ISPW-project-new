@@ -9,24 +9,25 @@ import com.example.hellofx.model.Noleggio;
 import com.example.hellofx.model.Prenotazione;
 import com.example.hellofx.model.Utente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UtenteService {
+    private static final String DB = "db";
     private UtenteDao utenteDao;
     private NoleggioDao noleggioDao;
     private PrenotazioneDao prenotazioneDao;
     private FiltriDao filtriDao;
 
     public UtenteService(boolean isFile) {
-        this.noleggioDao = FactoryProducer.getFactory("db").createDaoNoleggio();
-        this.filtriDao = FactoryProducer.getFactory("db").createDaoFiltri();
+        this.noleggioDao = FactoryProducer.getFactory(DB).createDaoNoleggio();
+        this.filtriDao = FactoryProducer.getFactory(DB).createDaoFiltri();
+        this.utenteDao = FactoryProducer.getFactory(DB).createDaoUtente();
 
         if(isFile) {
-            this.utenteDao = FactoryProducer.getFactory("file").createDaoUtente();
             this.prenotazioneDao = FactoryProducer.getFactory("file").createDaoPrenotazione();
         } else {
-            this.utenteDao = FactoryProducer.getFactory("db").createDaoUtente();
-            this.prenotazioneDao = FactoryProducer.getFactory("db").createDaoPrenotazione();
+            this.prenotazioneDao = FactoryProducer.getFactory(DB).createDaoPrenotazione();
         }
     }
 
@@ -44,16 +45,8 @@ public class UtenteService {
         List<Prenotazione> prenotazioni = prenotazioneDao.loadAllUtente(username);
         u.setPrenotazioniAttive(prenotazioni);
 
+        u.setNoleggiAttivi(new ArrayList<>());
+
         return u;
     }
-
-    public void storeUtente(Utente u){
-        utenteDao.storeUtente(u);
-    }
-
-    public void updateUtente(Utente u){
-        utenteDao.updateUtente(u);
-    }
-
 }
-
