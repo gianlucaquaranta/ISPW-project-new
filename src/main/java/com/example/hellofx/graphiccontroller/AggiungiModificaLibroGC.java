@@ -38,7 +38,7 @@ public class AggiungiModificaLibroGC {
     @FXML
     void annulla(ActionEvent event) throws IOException {
         // Carica il file FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("com/example/hellofx/modificaCatalogo.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/modificaCatalogo.fxml"));
         Parent root = loader.load();
 
         // Passaggio dati al controller
@@ -62,13 +62,13 @@ public class AggiungiModificaLibroGC {
         bean.setEditore(editoreTextField.getText());
         bean.setGenere(GenereBean.fromString(copieTotaliTextField.getText()));
         bean.setAnnoPubblicazione(Integer.parseInt(annoTextField.getText()));
-        Integer[] copie = {Integer.parseInt(copieTotaliTextField.getText()), bean.getNumCopie()[1]};
+        Integer[] copie = {Integer.parseInt(copieTotaliTextField.getText()), -1};
         bean.setNumCopie(copie);
 
         aggiornaCatController.update(bean);
 
         // Carica il file FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("com/example/hellofx/modificaCatalogo.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/modificaCatalogo.fxml"));
         Parent root = loader.load();
 
         // Passaggio dati al controller
@@ -97,5 +97,12 @@ public class AggiungiModificaLibroGC {
             }
         }
     }
+
+    @FXML
+    void setText(ActionEvent event){
+        MenuItem selectedItem = (MenuItem) event.getSource();
+        genereSplit.setText(selectedItem.getText());
+    }
+
 
 }

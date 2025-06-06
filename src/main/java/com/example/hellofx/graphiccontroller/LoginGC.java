@@ -18,7 +18,6 @@ public class LoginGC {
     @FXML
     private TextField usernameTextField;
 
-    SceneChanger sceneChanger = new SceneChanger();
     LoginController loginController = LoginControllerFactory.getInstance().createLoginController();
 
     @FXML
@@ -31,11 +30,11 @@ public class LoginGC {
         switch (result) {
             case LoginResult.UTENTE, LoginResult.NON_AUTENTICATO:
                 //passa i valori alla schermata successiva per displayare i dati utente
-                sceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
+                SceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
 
                 break;
             case LoginResult.BIBLIOTECARIO:
-                sceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
+                SceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
                 break;
         }
 
@@ -48,12 +47,12 @@ public class LoginGC {
         loginBean.setPassword("");
 
         loginController.authenticate(loginBean);
-        sceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
+        SceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
     }
 
     @FXML
     void registerNow(ActionEvent event) throws IOException {
-        sceneChanger.changeScene("/com/example/hellofx/sceltaRegistrazione.fxml", event);
+        SceneChanger.changeScene("/com/example/hellofx/sceltaRegistrazione.fxml", event);
     }
 
 }

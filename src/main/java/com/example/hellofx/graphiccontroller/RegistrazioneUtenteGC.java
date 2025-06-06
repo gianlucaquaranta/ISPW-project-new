@@ -20,12 +20,11 @@ public class RegistrazioneUtenteGC {
     @FXML
     private TextField usernameTextField;
 
-    SceneChanger sceneChanger = new SceneChanger();
     RegistrazioneController registrazioneController = RegistrazioneControllerFactory.getInstance().creteRegistrazioneController();
 
     @FXML
     void backToLogin(ActionEvent event) throws IOException {
-        sceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
+        SceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
     }
 
     @FXML
@@ -33,7 +32,7 @@ public class RegistrazioneUtenteGC {
         RegistrazioneUtenteBean regBean = new RegistrazioneUtenteBean(usernameTextField.getText(), emailTextField.getText(), passwordTextField.getText());
         boolean success = registrazioneController.registraUtente(regBean);
         if(success) {
-            sceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
+            SceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);

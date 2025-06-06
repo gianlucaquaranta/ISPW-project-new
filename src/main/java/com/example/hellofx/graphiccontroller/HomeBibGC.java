@@ -27,7 +27,7 @@ public class HomeBibGC {
         List<LibroBean> catalogo = aggiornaCatController.getCatalogo();
 
         // Carica il file FXML di visualizzaCatalogo
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("com/example/hellofx/visualizzaCatalogo.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/visualizzaCatalogo.fxml"));
         Parent root = loader.load();
 
         // Passaggio dati al controller di visualizzaCatalogo
@@ -62,7 +62,7 @@ public class HomeBibGC {
         List<PrenotazioneBean> prenotazioni = prenotazioniBibController.getPrenotazioni();
 
         // Carica il file FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("com/example/hellofx/visualizzaPrenotazioni.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/visualizzaPrenotazioni.fxml"));
         Parent root = loader.load();
 
         // Passaggio dati al controller

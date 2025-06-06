@@ -80,17 +80,17 @@
             <TextField fx:id="annoTextField" layoutX="500.0" layoutY="264.0" prefHeight="43.0" prefWidth="198.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="241.0" />
             <SplitMenuButton fx:id="genereSplit" layoutX="508.0" layoutY="161.0" mnemonicParsing="false" text="Scegli il genere" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="160.0">
               <items>
-                <MenuItem mnemonicParsing="false" text="Romance" />
-                <MenuItem mnemonicParsing="false" text="Fantasy" />
-                  <MenuItem mnemonicParsing="false" text="Thriller/Giallo" />
-                  <MenuItem mnemonicParsing="false" text="Distopico" />
-                  <MenuItem mnemonicParsing="false" text="Storico" />
-                  <MenuItem mnemonicParsing="false" text="Poesia" />
-                  <MenuItem mnemonicParsing="false" text="Narrativa" />
-                  <MenuItem mnemonicParsing="false" text="Fantascienza/Sci-fi" />
-                  <MenuItem mnemonicParsing="false" text="Saggistica" />
-                  <MenuItem mnemonicParsing="false" text="Horror" />
-                  <MenuItem mnemonicParsing="false" text="Varie" />
+                <MenuItem mnemonicParsing="false" onAction="#setText" text="Romance" />
+                <MenuItem mnemonicParsing="false" onAction="#setText" text="Fantasy" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Thriller/Giallo" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Distopico" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Storico" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Poesia" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Narrativa" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Fantascienza/Sci-fi" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Saggistica" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Horror" />
+                  <MenuItem mnemonicParsing="false" onAction="#setText" text="Varie" />
               </items>
             </SplitMenuButton>
             <TextField fx:id="copieTotaliTextField" layoutX="724.0" layoutY="264.0" prefHeight="43.0" prefWidth="214.0" AnchorPane.leftAnchor="720.0" AnchorPane.rightAnchor="100.0" />

@@ -83,7 +83,7 @@ public class ModificaCatalogoGC {
 
                         try {
                             // Carica il file FXML
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("com/example/hellofx/formAggiungiModificaLibro.fxml"));
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/formAggiungiModificaLibro.fxml"));
                             Parent root = loader.load();
 
                             // Passaggio dati al controller
@@ -158,7 +158,7 @@ public class ModificaCatalogoGC {
         aggiornaCatController.save();
 
         // Carica il file FXML di visualizzaCatalogo
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("com/example/hellofx/visualizzaCatalogo.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/visualizzaCatalogo.fxml"));
         Parent root = loader.load();
 
         // Passaggio dati al controller di visualizzaCatalogo

@@ -2,11 +2,12 @@ package com.example.hellofx.graphiccontroller;
 
 import com.example.hellofx.bean.FiltriBean;
 import com.example.hellofx.bean.LibroBean;
-import com.example.hellofx.bean.TrovaPrezziBean;
+import com.example.hellofx.controller.Logout;
+import com.example.hellofx.trovaprezzi.TrovaPrezziBean;
 import com.example.hellofx.controller.PLController;
-import com.example.hellofx.controller.TrovaPrezziController;
+import com.example.hellofx.trovaprezzi.TrovaPrezziController;
 import com.example.hellofx.controllerfactory.PLControllerFactory;
-import com.example.hellofx.controllerfactory.TrovaPrezziControllerFactory;
+import com.example.hellofx.trovaprezzi.TrovaPrezziControllerFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -176,7 +178,7 @@ public class SchermateUtenteGC {
 
     //Prenota libro
     @FXML
-    void cercaLibri(ActionEvent event) throws IOException {
+    void cercaLibri(ActionEvent event){
 
         String titolo = titoloTextField.getText();
         String autore = autoreTextField.getText();
@@ -201,12 +203,6 @@ public class SchermateUtenteGC {
         
     }
 
-
-    @FXML
-    void salvaRicerca(ActionEvent event) throws IOException {
-        //TODO
-    }
-
     @FXML
     void rimuoviFiltri(ActionEvent event) {
 
@@ -221,7 +217,7 @@ public class SchermateUtenteGC {
 
     //Trova prezzi
     @FXML
-    void cercaPrezzi(ActionEvent event) throws IOException {
+    void cercaPrezzi(ActionEvent event) {
 
         tableViewTP.getItems().clear();
         String ricerca = ricercaField.getText();
@@ -284,6 +280,18 @@ public class SchermateUtenteGC {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void logout(ActionEvent event) throws IOException{
+        new Logout().logout();
+            SceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
+    }
+
+    @FXML
+    void setText(ActionEvent event){
+        MenuItem selectedItem = (MenuItem) event.getSource();
+        genereSplitMenuButton.setText(selectedItem.getText());
     }
 
     @FXML

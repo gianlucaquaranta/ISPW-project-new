@@ -59,21 +59,21 @@ public class VisualizzaCatalogoGC {
     }
 
     @FXML
-    void mostraCatalogo(List<LibroBean> catalogo) throws IOException {
+    void mostraCatalogo(List<LibroBean> catalogo){
         ObservableList<LibroBean> data = FXCollections.observableArrayList(catalogo);
         aggiornaCatController.orderByIsbn(data, orderSplit.getText());
         tableView.setItems(data);
     }
 
     @FXML
-    void search(ActionEvent event) throws IOException {
+    void search(ActionEvent event){
         this.mostraCatalogo(aggiornaCatController.searchByField(searchBar.getText(), filterSplit.getText()));
     }
 
     @FXML
     void modificaCatalogo(ActionEvent event) throws IOException {
         // Carica il file FXML di modificaCatalogo
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("com/example/hellofx/modificaCatalogo.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/modificaCatalogo.fxml"));
         Parent root = loader.load();
 
         // Passaggio dati al controller di modificaCatalogo

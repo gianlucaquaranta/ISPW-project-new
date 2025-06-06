@@ -69,9 +69,17 @@
                                     <TextField fx:id="autoreTextField" layoutX="241.0" layoutY="51.0" prefHeight="30.0" prefWidth="200.0" />
                                     <SplitMenuButton fx:id="genereSplitMenuButton" ellipsisString="" layoutX="241.0" layoutY="134.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" stylesheets="@SchermateUtente_Stylesheet.css" text="Scegli un genere" textFill="WHITE">
                                        <items>
-                                          <MenuItem mnemonicParsing="false" style="-fx-border-color: TRANSPARENT; -fx-border-radius: 0; -fx-background-color: TRANSPARENT; -fx-background-radius: TRANSPARENT;" text="Action 1" />
-                                          <MenuItem mnemonicParsing="false" text="Action 2" />
-                                          <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Romance" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Fantasy" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Thriller/Giallo" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Distopico" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Storico" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Poesia" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Narrativa" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Fantascienza/Sci-Fi" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Saggistica" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Horror" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Varie" />
                                        </items>
                                     </SplitMenuButton>
                                     <Label layoutX="241.0" layoutY="108.0" text="Genere" textFill="#0b6b75">
@@ -111,7 +119,7 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="787.0" layoutY="134.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#salvaRicerca" prefHeight="30.0" prefWidth="30.0" styleClass="buttons" stylesheets="@SchermateUtente_Stylesheet.css" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                    <Button layoutX="787.0" layoutY="134.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="buttons" stylesheets="@SchermateUtente_Stylesheet.css" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
@@ -309,7 +317,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button layoutX="20.0" layoutY="491.8" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Log out" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="491.8">
+                              <Button layoutX="20.0" layoutY="491.8" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Log out" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="491.8">
                                  <graphic>
                                     <ImageView fitHeight="69.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 40;" styleClass="icona">
                                        <image>
