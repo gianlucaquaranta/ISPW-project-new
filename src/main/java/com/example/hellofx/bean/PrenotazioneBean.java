@@ -1,7 +1,7 @@
 package com.example.hellofx.bean;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class PrenotazioneBean {
@@ -14,11 +14,10 @@ public class PrenotazioneBean {
     private LibroBean libro;
 
 
-    public PrenotazioneBean(String id, LocalDate dataInizioL, LocalDate dataScadenzaL, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
+    public PrenotazioneBean(String id, LocalDateTime dataInizioL, LocalDateTime dataScadenzaL, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
         this.id = id;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.dataInizio = dataInizioL.format(formatter);
-        this.dataScadenza = dataScadenzaL.format(formatter);
+        this.dataInizio = formatInputDate(dataInizioL);
+        this.dataScadenza = formatInputDate(dataScadenzaL);
         this.utente = utente;
         this.biblioteca = biblioteca;
         this.libro = libro;
@@ -26,8 +25,8 @@ public class PrenotazioneBean {
 
     public PrenotazioneBean(String id, Timestamp dataInizioT, Timestamp dataScadenzaT, UtenteBean utente, BibliotecaBean biblioteca, LibroBean libro) {
         this.id = id;
-        this.dataInizio = dataInizioT.toString();
-        this.dataScadenza = dataScadenzaT.toString();
+        this.dataInizio = formatInputDate(dataInizioT.toLocalDateTime());
+        this.dataScadenza = formatInputDate(dataScadenzaT.toLocalDateTime());
         this.utente = utente;
         this.biblioteca = biblioteca;
         this.libro = libro;
@@ -38,11 +37,23 @@ public class PrenotazioneBean {
     }
 
     public String getDataInizio() {
-        return dataInizio;
+        return formatDateString(dataInizio);
     }
 
     public String getDataScadenza() {
-        return dataScadenza;
+        return formatDateString(dataScadenza);
+    }
+
+    private String formatDateString(String dateTimeString) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDateTime date = LocalDateTime.parse(dateTimeString, inputFormatter);
+        return date.format(outputFormatter);
+    }
+
+    private String formatInputDate(LocalDateTime date) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return date.format(inputFormatter);
     }
 
     public Timestamp getDataInizioT() {

@@ -66,6 +66,7 @@ public class Converter {
 
     public static BibliotecaBean bibliotecaToBean(Biblioteca biblioteca){
         BibliotecaBean b = new BibliotecaBean();
+        b.setIdBiblioteca(biblioteca.getId());
         b.setNome(biblioteca.getNome());
         b.setIndirizzo(biblioteca.getPosizione().getIndirizzo());
         b.setCap(biblioteca.getPosizione().getCap());

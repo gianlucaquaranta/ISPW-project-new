@@ -15,16 +15,30 @@ import java.util.Map;
 
 public class BibliotecaService {
 
+    private static BibliotecaDao bDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
+    private static LibroDao lDaoD = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoLibro();
+    private static LibroDao lDaoM = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoLibro();
+    private static PrenotazioneDao pDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoPrenotazione();
+
     private BibliotecaService() { }
 
     public static Biblioteca load(String id){
 
-        BibliotecaDao bDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
-        LibroDao lDaoD = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoLibro();
-        LibroDao lDaoM = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoLibro();
-        PrenotazioneDao pDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoPrenotazione();
-
         Biblioteca b = bDao.loadOne(id); //istanza di biblioteca senza catalogo, prenotazioniAttive, noleggiAttivi
+
+        return componiBiblioteca(b);
+    }
+
+    public static List<Biblioteca> loadAll(){
+        List<Biblioteca> biblioteche = bDao.loadAll();
+
+        for(Biblioteca b : biblioteche){
+            componiBiblioteca(b);
+        }
+        return biblioteche;
+    }
+
+    private static Biblioteca componiBiblioteca(Biblioteca b){
 
         List<Libro> catalogo = new ArrayList<>();
         Libro temp;
@@ -44,5 +58,6 @@ public class BibliotecaService {
         b.setPrenotazioniAttive(prenotazioniAttive);
 
         return b;
+
     }
 }

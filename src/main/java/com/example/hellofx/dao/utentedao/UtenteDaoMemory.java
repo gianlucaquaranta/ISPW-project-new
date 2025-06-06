@@ -26,7 +26,7 @@ public class UtenteDaoMemory implements UtenteDao {
     public Utente loadUtente(String username) {
         if (utentiMap.containsKey(username)) {
             return utentiMap.get(username);
-        } else throw new IllegalArgumentException("Utente non trovato"); //throws IllegalArgEx nella segnatura
+        } else return null; //throws IllegalArgEx nella segnatura
     }
 
     @Override

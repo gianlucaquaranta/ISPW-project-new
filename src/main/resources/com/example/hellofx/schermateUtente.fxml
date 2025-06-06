@@ -195,7 +195,7 @@
                               <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="880.0" styleClass="AnchorPanes" stylesheets="@SchermateUtente_Stylesheet.css" BorderPane.alignment="CENTER">
                                  <children>
                                     <TextField fx:id="ricercaField" layoutX="271.0" layoutY="10.0" prefHeight="43.0" prefWidth="499.0" promptText="Inserire un titolo o un autore" style="-fx-border-color: white; -fx-background-color: white; -fx-font-size: 18;" />
-                                    <Button contentDisplay="CENTER" layoutX="820.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cercaPrezzi" prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 80; -fx-background-radius: 80; -fx-pref-height: 45; -fx-pref-width: 45;" styleClass="buttons" stylesheets="@SchermateUtente_Stylesheet.css">
+                                    <Button contentDisplay="CENTER" layoutX="820.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 80; -fx-background-radius: 80; -fx-pref-height: 45; -fx-pref-width: 45;" styleClass="buttons" stylesheets="@SchermateUtente_Stylesheet.css">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
