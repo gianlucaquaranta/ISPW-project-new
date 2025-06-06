@@ -1,11 +1,13 @@
 package com.example.hellofx.model;
 
+
 public class Posizione {
-    String cap;
-    String indirizzo;
-    String numeroCivico;
-    String citta;
-    String provincia;
+
+    private String cap;
+    private String indirizzo;
+    private String numeroCivico;
+    private String citta;
+    private String provincia;
 
     public Posizione (String cap, String indirizzo, String numeroCivico, String citta, String provincia) {
         this.cap = cap;

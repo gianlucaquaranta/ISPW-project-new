@@ -42,8 +42,8 @@ public class PLController {
                 String cap = filtriRicerca.getCap();
 
                 if(biblioteca==null && cap==null){ //L'utente deve inserire almeno un filtro che permetta di filtrare le biblioteche
-                        return null; //handle exception ??
-                } else if(titolo.isEmpty() && autore.isEmpty() && genere.isEmpty() && isbn.isEmpty()) return null; //handle exception ??
+                        return new ArrayList<>(); //handle exception ??
+                } else if(titolo.isEmpty() && autore.isEmpty() && genere.isEmpty() && isbn.isEmpty()) return new ArrayList<>(); //handle exception ??
 
 
                 if(Session.isFull()){
@@ -122,7 +122,8 @@ public class PLController {
 
                 List<Biblioteca> bibliotecheRelative = new ArrayList<>();
 
-                for(Libro l: risultatiFinali.keySet()){
+                for(Map.Entry<Libro, List<Biblioteca>> entry: risultatiFinali.entrySet()){
+                        Libro l = entry.getKey();
                         if(l.getIsbn().equals(selezionato.getIsbn())){
                                 bibliotecheRelative = risultatiFinali.get(l);
                                 libroSelezionato = l;
@@ -217,7 +218,8 @@ public class PLController {
 
         private void addToMap(Libro libro, Biblioteca biblioteca) {
 
-                for(Libro l: risultatiFinali.keySet()){
+                for(Map.Entry<Libro, List<Biblioteca>> entry: risultatiFinali.entrySet()){
+                        Libro l = entry.getKey();
                         if(l.getIsbn().equals(libro.getIsbn())){
                                 risultatiFinali.get(l).add(biblioteca);
                                 return;
