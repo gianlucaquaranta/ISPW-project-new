@@ -1,37 +1,31 @@
 package com.example.hellofx.controller;
 
 import com.example.hellofx.bean.LoginBean;
-import com.example.hellofx.dao.FactoryProducer;
+import com.example.hellofx.dao.DaoFactory;
+import com.example.hellofx.dao.PersistenceType;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.model.Biblioteca;
 import com.example.hellofx.model.Utente;
+import com.example.hellofx.service.BibliotecaService;
+import com.example.hellofx.service.UtenteService;
 import com.example.hellofx.session.BibliotecarioSession;
 import com.example.hellofx.session.Session;
 import com.example.hellofx.session.SessionManager;
 import com.example.hellofx.session.UtenteSession;
 
 public class LoginController {
-    private static final String MEMORY = "memory";
-    private final UtenteDao utenteDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoUtente();
-    private final BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBiblioteca();
+    private final UtenteDao utenteDaoMemory = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoUtente();
+    private final BibliotecaDao bibliotecaDaoMemory = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoBiblioteca();
 
     public LoginResult authenticate(LoginBean loginBean) {
         String username = loginBean.getUsername();
         String password = loginBean.getPassword();
 
         if (password.equals("u")) {
-            System.out.println("here1");
             Utente u = utenteDaoMemory.loadUtente(username);
             if (u == null && Session.isFull()) {
-                if (Session.isFile()) {
-                    UtenteDao utenteDaoFile = FactoryProducer.getFactory("file").createDaoUtente();
-                    u = utenteDaoFile.loadUtente(username);
-                } else {
-                    // qui è necessario usare UtenteService
-                    UtenteDao utenteDaoDb = FactoryProducer.getFactory("db").createDaoUtente();
-                    u = utenteDaoDb.loadUtente(username);
-                }
+                u = UtenteService.getUtente(username);
             }
 
             if (u != null) {
@@ -42,17 +36,16 @@ public class LoginController {
             }
 
         } else if (password.equals("b")) {
-            System.out.println("here2");
             Biblioteca b = bibliotecaDaoMemory.loadOne(username);
             if (b == null && Session.isFull()) {
-                BibliotecaDao bibliotecaDaoFile = FactoryProducer.getFactory("file").createDaoBiblioteca();
-                b = bibliotecaDaoFile.loadOne(username);
+                b = BibliotecaService.load(username);
             }
 
             if (b != null) {
                 BibliotecarioSession session = BibliotecarioSession.getInstance();
                 session.setBiblioteca(b);
                 SessionManager.setSession(session);
+
                 return LoginResult.BIBLIOTECARIO;
             }
         }

@@ -1,7 +1,6 @@
 package com.example.hellofx.dao.librodao;
 
 import com.example.hellofx.dao.DbConnection;
-import com.example.hellofx.model.Filtri;
 import com.example.hellofx.model.Libro;
 import com.example.hellofx.model.modelfactory.LibroFactory;
 

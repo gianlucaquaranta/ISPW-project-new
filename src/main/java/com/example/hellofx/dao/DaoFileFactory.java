@@ -10,7 +10,7 @@ import com.example.hellofx.dao.prenotazionedao.PrenotazioneDaoFile;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.dao.utentedao.UtenteDaoFile;
 
-public class DaoFileFactory implements DaoFactory {
+public class DaoFileFactory extends DaoFactory {
     private static DaoFileFactory instance = null;
 
     private DaoFileFactory() {}

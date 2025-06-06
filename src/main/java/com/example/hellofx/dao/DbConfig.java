@@ -6,6 +6,9 @@ import java.util.Properties;
 
 public class DbConfig {
     private static final String PROPERTIES_FILE = "db.properties";
+
+    private DbConfig() {}
+
     public static Properties loadProperties() {
         Properties properties = new Properties();
         try (FileInputStream fis = new FileInputStream(PROPERTIES_FILE)) {

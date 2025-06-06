@@ -1,6 +1,5 @@
 package com.example.hellofx.dao.prenotazionedao;
 
-import com.example.hellofx.converter.Converter;
 import com.example.hellofx.dao.DbConnection;
 import com.example.hellofx.model.Prenotazione;
 import com.example.hellofx.model.modelfactory.PrenotazioneFactory;

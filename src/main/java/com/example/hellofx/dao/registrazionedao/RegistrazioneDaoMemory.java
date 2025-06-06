@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrazioneDaoMemory implements RegistrazioneDao {
-    private static List<String> BibliotecaUsername = new ArrayList<>();
-    private static List<String> UtentiUsername = new ArrayList<>();;
+    private static List<String> bibliotecaUsername = new ArrayList<>();
+    private static List<String> utentiUsername = new ArrayList<>();
     private static RegistrazioneDaoMemory instance = null;
 
     public static RegistrazioneDaoMemory getInstance() {
@@ -20,18 +20,18 @@ public class RegistrazioneDaoMemory implements RegistrazioneDao {
     @Override
     public List<String> loadAll(String type) {
         if(type.equalsIgnoreCase("utente")){
-            return UtentiUsername;
+            return utentiUsername;
         } else {
-            return BibliotecaUsername;
+            return bibliotecaUsername;
         }
     }
 
     @Override
     public void store(String type, String username) {
         if(type.equalsIgnoreCase("utente")){
-            UtentiUsername.add(username);
+            utentiUsername.add(username);
         } else {
-            BibliotecaUsername.add(username);
+            bibliotecaUsername.add(username);
         }
     }
 }

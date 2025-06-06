@@ -4,7 +4,7 @@ import com.example.hellofx.controller.LoginController;
 
 public class LoginControllerFactory{
 
-    public static LoginControllerFactory instance = null;
+    private static LoginControllerFactory instance = null;
 
 
     public static LoginControllerFactory getInstance() {

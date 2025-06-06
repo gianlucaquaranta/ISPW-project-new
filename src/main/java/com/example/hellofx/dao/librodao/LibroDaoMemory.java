@@ -1,6 +1,5 @@
 package com.example.hellofx.dao.librodao;
 
-import com.example.hellofx.model.Filtri;
 import com.example.hellofx.model.Libro;
 
 import java.util.ArrayList;

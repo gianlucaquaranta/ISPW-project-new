@@ -2,12 +2,7 @@ package com.example.hellofx.bean;
 
 import com.example.hellofx.converter.Converter;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class NoleggioBean {
     private String[] datiUtente; //username, email

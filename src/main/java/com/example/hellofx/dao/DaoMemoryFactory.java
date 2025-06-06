@@ -13,7 +13,7 @@ import com.example.hellofx.dao.prenotazionedao.PrenotazioneDaoMemory;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.dao.utentedao.UtenteDaoMemory;
 
-public class DaoMemoryFactory implements DaoFactory {
+public class DaoMemoryFactory extends DaoFactory {
     private static DaoMemoryFactory instance = null;
 
     public static DaoMemoryFactory getInstance() {

@@ -12,9 +12,9 @@ import com.example.hellofx.dao.prenotazionedao.PrenotazioneDaoDb;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.dao.utentedao.UtenteDaoDb;
 
-public class DaoDbFactory implements DaoFactory {
+public class DaoDbFactory extends DaoFactory {
 
-    public static DaoDbFactory instance = null;
+    private static DaoDbFactory instance = null;
 
     public static DaoDbFactory getInstance() {
         if (instance == null) {

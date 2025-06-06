@@ -8,6 +8,8 @@ import java.util.Properties;
 public class DbConnection {
     private static Connection connection;
 
+    private DbConnection() {}
+
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             Properties props = DbConfig.loadProperties();
