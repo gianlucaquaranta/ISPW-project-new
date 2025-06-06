@@ -1,6 +1,6 @@
 package com.example.hellofx.dao.librodao;
 
-import com.example.hellofx.dao.DbConnection;
+import com.example.hellofx.DbConnection;
 import com.example.hellofx.model.Libro;
 import com.example.hellofx.model.modelfactory.LibroFactory;
 
@@ -13,6 +13,7 @@ import java.util.List;
 
 public class LibroDaoDb implements LibroDao {
     private LibroFactory libroFactory = LibroFactory.getInstance();
+    private static final String ISBN = "isbn";
     private static final String TITOLO = "titolo";
     private static final String AUTORE = "autore";
     private static final String EDITORE = "editore";
@@ -30,6 +31,7 @@ public class LibroDaoDb implements LibroDao {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                libro.setIsbn(rs.getString(ISBN));
                 libro.setTitolo(rs.getString(TITOLO));
                 libro.setAutore(rs.getString(AUTORE));
                 libro.setEditore(rs.getString(EDITORE));
