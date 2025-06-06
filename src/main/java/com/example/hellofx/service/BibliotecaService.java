@@ -1,6 +1,7 @@
 package com.example.hellofx.service;
 
-import com.example.hellofx.dao.FactoryProducer;
+import com.example.hellofx.dao.DaoFactory;
+import com.example.hellofx.dao.PersistenceType;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
@@ -14,17 +15,14 @@ import java.util.Map;
 
 public class BibliotecaService {
 
-    public Biblioteca load(String id, boolean isFile){
+    private BibliotecaService() { }
 
-        BibliotecaDao bDao = FactoryProducer.getFactory("file").createDaoBiblioteca();
-        LibroDao lDaoD = FactoryProducer.getFactory("db").createDaoLibro();
-        LibroDao lDaoM = FactoryProducer.getFactory("memory").createDaoLibro();
-        PrenotazioneDao pDao;
-        if(isFile){
-            pDao = FactoryProducer.getFactory("file").createDaoPrenotazione();
-        } else {
-            pDao = FactoryProducer.getFactory("db").createDaoPrenotazione();
-        }
+    public static Biblioteca load(String id){
+
+        BibliotecaDao bDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
+        LibroDao lDaoD = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoLibro();
+        LibroDao lDaoM = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoLibro();
+        PrenotazioneDao pDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoPrenotazione();
 
         Biblioteca b = bDao.loadOne(id); //istanza di biblioteca senza catalogo, prenotazioniAttive, noleggiAttivi
 

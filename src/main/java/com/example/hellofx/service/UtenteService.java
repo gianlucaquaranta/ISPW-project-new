@@ -1,6 +1,7 @@
 package com.example.hellofx.service;
 
-import com.example.hellofx.dao.FactoryProducer;
+import com.example.hellofx.dao.DaoFactory;
+import com.example.hellofx.dao.PersistenceType;
 import com.example.hellofx.dao.filtridao.FiltriDao;
 import com.example.hellofx.dao.noleggiodao.NoleggioDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
@@ -13,25 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtenteService {
-    private static final String DB = "db";
-    private UtenteDao utenteDao;
-    private NoleggioDao noleggioDao;
-    private PrenotazioneDao prenotazioneDao;
-    private FiltriDao filtriDao;
+    private static UtenteDao utenteDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoUtente();
+    private static NoleggioDao noleggioDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoNoleggio();
+    private static PrenotazioneDao prenotazioneDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoPrenotazione();
+    private static FiltriDao filtriDao = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoFiltri();
 
-    public UtenteService(boolean isFile) {
-        this.noleggioDao = FactoryProducer.getFactory(DB).createDaoNoleggio();
-        this.filtriDao = FactoryProducer.getFactory(DB).createDaoFiltri();
-        this.utenteDao = FactoryProducer.getFactory(DB).createDaoUtente();
+    private UtenteService() {}
 
-        if(isFile) {
-            this.prenotazioneDao = FactoryProducer.getFactory("file").createDaoPrenotazione();
-        } else {
-            this.prenotazioneDao = FactoryProducer.getFactory(DB).createDaoPrenotazione();
-        }
-    }
-
-    public Utente getUtente(String username){
+    public static Utente getUtente(String username){
         Utente u = utenteDao.loadUtente(username);
 
         //aggiungo le entity filtri all'utente
@@ -47,6 +37,8 @@ public class UtenteService {
 
         u.setNoleggiAttivi(new ArrayList<>());
 
+        // salvataggio in cache dell'utente creato
+        DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoUtente().storeUtente(u);
         return u;
     }
 }
