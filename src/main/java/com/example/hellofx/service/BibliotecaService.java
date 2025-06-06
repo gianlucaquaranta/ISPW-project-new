@@ -15,6 +15,7 @@ import java.util.Map;
 public class BibliotecaService {
 
     public Biblioteca load(String id, boolean isFile){
+
         BibliotecaDao bDao = FactoryProducer.getFactory("file").createDaoBiblioteca();
         LibroDao lDaoD = FactoryProducer.getFactory("db").createDaoLibro();
         LibroDao lDaoM = FactoryProducer.getFactory("memory").createDaoLibro();
