@@ -26,7 +26,7 @@ public class LibroDaoMemory implements LibroDao {
     public Libro load(String isbn) {
         if(libriMap.containsKey(isbn)) {
             return libriMap.get(isbn);
-        } else throw new IllegalArgumentException("isbn not found");
+        } else return null;
     }
 
     @Override
