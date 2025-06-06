@@ -5,7 +5,7 @@ public class RegistrazioneUtenteBean {
     private String email;
     private String password;
 
-    public RegistrazioneUtenteBean(String password, String email, String username) {
+    public RegistrazioneUtenteBean(String username, String email, String password) {
         this.password = password;
         this.email = email;
         this.username = username;

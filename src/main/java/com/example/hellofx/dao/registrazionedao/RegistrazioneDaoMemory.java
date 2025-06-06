@@ -1,10 +1,11 @@
 package com.example.hellofx.dao.registrazionedao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrazioneDaoMemory implements RegistrazioneDao {
-    private static List<String> BibliotecaUsername;
-    private static List<String> UtentiUsername;
+    private static List<String> BibliotecaUsername = new ArrayList<>();
+    private static List<String> UtentiUsername = new ArrayList<>();;
     private static RegistrazioneDaoMemory instance = null;
 
     public static RegistrazioneDaoMemory getInstance() {

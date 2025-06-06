@@ -11,14 +11,15 @@ public class UtenteDaoFile implements UtenteDao {
 
     @Override
     public List<Utente> loadAllUtenti() {
+        List<Utente> utenti = new ArrayList<>();
         File file = new File(FILE_PATH);
-        if (!file.exists()) return null; // Se il file non esiste, restituisce null
+        if (!file.exists()) return utenti; // Se il file non esiste, restituisce null
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             return (List<Utente>) ois.readObject(); // Restituisce la lista di utenti
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
+            return utenti;
         }
     }
 

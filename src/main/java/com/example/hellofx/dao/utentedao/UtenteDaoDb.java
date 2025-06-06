@@ -70,7 +70,7 @@ public class UtenteDaoDb implements UtenteDao {
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, utente.getEmail());
-            stmt.setString(3, utente.getUsername());
+            stmt.setString(2, utente.getUsername());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +82,7 @@ public class UtenteDaoDb implements UtenteDao {
         String query = "DELETE FROM utenti WHERE username = ?";
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1,username);
+            stmt.setString(1, username);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
