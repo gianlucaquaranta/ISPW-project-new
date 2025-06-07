@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 public class SceneChanger {
 
@@ -27,4 +28,34 @@ public class SceneChanger {
         e.printStackTrace();
         }
     }
+
+    public static <T> void changeSceneWithController(
+            String path,
+            ActionEvent event,
+            Consumer<T> controllerHandler) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(SceneChanger.class.getResource(path));
+            Parent root = loader.load();
+
+            T controller = loader.getController();
+            controllerHandler.accept(controller);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Nei GC:
+    SceneChanger.changeSceneWithController(
+    "/com/example/hellofx/visualizzaCatalogo.fxml",
+    event,
+    (VisualizzaCatalogoGC controller) -> controller.mostraCatalogo(aggiornaCatController.getCatalogo())
+);
+     */
 }
