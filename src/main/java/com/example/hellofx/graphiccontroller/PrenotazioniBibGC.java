@@ -7,15 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 
 public class PrenotazioniBibGC {
@@ -46,13 +40,13 @@ public class PrenotazioniBibGC {
 
     @FXML
     public void initialize() {
-        idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        isbnCol.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
-        titoloCol.setCellValueFactory(new PropertyValueFactory<>("Titolo"));
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("Username"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        dataInizioCol.setCellValueFactory(new PropertyValueFactory<>("Data di inizio"));
-        scadenzaCol.setCellValueFactory(new PropertyValueFactory<>("Scadenza"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        titoloCol.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        dataInizioCol.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
+        scadenzaCol.setCellValueFactory(new PropertyValueFactory<>("scadenza"));
 
         setUpOptions();
     }
@@ -76,7 +70,7 @@ public class PrenotazioniBibGC {
                         alert.setContentText("La prenotazione è stata trasformata con successo in un noleggio.");
                         alert.showAndWait();
                     });
-                    noleggioBtn.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;");
+                    noleggioBtn.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 15;");
                     setGraphic(noleggioBtn);
                 }
 
@@ -86,16 +80,7 @@ public class PrenotazioniBibGC {
 
     @FXML
     void goHome(ActionEvent event) {
-        Stage stage;
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/homeBibliotecario.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
     }
 
     @FXML

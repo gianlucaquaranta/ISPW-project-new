@@ -39,15 +39,15 @@
                   <TableColumn fx:id="editoreCol" prefWidth="164.80001831054688" text="Editore" />
                   <TableColumn fx:id="genereCol" prefWidth="143.19992065429688" text="Genere" />
                   <TableColumn id="colonneGrandi" fx:id="annoCol" prefWidth="133.5999755859375" text="Anno di pubblicazione" />
-                  <TableColumn fx:id="isbnCol" prefWidth="149.60003662109375" text="ISBN" />
-                  <TableColumn id="colonneGrandi" fx:id="copieCol" prefWidth="138.4000244140625" text="Num. copie" />
-                  <TableColumn id="colonneGrandi" fx:id="copieDispCol" prefWidth="145.5999755859375" text="Num. copie disponibili" />
+                  <TableColumn fx:id="isbnCol" prefWidth="148.0" text="ISBN" />
+                  <TableColumn id="colonneGrandi" fx:id="copieCol" prefWidth="132.79998779296875" text="Num. copie" />
+                  <TableColumn id="colonneGrandi" fx:id="copieDispCol" prefWidth="146.4000244140625" text="Num. copie disponibili" />
               </columns>
             </TableView>
             <SplitMenuButton fx:id="orderSplit" layoutX="748.0" layoutY="33.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="190.0" stylesheets="@form_Stylesheet.css" text="Ordinamento" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="33.0">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Crescente" />
-                  <MenuItem mnemonicParsing="false" text="Decrescente" />
+                  <MenuItem mnemonicParsing="false" onAction="#setOrderSplitText" text="Crescente" />
+                  <MenuItem mnemonicParsing="false" onAction="#setOrderSplitText" text="Decrescente" />
                </items>
             </SplitMenuButton>
             <TextField fx:id="searchBar" layoutX="257.4" layoutY="90.4" prefHeight="47.0" prefWidth="422.0" style="-fx-border-radius: 0;" styleClass="searchBar" stylesheets="@form_Stylesheet.css" AnchorPane.leftAnchor="257.4" AnchorPane.topAnchor="90.0" />
@@ -62,12 +62,12 @@
             </Button>
             <SplitMenuButton fx:id="filterSplit" layoutX="31.4" layoutY="91.2" mnemonicParsing="false" prefHeight="46.0" prefWidth="190.0" style="-fx-border-radius: 7 0 0 7; -fx-background-radius: 7 0 0 7;" styleClass="filter-split" stylesheets="@form_Stylesheet.css" text="Filtra per" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="1000.0" AnchorPane.topAnchor="91.0">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Titolo" />
-                  <MenuItem mnemonicParsing="false" text="Autore" />
-                  <MenuItem mnemonicParsing="false" text="Editore" />
-                  <MenuItem mnemonicParsing="false" text="Genere" />
-                  <MenuItem mnemonicParsing="false" text="Isbn" />
-                  <MenuItem mnemonicParsing="false" text="Mostra tutti" />
+                  <MenuItem mnemonicParsing="false" onAction="#setFilterSplitText" text="Titolo" />
+                  <MenuItem mnemonicParsing="false" onAction="#setFilterSplitText" text="Autore" />
+                  <MenuItem mnemonicParsing="false" onAction="#setFilterSplitText" text="Editore" />
+                  <MenuItem mnemonicParsing="false" onAction="#setFilterSplitText" text="Genere" />
+                  <MenuItem mnemonicParsing="false" onAction="#setFilterSplitText" text="Isbn" />
+                  <MenuItem mnemonicParsing="false" onAction="#setFilterSplitText" text="Mostra tutti" />
                </items>
             </SplitMenuButton>
          </children>

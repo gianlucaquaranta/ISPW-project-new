@@ -14,7 +14,7 @@ public class SceneChanger {
 
     private SceneChanger(){}
 
-    public static void changeScene(String path, ActionEvent event) throws IOException {
+    public static void changeScene(String path, ActionEvent event) {
         try{
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FXMLLoader loader;

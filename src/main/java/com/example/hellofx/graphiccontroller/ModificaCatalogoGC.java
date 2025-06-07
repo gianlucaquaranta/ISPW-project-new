@@ -7,16 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +20,9 @@ public class ModificaCatalogoGC {
     @FXML
     private TableColumn<LibroBean, String> autoreCol;
     @FXML
-    private TableColumn<LibroBean, String> copieCol;
+    private TableColumn<LibroBean, Integer> copieCol;
     @FXML
-    private TableColumn<LibroBean, String> copieDispCol;
+    private TableColumn<LibroBean, Integer> copieDispCol;
     @FXML
     private TableColumn<LibroBean, String> editoreCol;
     @FXML
@@ -52,14 +46,14 @@ public class ModificaCatalogoGC {
 
     @FXML
     public void initialize() {
-        annoCol.setCellValueFactory(new PropertyValueFactory<>("Anno di pubblicazione"));
-        autoreCol.setCellValueFactory(new PropertyValueFactory<>("Autore"));
-        copieCol.setCellValueFactory(new PropertyValueFactory<>("Num. copie"));
-        copieDispCol.setCellValueFactory(new PropertyValueFactory<>("Num. copie disponibili"));
-        editoreCol.setCellValueFactory(new PropertyValueFactory<>("Editore"));
-        genereCol.setCellValueFactory(new PropertyValueFactory<>("Genere"));
-        isbnCol.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
-        titoloCol.setCellValueFactory(new PropertyValueFactory<>("Titolo"));
+        annoCol.setCellValueFactory(new PropertyValueFactory<>("annoPubblicazione"));
+        autoreCol.setCellValueFactory(new PropertyValueFactory<>("autore"));
+        copieCol.setCellValueFactory(new PropertyValueFactory<>("copie"));
+        copieDispCol.setCellValueFactory(new PropertyValueFactory<>("copieDisponibili"));
+        editoreCol.setCellValueFactory(new PropertyValueFactory<>("editore"));
+        genereCol.setCellValueFactory(new PropertyValueFactory<>("genereString"));
+        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        titoloCol.setCellValueFactory(new PropertyValueFactory<>("titolo"));
 
         setUpOptions();
     }
@@ -81,24 +75,14 @@ public class ModificaCatalogoGC {
                     modificaBtn.setOnAction(event -> {
                         LibroBean bean = getTableView().getItems().get(getIndex());
 
-                        try {
-                            // Carica il file FXML
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/formAggiungiModificaLibro.fxml"));
-                            Parent root = loader.load();
-
-                            // Passaggio dati al controller
-                            AggiungiModificaLibroGC aggiungiModificaLibroGC = loader.getController();
-                            aggiungiModificaLibroGC.setForm(bean);
-
-                            // Mostra la nuova scena
-                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                            Scene scene = new Scene(root);
-                            stage.setScene(scene);
-                            stage.show();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        SceneChanger.changeSceneWithController(
+                                "/com/example/hellofx/formAggiungiModificaLibro.fxml",
+                                event,
+                                (AggiungiModificaLibroGC controller) -> {
+                                    controller.setForm(bean);
+                                    controller.setEditMode(true);
+                                }
+                        );
                     });
 
                     // Elimina
@@ -117,8 +101,9 @@ public class ModificaCatalogoGC {
                             aggiornaCatController.delete(bean);
                         }
                     });
-                    modificaBtn.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;");
-                    eliminaBtn.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;");
+                    modificaBtn.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;-fx-font-size: 15;");
+                    eliminaBtn.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 15;");
+                    buttonBox.getChildren().setAll(modificaBtn, eliminaBtn);
                     setGraphic(buttonBox);
                 }
 
@@ -141,49 +126,41 @@ public class ModificaCatalogoGC {
 
     @FXML
     void goHome(ActionEvent event) {
-        Stage stage;
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/homeBibliotecario.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
     }
 
     @FXML
-    void salva(ActionEvent event) throws IOException {
+    void salva(ActionEvent event) {
         aggiornaCatController.save();
 
-        // Carica il file FXML di visualizzaCatalogo
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/visualizzaCatalogo.fxml"));
-        Parent root = loader.load();
+        SceneChanger.changeSceneWithController(
+                "/com/example/hellofx/visualizzaCatalogo.fxml",
+                event,
+                (VisualizzaCatalogoGC controller) -> controller.mostraCatalogo(aggiornaCatController.getCatalogo())
+        );
 
-        // Passaggio dati al controller di visualizzaCatalogo
-        VisualizzaCatalogoGC visualizzaCatalogoGC = loader.getController();
-        visualizzaCatalogoGC.mostraCatalogo(aggiornaCatController.getCatalogo());
-
-        // Mostra la nuova scena
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     @FXML
     void aggiungiLibro(ActionEvent event) {
-        Stage stage;
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/formAggiungiModificaLibro.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        SceneChanger.changeSceneWithController(
+                "/com/example/hellofx/formAggiungiModificaLibro.fxml",
+                event,
+                (AggiungiModificaLibroGC controller) -> controller.setEditMode(false)
+        );
+    }
+
+    @FXML
+    void setFilterSplitText(ActionEvent event){
+        MenuItem selectedItem = (MenuItem) event.getSource();
+        filterSplit.setText(selectedItem.getText());
+    }
+
+    @FXML
+    void setOrderSplitText(ActionEvent event){
+        MenuItem selectedItem = (MenuItem) event.getSource();
+        orderSplit.setText(selectedItem.getText());
     }
 
 }
