@@ -4,6 +4,8 @@ import com.example.hellofx.bean.GenereBean;
 import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.controller.AggiornaCatController;
 import com.example.hellofx.controllerfactory.AggiornaCatControllerFactory;
+import com.example.hellofx.exception.CopieDisponibiliException;
+import com.example.hellofx.exception.LibroGiaPresenteException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -72,17 +74,13 @@ public class AggiungiModificaLibroGC {
             );
 
         } catch (NumberFormatException _) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Errore di input numerico");
-            alert.setHeaderText("Controlla i campi numerici");
-            alert.setContentText("Anno di pubblicazione o numero di copie non validi.");
-            alert.showAndWait();
+            this.showAlert("Errore - Input numerico", "Controlla i campi numerici", "Anno di pubblicazione o numero di copie non validi.");
         } catch (IllegalArgumentException _) {
-            // Notifica errore all’utente
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Errore di validazione");
-            alert.setHeaderText("Dati mancanti o non validi");
-            alert.showAndWait();
+            this.showAlert("Errore di validazione", "Dati mancanti o non validi", "");
+        } catch (LibroGiaPresenteException e){
+            this.showAlert("Errore - Libro già esistente", "Il libro inserito è già in catalogo", e.getMessage());
+        } catch (CopieDisponibiliException e){
+            this.showAlert("Errore - Numero di copie", "Numero di copie non valido", e.getMessage());
         }
     }
 
@@ -110,5 +108,13 @@ public class AggiungiModificaLibroGC {
 
     public void setEditMode(boolean editMode) {
         isEditMode = editMode;
+    }
+
+    private void showAlert(String title, String headerText, String contentText){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.showAndWait();
     }
 }

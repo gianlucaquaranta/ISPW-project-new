@@ -41,6 +41,10 @@ public class ModificaCatalogoGC {
     private SplitMenuButton filterSplit;
     @FXML
     private TextField searchBar;
+    @FXML
+    private MenuItem crescenteModificaItem;
+    @FXML
+    private MenuItem decrescenteModificaItem;
 
     AggiornaCatController aggiornaCatController = AggiornaCatControllerFactory.getInstance().createAggiornaCatController();
 
@@ -56,6 +60,16 @@ public class ModificaCatalogoGC {
         titoloCol.setCellValueFactory(new PropertyValueFactory<>("titolo"));
 
         setUpOptions();
+
+        crescenteModificaItem.setOnAction(event -> {
+            orderSplit.setText("Crescente");
+            aggiornaCatController.orderByIsbn(tableView.getItems(), "Crescente");
+        });
+
+        decrescenteModificaItem.setOnAction(event -> {
+            orderSplit.setText("Decrescente");
+            aggiornaCatController.orderByIsbn(tableView.getItems(), "Decrescente");
+        });
     }
 
     private void setUpOptions() {
@@ -155,12 +169,6 @@ public class ModificaCatalogoGC {
     void setFilterSplitText(ActionEvent event){
         MenuItem selectedItem = (MenuItem) event.getSource();
         filterSplit.setText(selectedItem.getText());
-    }
-
-    @FXML
-    void setOrderSplitText(ActionEvent event){
-        MenuItem selectedItem = (MenuItem) event.getSource();
-        orderSplit.setText(selectedItem.getText());
     }
 
 }

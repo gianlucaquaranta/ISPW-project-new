@@ -1,18 +1,13 @@
 package com.example.hellofx.graphiccontroller;
 
-import com.example.hellofx.bean.LoginBean;
 import com.example.hellofx.bean.RegistrazioneBibliotecaBean;
-import com.example.hellofx.controller.LoginController;
 import com.example.hellofx.controller.RegistrazioneController;
-import com.example.hellofx.controllerfactory.LoginControllerFactory;
 import com.example.hellofx.controllerfactory.RegistrazioneControllerFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
-import java.io.IOException;
 
 public class RegistrazioneBibGC {
 
@@ -32,15 +27,14 @@ public class RegistrazioneBibGC {
     private TextField provinciaTextField;
 
     RegistrazioneController registrazioneController = RegistrazioneControllerFactory.getInstance().creteRegistrazioneController();
-    LoginController loginController = LoginControllerFactory.getInstance().createLoginController();
 
     @FXML
-    void backToLogin(ActionEvent event) throws IOException {
+    void backToLogin(ActionEvent event) {
         SceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
     }
 
     @FXML
-    void register(ActionEvent event) throws IOException {
+    void register(ActionEvent event){
         String nome = nomeTextField.getText();
         String cap = capTextField.getText();
         String numCivico = numCivicoTextField.getText();
