@@ -5,12 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SceneChanger {
+    private static final Logger LOGGER = Logger.getLogger(SceneChanger.class.getName());
 
     private SceneChanger(){}
 
@@ -24,8 +28,8 @@ public class SceneChanger {
         root = loader.load();
         stage.setScene(new Scene(root));
         stage.show();
-        } catch (IOException e) {
-        e.printStackTrace();
+        } catch (IOException _) {
+        showAlert();
         }
     }
 
@@ -46,16 +50,15 @@ public class SceneChanger {
             stage.show();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Errore I/O", e);
+            showAlert();
         }
     }
 
-    /*
-    Nei GC:
-    SceneChanger.changeSceneWithController(
-    "/com/example/hellofx/visualizzaCatalogo.fxml",
-    event,
-    (VisualizzaCatalogoGC controller) -> controller.mostraCatalogo(aggiornaCatController.getCatalogo())
-);
-     */
+    private static void showAlert(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Errore");
+        alert.setContentText("Errore di lettura del file.");
+        alert.showAndWait();
+    }
 }
