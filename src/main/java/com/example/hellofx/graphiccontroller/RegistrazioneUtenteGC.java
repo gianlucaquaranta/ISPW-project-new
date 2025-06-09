@@ -9,8 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
-
 public class RegistrazioneUtenteGC {
 
     @FXML
@@ -23,12 +21,12 @@ public class RegistrazioneUtenteGC {
     RegistrazioneController registrazioneController = RegistrazioneControllerFactory.getInstance().creteRegistrazioneController();
 
     @FXML
-    void backToLogin(ActionEvent event) throws IOException {
+    void backToLogin(ActionEvent event){
         SceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
     }
 
     @FXML
-    void register(ActionEvent event) throws IOException {
+    void register(ActionEvent event){
         RegistrazioneUtenteBean regBean = new RegistrazioneUtenteBean(usernameTextField.getText(), emailTextField.getText(), passwordTextField.getText());
         boolean success = registrazioneController.registraUtente(regBean);
         if(success) {
