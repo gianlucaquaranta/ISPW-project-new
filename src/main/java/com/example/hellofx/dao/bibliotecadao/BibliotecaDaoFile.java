@@ -6,6 +6,8 @@ import com.example.hellofx.model.modelfactory.BibliotecaFactory;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BibliotecaDaoFile implements BibliotecaDao {
 
@@ -22,7 +24,8 @@ public class BibliotecaDaoFile implements BibliotecaDao {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(BibliotecaDaoFile.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal file Biblioteche.txt");
         }
         return null;
     }
@@ -39,7 +42,8 @@ public class BibliotecaDaoFile implements BibliotecaDao {
 
             }
         } catch (IOException e) {
-            e.printStackTrace();
+        Logger logger = Logger.getLogger(BibliotecaDaoFile.class.getName());
+        logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal file Biblioteche.txt");
         }
         return biblioteche;
     }
@@ -69,7 +73,8 @@ public class BibliotecaDaoFile implements BibliotecaDao {
                 writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(BibliotecaDaoFile.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore l'update del file Biblioteche.txt");
         }
     }
 
@@ -105,7 +110,8 @@ public class BibliotecaDaoFile implements BibliotecaDao {
                 int disponibili = Integer.parseInt(counts[1]);
                 copie.put(isbn, new Integer[]{totali, disponibili});
             } catch (NumberFormatException e){
-                e.printStackTrace();
+                Logger logger = Logger.getLogger(BibliotecaDaoFile.class.getName());
+                logger.log(Level.SEVERE, e, () -> "Errore di formato");
             }
         }
         return copie;

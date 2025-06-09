@@ -4,6 +4,8 @@ import com.example.hellofx.model.Utente;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UtenteDaoFile implements UtenteDao {
 
@@ -18,7 +20,8 @@ public class UtenteDaoFile implements UtenteDao {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             return (List<Utente>) ois.readObject(); // Restituisce la lista di utenti
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(UtenteDaoFile.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal file " + FILE_PATH);
             return utenti;
         }
     }
@@ -29,8 +32,8 @@ public class UtenteDaoFile implements UtenteDao {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(utenti); // Scrive o sovrascrive la lista di utenti nel file
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Logger logger = Logger.getLogger(UtenteDaoFile.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il salvataggio nel file " + FILE_PATH);        }
     }
 
 
@@ -64,8 +67,6 @@ public class UtenteDaoFile implements UtenteDao {
             // Aggiunge l'utente aggiornato
             utenti.add(updatedUtente);
             saveAll(utenti);
-        } else {
-            System.out.println("Utente con username " + updatedUtente.getUsername() + " non trovato.");
         }
     }
 

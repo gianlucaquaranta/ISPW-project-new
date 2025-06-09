@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LibroDaoDb implements LibroDao {
     private LibroFactory libroFactory = LibroFactory.getInstance();
@@ -39,7 +41,8 @@ public class LibroDaoDb implements LibroDao {
                 libro.setAnnoPubblicazione(rs.getInt("anno"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(LibroDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal DB dei libri");
         }
 
         return libro;
@@ -65,7 +68,8 @@ public class LibroDaoDb implements LibroDao {
                 libri.add(libro);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(LibroDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal DB dei libri");
         }
         return libri;
     }
@@ -86,7 +90,8 @@ public class LibroDaoDb implements LibroDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(LibroDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il salvataggio nel DB dei libri");
         }
     }
 }

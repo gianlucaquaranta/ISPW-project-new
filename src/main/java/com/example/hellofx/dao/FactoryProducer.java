@@ -1,6 +1,5 @@
 package com.example.hellofx.dao;
 
-import java.util.Locale;
 
 public class FactoryProducer {
     private FactoryProducer() {}

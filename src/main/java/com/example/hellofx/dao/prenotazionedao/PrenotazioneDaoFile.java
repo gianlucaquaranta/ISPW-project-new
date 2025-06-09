@@ -5,6 +5,8 @@ import com.example.hellofx.model.Prenotazione;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PrenotazioneDaoFile implements PrenotazioneDao{
 
@@ -61,7 +63,8 @@ public class PrenotazioneDaoFile implements PrenotazioneDao{
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             return (List<Prenotazione>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(PrenotazioneDaoFile.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal file " + FILE_PATH);
             return new ArrayList<>();
         }
     }
@@ -70,7 +73,8 @@ public class PrenotazioneDaoFile implements PrenotazioneDao{
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(prenotazioni);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(PrenotazioneDaoFile.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il salvataggio nel file " + FILE_PATH);
         }
     }
 

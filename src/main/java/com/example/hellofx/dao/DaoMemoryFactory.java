@@ -6,8 +6,6 @@ import com.example.hellofx.dao.filtridao.FiltriDao;
 import com.example.hellofx.dao.filtridao.FiltriDaoMemory;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.dao.librodao.LibroDaoMemory;
-import com.example.hellofx.dao.noleggiodao.NoleggioDao;
-import com.example.hellofx.dao.noleggiodao.NoleggioDaoMemory;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDaoMemory;
 import com.example.hellofx.dao.utentedao.UtenteDao;
@@ -49,10 +47,5 @@ public class DaoMemoryFactory extends DaoFactory {
     @Override
     public FiltriDao createDaoFiltri() {
         return FiltriDaoMemory.getInstance();
-    }
-
-    @Override
-    public NoleggioDao createDaoNoleggio() {
-        return NoleggioDaoMemory.getInstance();
     }
 }
