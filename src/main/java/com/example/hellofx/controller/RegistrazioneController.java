@@ -26,18 +26,18 @@ public class RegistrazioneController {
     UtenteDao utenteDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoUtente();
 
     public boolean registraBiblioteca(RegistrazioneBibliotecaBean rbb) {
-         boolean result = checkCredenziali(rbb.getNome(), "bib");
+         boolean result = checkCredenziali(rbb.getBiblioteca().getNome(), "bib");
          if(!result){
              return false;
          }
          Biblioteca b = BibliotecaFactory.getInstance().createBiblioteca();
-         b.setNome(rbb.getNome());
+         b.setNome(rbb.getBiblioteca().getNome());
          b.setCatalogo(new ArrayList<>());
-         b.setPosizione(new Posizione(rbb.getCap(), rbb.getIndirizzo(), rbb.getNumeroCivico(), rbb.getCitta(), rbb.getProvincia()));
+         b.setPosizione(new Posizione(rbb.getBiblioteca().getCap(), rbb.getBiblioteca().getIndirizzo(), rbb.getBiblioteca().getNumeroCivico(), rbb.getBiblioteca().getCitta(), rbb.getBiblioteca().getProvincia()));
          b.setPrenotazioniAttive(new ArrayList<>());
          b.setCopie(new HashMap<>());
          b.setNoleggiAttivi(new ArrayList<>());
-         b.setId(rbb.getNome());
+         b.setId(rbb.getBiblioteca().getNome());
 
          bibliotecaDaoMemory.update(b);
          if(Session.isFull()){
@@ -63,13 +63,10 @@ public class RegistrazioneController {
 
         utenteDaoMemory.storeUtente(u);
         if(Session.isFull()){
-            if(Session.isFile()){
-                UtenteDao utenteDaoFile = FactoryProducer.getFactory(FILE).createDaoUtente();
-                utenteDaoFile.storeUtente(u);
-            } else {
-                UtenteDao utenteDaoDb = FactoryProducer.getFactory("db").createDaoUtente();
-                utenteDaoDb.storeUtente(u);
-            }
+
+            UtenteDao utenteDaoDb = FactoryProducer.getFactory("db").createDaoUtente();
+            utenteDaoDb.storeUtente(u);
+
         }
 
         return true;
@@ -95,7 +92,8 @@ public class RegistrazioneController {
 
     }
 
-    boolean found(List<String> list, String username) { //nome trovato nella lista
+    boolean found(List<String> list, String username) {
+        if(list == null) return false;
         for (String u : list) {
             if (u.equals(username)) {
                 return true;

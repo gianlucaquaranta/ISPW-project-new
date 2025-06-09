@@ -5,6 +5,7 @@ public class RegistrazioneBibliotecaBean {
     private String password;
 
     public RegistrazioneBibliotecaBean(String nome, String password, String indirizzo, String cap, String numeroCivico, String citta, String provincia) {
+        this.biblioteca = new BibliotecaBean();
         this.biblioteca.setNome(nome);
         this.password = password;
         this.biblioteca.setIndirizzo(indirizzo);
