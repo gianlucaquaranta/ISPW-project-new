@@ -39,6 +39,7 @@
                   <TableColumn id="colonneGrandi" fx:id="capColumn" prefWidth="171.4" text="CAP" />
                   <TableColumn fx:id="provinciaColumn" prefWidth="171.4" text="Provincia" />
                   <TableColumn fx:id="opzioniColumn" prefWidth="171.4" text="Opzioni" />
+                  <TableColumn fx:id="idColumn" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" text="Id" />
                </columns>
             </TableView>
          </children>

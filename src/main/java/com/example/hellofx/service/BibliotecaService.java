@@ -56,6 +56,7 @@ public class BibliotecaService {
 
         List<Prenotazione> prenotazioniAttive = pDao.loadAllBiblioteca(b.getId());
         b.setPrenotazioniAttive(prenotazioniAttive);
+        DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoBiblioteca().update(b);
 
         return b;
 

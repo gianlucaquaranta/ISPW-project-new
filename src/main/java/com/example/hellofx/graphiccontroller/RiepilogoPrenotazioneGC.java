@@ -1,25 +1,17 @@
 package com.example.hellofx.graphiccontroller;
 
 import com.example.hellofx.bean.BibliotecaBean;
+import com.example.hellofx.bean.FiltriBean;
+import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.bean.PrenotazioneBean;
 import com.example.hellofx.controller.PLController;
-import com.example.hellofx.controllerfactory.PLControllerFactory;
+import com.example.hellofx.exception.UserNotLoggedException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class RiepilogoPrenotazioneGC {
-
-    private Stage stage;
-    private Parent root;
 
     @FXML
     private Label titoloLabelRiepilogo;
@@ -39,11 +31,12 @@ public class RiepilogoPrenotazioneGC {
     private Label scadenzaLabelRiepilogo;
 
     private PLController plController;
-    private ObservableList<BibliotecaBean> datiTemp;
+    private ObservableList<BibliotecaBean> bibliotecheTemp;
+    private ObservableList<LibroBean> libriTemp;
+    private FiltriBean filtriTemp;
 
     public void visualizzaRiepilogo(BibliotecaBean bb){
 
-        plController = PLControllerFactory.getInstance().createPLController();
         PrenotazioneBean pb = plController.creaRiepilogo(bb);
 
         titoloLabelRiepilogo.setText("Titolo: "+pb.getLibro().getTitolo());
@@ -53,46 +46,48 @@ public class RiepilogoPrenotazioneGC {
         bibliotecaLabelRiepilogo.setText("Biblioteca: "+pb.getBibliotecaB().getNome());
         indirizzoLabelRiepilogo.setText("Indirizzo: "+pb.getBibliotecaB().getIndirizzoCompleto());
         inizioLabelRiepilogo.setText("Data di inizio: "+pb.getDataInizio());
-        scadenzaLabelRiepilogo.setText("Data di scadenza+ "+pb.getDataScadenza());
+        scadenzaLabelRiepilogo.setText("Data di scadenza: "+pb.getDataScadenza());
 
     }
 
     @FXML
-    public void confermaPrenotazione(ActionEvent event) {
-
-        plController.registraPrenotazione();
-
+    public void confermaPrenotazione(ActionEvent event){
         try {
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/schermateUtente.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+            plController.registraPrenotazione();
+        } catch (UserNotLoggedException e) {
+            SceneChanger.changeSceneWithController("/com/example/hellofx/login.fxml", event, (LoginGC lgc) -> lgc.setPlController(plController));
+            return;
         }
+        SceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml",event);
 
     }
 
     @FXML
     public void annulla(ActionEvent event) {
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/risultatiBiblioteche.fxml"));
-            root = loader.load();
-            RisultatiBibliotecheGC rbGC = loader.getController();
-            rbGC.caricaDati(datiTemp);
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneChanger.changeSceneWithController(
+                "/com/example/hellofx/risultatiBiblioteche.fxml",
+                event,
+                (RisultatiBibliotecheGC rbGC) -> {
+                    rbGC.caricaDati(bibliotecheTemp);
+                    rbGC.setPlController(plController);
+                    rbGC.setLibriTemp(libriTemp);
+                    rbGC.setFiltriTemp(filtriTemp);
+                }
+        );
 
     }
 
-    public void setDatiTemp(ObservableList<BibliotecaBean> bblist){
-        datiTemp = bblist;
+    public void setBibliotecheTemp(ObservableList<BibliotecaBean> bblist){
+        bibliotecheTemp = bblist;
     }
 
+    public void setLibriTemp(ObservableList<LibroBean> lblist){
+        libriTemp = lblist;
+    }
+
+    @FXML
+    public void setFiltriTemp(FiltriBean fb){filtriTemp = fb;}
+
+    public void setPlController(PLController plcontroller){ this.plController = plcontroller; }
 }

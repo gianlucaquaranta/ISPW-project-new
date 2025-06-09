@@ -9,13 +9,13 @@
 .label{
     -fx-text-fill: #565656;
     -fx-font-size: 20px;
-    -fx-alignment: right;
+    -fx-alignment: CENTER_LEFT;
     -fx-label-padding: 0;
 }
 .titolo{
     -fx-text-fill: #0b6b75;
     -fx-font-size: 30px;
-    -fx-alignment: center;
+    -fx-alignment: CENTER;
     -fx-font-weight: bold;
 }
 .text-field{

@@ -54,11 +54,11 @@ public class PrenotazioniUtenteGC {
 
         titoloCol.setCellValueFactory(new PropertyValueFactory<>("titolo"));
         autoreCol.setCellValueFactory(new PropertyValueFactory<>("autore"));
-        bibliotecaCol.setCellValueFactory(new PropertyValueFactory<>("editore"));
-        editoreCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-        indirizzoCol.setCellValueFactory(new PropertyValueFactory<>("titolo"));
-        isbnCol.setCellValueFactory(new PropertyValueFactory<>("autore"));
-        scadenzaCol.setCellValueFactory(new PropertyValueFactory<>("editore"));
+        bibliotecaCol.setCellValueFactory(new PropertyValueFactory<>("biblioteca"));
+        editoreCol.setCellValueFactory(new PropertyValueFactory<>("editore"));
+        indirizzoCol.setCellValueFactory(new PropertyValueFactory<>("indirizzo"));
+        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        scadenzaCol.setCellValueFactory(new PropertyValueFactory<>("dataScadenza"));
 
         setupOptionColumn();
 

@@ -3,35 +3,22 @@ package com.example.hellofx.graphiccontroller;
 import com.example.hellofx.bean.FiltriBean;
 import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.controller.Logout;
-import com.example.hellofx.trovaprezzi.TrovaPrezziBean;
 import com.example.hellofx.controller.PLController;
-import com.example.hellofx.trovaprezzi.TrovaPrezziController;
 import com.example.hellofx.controllerfactory.PLControllerFactory;
-import com.example.hellofx.trovaprezzi.TrovaPrezziControllerFactory;
+import com.example.hellofx.exception.EmptyFiltersException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SchermateUtenteGC {
-    private Stage stage;
-    private Parent root;
 
     //Prenota libro FXML
     @FXML
@@ -61,32 +48,8 @@ public class SchermateUtenteGC {
     @FXML
     private TableColumn<LibroBean, Void> optionColumnPL;
 
-
-    //Trova prezzi FXML
-    @FXML
-    private TextField ricercaField;
-    @FXML
-    private CheckBox mondadoriCheck;
-    @FXML
-    private CheckBox feltrinelliCheck;
-    @FXML
-    private CheckBox ibsCheck;
-    @FXML
-    private TableView<TrovaPrezziBean> tableViewTP;
-    @FXML
-    private TableColumn<TrovaPrezziBean, String> titleColumnTP;
-    @FXML
-    private TableColumn<TrovaPrezziBean, String> authorColumnTP;
-    @FXML
-    private TableColumn<TrovaPrezziBean, String> editorColumnTP;
-    @FXML
-    private TableColumn<TrovaPrezziBean, String> annoPubblicazioneTP;
-    @FXML
-    private TableColumn<TrovaPrezziBean, String> priceColumnTP;
-    @FXML
-    private TableColumn<TrovaPrezziBean, String> vendorColumnTP;
-    @FXML
-    private TableColumn<TrovaPrezziBean, Void> optionColumnTP;
+    private PLController plController;
+    private FiltriBean filtriTemp;
 
     //Inizializzazioni table view
     @FXML
@@ -99,15 +62,6 @@ public class SchermateUtenteGC {
 
         setupOptionColumnPL();
 
-        // Trova prezzi table view
-        titleColumnTP.setCellValueFactory(new PropertyValueFactory<>("titolo"));
-        authorColumnTP.setCellValueFactory(new PropertyValueFactory<>("autore"));
-        editorColumnTP.setCellValueFactory(new PropertyValueFactory<>("editore"));
-        annoPubblicazioneTP.setCellValueFactory(new PropertyValueFactory<>("annoPubblicazione"));
-        priceColumnTP.setCellValueFactory(new PropertyValueFactory<>("prezzo"));
-        vendorColumnTP.setCellValueFactory(new PropertyValueFactory<>("vendor"));
-
-        setupOptionColumnTP();
     }
 
     private void setupOptionColumnPL(){
@@ -122,21 +76,17 @@ public class SchermateUtenteGC {
                 } else {
                     button.setOnAction(event -> {
                         LibroBean bean = getTableView().getItems().get(getIndex());
-                        try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/risultatiBiblioteche.fxml"));
-                            root = loader.load(); // Carica la scena e istanzia il controller
-                            // Ottiene l'istanza del controller legata alla scena
-                            RisultatiBibliotecheGC rbGC = loader.getController();
-                            rbGC.setDatiTemp(getTableView().getItems());
-                            // Chiama il metodo sul controller effettivo
-                            rbGC.visualizzaBiblioteche(bean);
-                            // Cambia scena
-                            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                            stage.setScene(new Scene(root));
-                            stage.show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+
+                        SceneChanger.changeSceneWithController(
+                                "/com/example/hellofx/risultatiBiblioteche.fxml",
+                                event,
+                                (RisultatiBibliotecheGC rbGC) -> {
+                                    rbGC.setPlController(plController);
+                                    rbGC.setLibriTemp(getTableView().getItems());
+                                    rbGC.setFiltriTemp(filtriTemp);
+                                    rbGC.visualizzaBiblioteche(bean);
+                                }
+                        );
                     });
                     button.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;");
                     setGraphic(button);
@@ -145,36 +95,6 @@ public class SchermateUtenteGC {
         });
 
     }
-
-    private void setupOptionColumnTP(){
-        optionColumnTP.setCellFactory(param -> new TableCell<>() {
-            private Button button = new Button("Vai al sito");
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    button.setOnAction(event -> {
-                        TrovaPrezziBean bean = getTableView().getItems().get(getIndex());
-                        String link = bean.getLink();
-                        try {
-                            Desktop.getDesktop().browse(new URI(link));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            new Alert(Alert.AlertType.ERROR, "Impossibile aprire il link.").showAndWait();
-                        }
-
-                    });
-                    button.setStyle("-fx-background-color: #0b6b75; -fx-background-radius: 8; -fx-text-fill: #ffffff; -fx-font-weight: bold;");
-                    setGraphic(button);
-                }
-            }
-        });
-    }
-
-
 
     //Prenota libro
     @FXML
@@ -187,15 +107,18 @@ public class SchermateUtenteGC {
         String biblioteca = bibliotecaTextField.getText();
         String cap = capTextField.getText();
 
-        FiltriBean filtriBean = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
-        PLController plController = PLControllerFactory.getInstance().createPLController();
-        List<LibroBean> libriFiltrati = plController.filtra(filtriBean);
+        filtriTemp = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
+        plController = PLControllerFactory.getInstance().createPLController();
+        List<LibroBean> libriFiltrati;
+        try {
+            libriFiltrati = plController.filtra(filtriTemp);
+        } catch(EmptyFiltersException e){
+            mostraAlert(e.getMessage(), Alert.AlertType.ERROR);
+            return;
+        }
 
         if(libriFiltrati.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null); // nessun header
-            alert.setContentText("Nessun risultato disponibile");
-            alert.showAndWait();
+            mostraAlert("Nessun risultato disponibile", Alert.AlertType.INFORMATION);
         }
         ObservableList<LibroBean> data = FXCollections.observableArrayList(libriFiltrati);
         tableViewBooksPL.setItems(data);
@@ -215,77 +138,25 @@ public class SchermateUtenteGC {
 
     }
 
-    //Trova prezzi
-    @FXML
-    void cercaPrezzi(ActionEvent event) {
-
-        tableViewTP.getItems().clear();
-        String ricerca = ricercaField.getText();
-        if (ricerca.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Inserisci un titolo o un autore");
-            alert.showAndWait();
-        }
-
-        TrovaPrezziBean trovaPrezziBean = new TrovaPrezziBean();
-        trovaPrezziBean.setRicerca(ricerca);
-
-        List<String> vendors = new ArrayList<>();
-
-        // Controlla ogni checkbox e aggiunge il testo se è selezionata
-        if (mondadoriCheck.isSelected()) vendors.add(mondadoriCheck.getText());
-        if (feltrinelliCheck.isSelected()) vendors.add(feltrinelliCheck.getText());
-        if (ibsCheck.isSelected()) vendors.add(ibsCheck.getText());
-
-        if (vendors.isEmpty()) {
-            vendors.add(mondadoriCheck.getText());
-            vendors.add(feltrinelliCheck.getText());
-            vendors.add(ibsCheck.getText());
-        }
-
-        trovaPrezziBean.setVendors(vendors);
-
-        TrovaPrezziController trovaPrezziController = TrovaPrezziControllerFactory.getInstance().createTrovaPrezziController();
-        List<TrovaPrezziBean> risultati = trovaPrezziController.trovaPrezzi(trovaPrezziBean);
-
-        ObservableList<TrovaPrezziBean> data = FXCollections.observableArrayList(risultati);
-        tableViewTP.setItems(data);
-
-    }
-
     @FXML
     void visualizzaNoleggi(ActionEvent event) {
-
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/example/hellofx/noleggiUtente.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneChanger.changeScene("/com/example/hellofx/noleggiUtente.fxml", event);
     }
 
     @FXML
     void visualizzaPrenotazioni(ActionEvent event) {
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/prenotazioniUtente.fxml"));
-            root = loader.load();
-            PrenotazioniUtenteGC puGC = loader.getController();
-            puGC.getPrenotazioni();
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneChanger.changeSceneWithController(
+                "/com/example/hellofx/prenotazioniUtente.fxml",
+                event,
+                PrenotazioniUtenteGC::getPrenotazioni
+        );
     }
 
     @FXML
-    void logout(ActionEvent event) throws IOException{
+    void logout(ActionEvent event){
         new Logout().logout();
-            SceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
+        SceneChanger.changeScene("/com/example/hellofx/login.fxml", event);
     }
 
     @FXML
@@ -295,6 +166,22 @@ public class SchermateUtenteGC {
     }
 
     @FXML
-    void caricaDati(ObservableList<LibroBean> lblist){ tableViewBooksPL.setItems(lblist); }
+    void caricaDati(ObservableList<LibroBean> lblist, FiltriBean fb){
+        tableViewBooksPL.setItems(lblist);
+        titoloTextField.setText(fb.getTitolo());
+        autoreTextField.setText(fb.getAutore());
+        isbnTextField.setText(fb.getIsbn());
+        genereSplitMenuButton.setText(fb.getGenere());
+        bibliotecaTextField.setText(fb.getBiblioteca());
+        capTextField.setText(fb.getCap());
+    }
 
+    void setPlController(PLController plController){ this.plController = plController; }
+
+    void mostraAlert(String messaggio, Alert.AlertType alertType){
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setContentText(messaggio);
+        alert.showAndWait();
+    }
 }
