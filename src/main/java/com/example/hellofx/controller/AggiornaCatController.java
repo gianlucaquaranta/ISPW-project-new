@@ -102,7 +102,9 @@ public class AggiornaCatController {
 
         for (Libro l : list) {
             if (extractor.apply(l).equalsIgnoreCase(field)) {
-                results.add(Converter.libroToBean(l));
+                LibroBean lb = Converter.libroToBean(l);
+                lb.setNumCopie(b.getCopie().get(l.getIsbn()));
+                results.add(lb);
             }
         }
         return results;
@@ -166,36 +168,5 @@ public class AggiornaCatController {
         if (!missingFields.isEmpty()) {
             throw new IllegalArgumentException("I seguenti campi sono mancanti o invalidi:\n" + missingFields);
         }
-    }
-
-    private Biblioteca setBibliotecaCopy(){
-        Biblioteca bib = ((BibliotecarioSession) session).getBiblioteca();
-        Biblioteca bibCopy = new Biblioteca();
-
-        bibCopy.setId(bib.getId());
-        bibCopy.setNome(bib.getNome());
-
-        // Copia profonda catalogo
-        bibCopy.setCatalogo(
-                bib.getCatalogo().stream()
-                        .map(Libro::new)
-                        .collect(Collectors.toList())
-        );
-
-        // Copia profonda prenotazioni
-        bibCopy.setPrenotazioniAttive(
-                bib.getPrenotazioniAttive().stream()
-                        .map(Prenotazione::new)
-                        .collect(Collectors.toList())
-        );
-
-        // Copia profonda mappa copie
-        Map<String, Integer[]> copieCopy = new HashMap<>();
-        for (Map.Entry<String, Integer[]> entry : bib.getCopie().entrySet()) {
-            copieCopy.put(entry.getKey(), new Integer[]{entry.getValue()[0], entry.getValue()[1]});
-        }
-        bibCopy.setCopie(copieCopy);
-
-        return bibCopy;
     }
 }

@@ -37,7 +37,10 @@ public class AggiungiModificaLibroGC {
         SceneChanger.changeSceneWithController(
                 "/com/example/hellofx/modificaCatalogo.fxml",
                 event,
-                (ModificaCatalogoGC controller) -> controller.mostraCatalogoModificabile(aggiornaCatController.getCatalogo())
+                (ModificaCatalogoGC controller) -> {
+                    controller.setAggiornaCatController(aggiornaCatController);
+                    controller.mostraCatalogoModificabile(aggiornaCatController.getCatalogo());
+                }
         );
     }
 
