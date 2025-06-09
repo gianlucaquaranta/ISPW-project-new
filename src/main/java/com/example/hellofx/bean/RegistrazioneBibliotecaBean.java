@@ -1,30 +1,17 @@
 package com.example.hellofx.bean;
 
 public class RegistrazioneBibliotecaBean {
-    private String nome;
+    private BibliotecaBean biblioteca;
     private String password;
-    private String indirizzo;
-    private String cap;
-    private String numeroCivico;
-    private String citta;
-    private String provincia;
 
     public RegistrazioneBibliotecaBean(String nome, String password, String indirizzo, String cap, String numeroCivico, String citta, String provincia) {
-        this.nome = nome;
+        this.biblioteca.setNome(nome);
         this.password = password;
-        this.indirizzo = indirizzo;
-        this.cap = cap;
-        this.numeroCivico = numeroCivico;
-        this.citta = citta;
-        this.provincia = provincia;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+        this.biblioteca.setIndirizzo(indirizzo);
+        this.biblioteca.setCap(cap);
+        this.biblioteca.setNumeroCivico(numeroCivico);
+        this.biblioteca.setCitta(citta);
+        this.biblioteca.setProvincia(provincia);
     }
 
     public String getPassword() {
@@ -35,43 +22,8 @@ public class RegistrazioneBibliotecaBean {
         this.password = password;
     }
 
-    public String getIndirizzo() {
-        return indirizzo;
-    }
+    public BibliotecaBean getBiblioteca() {return this.biblioteca;}
 
-    public void setIndirizzo(String indirizzo) {
-        this.indirizzo = indirizzo;
-    }
-
-    public String getCap() {
-        return cap;
-    }
-
-    public void setCap(String cap) {
-        this.cap = cap;
-    }
-
-    public String getNumeroCivico() {
-        return numeroCivico;
-    }
-
-    public void setNumeroCivico(String numeroCivico) {
-        this.numeroCivico = numeroCivico;
-    }
-
-    public String getCitta() {
-        return citta;
-    }
-
-    public void setCitta(String citta) {
-        this.citta = citta;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
+    public void setBiblioteca(BibliotecaBean biblioteca) { this.biblioteca = biblioteca; }
 }
+
