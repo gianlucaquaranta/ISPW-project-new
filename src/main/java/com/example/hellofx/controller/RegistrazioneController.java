@@ -2,7 +2,8 @@ package com.example.hellofx.controller;
 
 import com.example.hellofx.bean.RegistrazioneBibliotecaBean;
 import com.example.hellofx.bean.RegistrazioneUtenteBean;
-import com.example.hellofx.dao.FactoryProducer;
+import com.example.hellofx.dao.DaoFactory;
+import com.example.hellofx.dao.PersistenceType;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.registrazionedao.RegistrazioneDao;
 import com.example.hellofx.dao.registrazionedao.RegistrazioneDaoFile;
@@ -20,10 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RegistrazioneController {
-    private static final String MEMORY = "memory";
-    private static final String FILE = "file";
-    BibliotecaDao bibliotecaDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoBiblioteca();
-    UtenteDao utenteDaoMemory = FactoryProducer.getFactory(MEMORY).createDaoUtente();
+    BibliotecaDao bibliotecaDaoMemory = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoBiblioteca();
+    UtenteDao utenteDaoMemory = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoUtente();
 
     public boolean registraBiblioteca(RegistrazioneBibliotecaBean rbb) {
          boolean result = checkCredenziali(rbb.getBiblioteca().getNome(), "bib");
@@ -41,7 +40,7 @@ public class RegistrazioneController {
 
          bibliotecaDaoMemory.update(b);
          if(Session.isFull()){
-            BibliotecaDao bibliotecaDaoFile = FactoryProducer.getFactory(FILE).createDaoBiblioteca();
+            BibliotecaDao bibliotecaDaoFile = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
             bibliotecaDaoFile.update(b);
          }
 
@@ -63,10 +62,8 @@ public class RegistrazioneController {
 
         utenteDaoMemory.storeUtente(u);
         if(Session.isFull()){
-
-            UtenteDao utenteDaoDb = FactoryProducer.getFactory("db").createDaoUtente();
-            utenteDaoDb.storeUtente(u);
-
+                UtenteDao utenteDaoPers = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoUtente();
+                utenteDaoPers.storeUtente(u);
         }
 
         return true;
@@ -92,8 +89,9 @@ public class RegistrazioneController {
 
     }
 
-    boolean found(List<String> list, String username) {
+    boolean found(List<String> list, String username) { //nome trovato nella lista
         if(list == null) return false;
+
         for (String u : list) {
             if (u.equals(username)) {
                 return true;
