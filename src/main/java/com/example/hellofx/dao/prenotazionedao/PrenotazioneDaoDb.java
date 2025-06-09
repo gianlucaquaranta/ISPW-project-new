@@ -1,12 +1,14 @@
 package com.example.hellofx.dao.prenotazionedao;
 
-import com.example.hellofx.dao.DbConnection;
+import com.example.hellofx.DbConnection;
 import com.example.hellofx.model.Prenotazione;
 import com.example.hellofx.model.modelfactory.PrenotazioneFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PrenotazioneDaoDb implements PrenotazioneDao {
     PrenotazioneFactory prenotazioneFactory = PrenotazioneFactory.getInstance();
@@ -34,7 +36,8 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
                 prenotazione = mapResultSet(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(PrenotazioneDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal DB delle prenotazioni");
         }
 
         return prenotazione;
@@ -57,7 +60,8 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
                 prenotazioni.add(mapResultSet(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(PrenotazioneDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento degli utenti dal DB delle prenotazioni");
         }
 
         return prenotazioni;
@@ -80,7 +84,8 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
                 prenotazioni.add(mapResultSet(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(PrenotazioneDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento delle biblioteche dal DB delle prenotazioni");
         }
 
         return prenotazioni;
@@ -103,7 +108,9 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(PrenotazioneDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il salvataggio nel DB delle prenotazioni");
+
         }
     }
 
@@ -122,7 +129,9 @@ public class PrenotazioneDaoDb implements PrenotazioneDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(PrenotazioneDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante l'eliminazione nel DB delle prenotazioni");
+
         }
     }
 

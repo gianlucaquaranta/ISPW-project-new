@@ -1,8 +1,12 @@
 package com.example.hellofx.dao.registrazionedao;
 
+import com.example.hellofx.dao.bibliotecadao.BibliotecaDaoFile;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RegistrazioneDaoFile implements RegistrazioneDao {
 
@@ -29,7 +33,8 @@ public class RegistrazioneDaoFile implements RegistrazioneDao {
 
             usernames = Files.readAllLines(path);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(RegistrazioneDaoFile.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal file " + filePath);
         }
 
         return usernames;
@@ -55,7 +60,8 @@ public class RegistrazioneDaoFile implements RegistrazioneDao {
             Files.write(path, (username + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(RegistrazioneDaoFile.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il salvataggio nel file " + filePath);
         }
     }
 

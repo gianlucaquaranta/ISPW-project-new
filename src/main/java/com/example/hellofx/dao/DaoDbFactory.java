@@ -5,8 +5,6 @@ import com.example.hellofx.dao.filtridao.FiltriDaoDb;
 import com.example.hellofx.dao.filtridao.FiltriDao;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.dao.librodao.LibroDaoDb;
-import com.example.hellofx.dao.noleggiodao.NoleggioDao;
-import com.example.hellofx.dao.noleggiodao.NoleggioDaoDb;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDaoDb;
 import com.example.hellofx.dao.utentedao.UtenteDao;
@@ -50,8 +48,4 @@ public class DaoDbFactory extends DaoFactory {
         return new FiltriDaoDb();
     }
 
-    @Override
-    public NoleggioDao createDaoNoleggio() {
-        return new NoleggioDaoDb();
-    }
 }

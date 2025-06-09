@@ -1,6 +1,6 @@
 package com.example.hellofx.dao.filtridao;
 
-import com.example.hellofx.dao.DbConnection;
+import com.example.hellofx.DbConnection;
 import com.example.hellofx.model.Filtri;
 import com.example.hellofx.model.modelfactory.FiltriFactory;
 
@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FiltriDaoDb implements FiltriDao{
     FiltriFactory filtriFactory = FiltriFactory.getInstance();
@@ -34,7 +36,8 @@ public class FiltriDaoDb implements FiltriDao{
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(FiltriDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal DB dei filtri");
         }
         return filtriList;
     }
@@ -54,7 +57,8 @@ public class FiltriDaoDb implements FiltriDao{
             stmt.setString(7, filtri.getCap());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(FiltriDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il salvataggio nel DB dei filtri");
         }
     }
 
@@ -67,7 +71,8 @@ public class FiltriDaoDb implements FiltriDao{
             stmt.setString(1, username);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(FiltriDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante l'eliminazione nel DB dei filtri");
         }
     }
 
@@ -81,7 +86,8 @@ public class FiltriDaoDb implements FiltriDao{
             stmt.setInt(2, i);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(FiltriDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante l'eliminazione nel DB dei filtri");
         }
     }
 }

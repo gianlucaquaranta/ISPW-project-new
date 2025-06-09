@@ -1,12 +1,15 @@
 package com.example.hellofx.dao.utentedao;
 
-import com.example.hellofx.dao.DbConnection;
+import com.example.hellofx.DbConnection;
+import com.example.hellofx.dao.prenotazionedao.PrenotazioneDaoDb;
 import com.example.hellofx.model.Utente;
 import com.example.hellofx.model.modelfactory.UtenteFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UtenteDaoDb implements UtenteDao {
     private UtenteFactory utenteFactory = UtenteFactory.getInstance();
@@ -25,7 +28,9 @@ public class UtenteDaoDb implements UtenteDao {
                 return utente;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(UtenteDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal DB degli utenti");
+
         }
         return null;
     }
@@ -45,7 +50,9 @@ public class UtenteDaoDb implements UtenteDao {
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(UtenteDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il caricamento dal DB degli utenti");
+
         }
         return utenti;
     }
@@ -59,7 +66,9 @@ public class UtenteDaoDb implements UtenteDao {
             stmt.setString(2, utente.getEmail());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(UtenteDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante il salvataggip nel DB degli utenti");
+
         }
     }
 
@@ -73,7 +82,9 @@ public class UtenteDaoDb implements UtenteDao {
             stmt.setString(2, utente.getUsername());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(UtenteDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante l'update nel DB degli utenti");
+
         }
     }
 
@@ -85,7 +96,9 @@ public class UtenteDaoDb implements UtenteDao {
             stmt.setString(1, username);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(UtenteDaoDb.class.getName());
+            logger.log(Level.SEVERE, e, () -> "Errore durante l'eliminazione nel DB degli utenti");
+
         }
     }
 }

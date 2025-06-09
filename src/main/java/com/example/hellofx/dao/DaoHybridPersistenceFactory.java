@@ -3,7 +3,6 @@ package com.example.hellofx.dao;
 import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.filtridao.FiltriDao;
 import com.example.hellofx.dao.librodao.LibroDao;
-import com.example.hellofx.dao.noleggiodao.NoleggioDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.session.Session;
@@ -46,9 +45,4 @@ public class DaoHybridPersistenceFactory extends DaoFactory {
         return dbFactory.createDaoFiltri(); // esempio
     }
 
-    @Override
-    public NoleggioDao createDaoNoleggio() {
-        return null;
-        // not implemented
-    }
 }
