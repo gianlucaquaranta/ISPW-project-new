@@ -3,7 +3,6 @@ package com.example.hellofx.graphiccontroller;
 import com.example.hellofx.bean.GenereBean;
 import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.controller.AggiornaCatController;
-import com.example.hellofx.controllerfactory.AggiornaCatControllerFactory;
 import com.example.hellofx.exception.CopieDisponibiliException;
 import com.example.hellofx.exception.LibroGiaPresenteException;
 import javafx.event.ActionEvent;
@@ -31,7 +30,7 @@ public class AggiungiModificaLibroGC {
 
     boolean isEditMode;
 
-    AggiornaCatController aggiornaCatController = AggiornaCatControllerFactory.getInstance().createAggiornaCatController();
+    AggiornaCatController aggiornaCatController;
 
     @FXML
     void annulla(ActionEvent event) {
@@ -57,7 +56,7 @@ public class AggiungiModificaLibroGC {
             bean.setNumCopie(copie);
 
             // Validazione
-            AggiornaCatController.validateLibroBean(bean);
+            aggiornaCatController.validateLibroBean(bean);
 
             // Azione
             if (this.isEditMode) {
@@ -70,13 +69,16 @@ public class AggiungiModificaLibroGC {
             SceneChanger.changeSceneWithController(
                     "/com/example/hellofx/modificaCatalogo.fxml",
                     event,
-                    (ModificaCatalogoGC controller) -> controller.mostraCatalogoModificabile(aggiornaCatController.getCatalogo())
+                    (ModificaCatalogoGC controller) -> {
+                        controller.setAggiornaCatController(aggiornaCatController);
+                        controller.mostraCatalogoModificabile(aggiornaCatController.getCatalogo());
+                    }
             );
 
         } catch (NumberFormatException _) {
             this.showAlert("Errore - Input numerico", "Controlla i campi numerici", "Anno di pubblicazione o numero di copie non validi.");
-        } catch (IllegalArgumentException _) {
-            this.showAlert("Errore di validazione", "Dati mancanti o non validi", "");
+        } catch (IllegalArgumentException e) {
+            this.showAlert("Errore di validazione", "Dati mancanti o non validi", e.getMessage());
         } catch (LibroGiaPresenteException e){
             this.showAlert("Errore - Libro già esistente", "Il libro inserito è già in catalogo", e.getMessage());
         } catch (CopieDisponibiliException e){
@@ -116,5 +118,9 @@ public class AggiungiModificaLibroGC {
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
         alert.showAndWait();
+    }
+
+    public void setAggiornaCatController(AggiornaCatController c) {
+        this.aggiornaCatController = c;
     }
 }

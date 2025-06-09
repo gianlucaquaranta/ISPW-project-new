@@ -34,13 +34,13 @@
             <TableView fx:id="tableView" layoutX="71.2" layoutY="138.4" prefHeight="532.0" prefWidth="1199.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="150.0">
                <columns>
                   <TableColumn fx:id="idCol" prefWidth="171.0" text="ID" />
-                  <TableColumn fx:id="isbnCol" prefWidth="143.99998474121094" text="ISBN" />
-                  <TableColumn fx:id="titoloCol" prefWidth="191.20004272460938" text="Titolo" />
-                  <TableColumn fx:id="usernameCol" prefWidth="115.19992065429688" text="Username" />
-                  <TableColumn id="colonneGrandi" fx:id="emailCol" prefWidth="228.0" text="Email" />
-                  <TableColumn fx:id="dataInizioCol" prefWidth="88.0001220703125" text="Data di inizio" />
-                  <TableColumn id="colonneGrandi" fx:id="scadenzaCol" prefWidth="86.4000244140625" text="Scadenza" />
-                  <TableColumn id="colonneGrandi" fx:id="opzioniCol" prefWidth="175.199951171875" text="Opzioni" />
+                  <TableColumn fx:id="isbnCol" prefWidth="128.79998779296875" text="ISBN" />
+                  <TableColumn fx:id="titoloCol" prefWidth="186.39990234375" text="Titolo" />
+                  <TableColumn fx:id="usernameCol" prefWidth="129.59994506835938" text="Username" />
+                  <TableColumn id="colonneGrandi" fx:id="emailCol" prefWidth="201.60003662109375" text="Email" />
+                  <TableColumn fx:id="dataInizioCol" prefWidth="92.0" text="Data di inizio" />
+                  <TableColumn id="colonneGrandi" fx:id="scadenzaCol" prefWidth="98.4000244140625" text="Scadenza" />
+                  <TableColumn id="colonneGrandi" fx:id="opzioniCol" prefWidth="188.00009765624986" text="Opzioni" />
                </columns>
             </TableView>
             <TextField fx:id="searchBar" layoutX="488.0" layoutY="91.0" prefHeight="48.0" prefWidth="422.0" style="-fx-border-radius: 0;" styleClass="searchBar" stylesheets="@form_Stylesheet.css" AnchorPane.leftAnchor="488.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="85.0" />

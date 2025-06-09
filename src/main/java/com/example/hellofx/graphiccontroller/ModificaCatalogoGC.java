@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class ModificaCatalogoGC {
     @FXML
-    private TableColumn<LibroBean, String> annoCol;
+    private TableColumn<LibroBean, Integer> annoCol;
     @FXML
     private TableColumn<LibroBean, String> autoreCol;
     @FXML
@@ -46,18 +46,12 @@ public class ModificaCatalogoGC {
     @FXML
     private MenuItem decrescenteModificaItem;
 
-    AggiornaCatController aggiornaCatController = AggiornaCatControllerFactory.getInstance().createAggiornaCatController();
+    AggiornaCatController aggiornaCatController;
 
     @FXML
     public void initialize() {
-        annoCol.setCellValueFactory(new PropertyValueFactory<>("annoPubblicazione"));
-        autoreCol.setCellValueFactory(new PropertyValueFactory<>("autore"));
-        copieCol.setCellValueFactory(new PropertyValueFactory<>("copie"));
-        copieDispCol.setCellValueFactory(new PropertyValueFactory<>("copieDisponibili"));
-        editoreCol.setCellValueFactory(new PropertyValueFactory<>("editore"));
-        genereCol.setCellValueFactory(new PropertyValueFactory<>("genereString"));
-        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-        titoloCol.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+        CatalogoTableConfigurator.initializeIntegerColumns(annoCol, copieCol, copieDispCol);
+        CatalogoTableConfigurator.initializeStringColumns(autoreCol, editoreCol, genereCol, isbnCol, titoloCol);
 
         setUpOptions();
 
@@ -93,6 +87,7 @@ public class ModificaCatalogoGC {
                                 "/com/example/hellofx/formAggiungiModificaLibro.fxml",
                                 event,
                                 (AggiungiModificaLibroGC controller) -> {
+                                    controller.setAggiornaCatController(aggiornaCatController);
                                     controller.setForm(bean);
                                     controller.setEditMode(true);
                                 }
@@ -139,20 +134,14 @@ public class ModificaCatalogoGC {
     }
 
     @FXML
-    void goHome(ActionEvent event) {
-        SceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
-    }
-
-    @FXML
-    void salva(ActionEvent event) {
-        aggiornaCatController.save();
-
-        SceneChanger.changeSceneWithController(
-                "/com/example/hellofx/visualizzaCatalogo.fxml",
+    void goBack(ActionEvent event) {
+        SceneChanger.changeSceneWithController("/com/example/hellofx/visualizzaCatalogo.fxml",
                 event,
-                (VisualizzaCatalogoGC controller) -> controller.mostraCatalogo(aggiornaCatController.getCatalogo())
+                (VisualizzaCatalogoGC controller) -> {
+                    controller.setAggiornaCatController(aggiornaCatController);
+                    controller.mostraCatalogo(aggiornaCatController.getCatalogo());
+                }
         );
-
     }
 
     @FXML
@@ -161,7 +150,10 @@ public class ModificaCatalogoGC {
         SceneChanger.changeSceneWithController(
                 "/com/example/hellofx/formAggiungiModificaLibro.fxml",
                 event,
-                (AggiungiModificaLibroGC controller) -> controller.setEditMode(false)
+                (AggiungiModificaLibroGC controller) -> {
+                    controller.setAggiornaCatController(aggiornaCatController);
+                    controller.setEditMode(false);
+                }
         );
     }
 
@@ -169,6 +161,10 @@ public class ModificaCatalogoGC {
     void setFilterSplitText(ActionEvent event){
         MenuItem selectedItem = (MenuItem) event.getSource();
         filterSplit.setText(selectedItem.getText());
+    }
+
+    public void setAggiornaCatController(AggiornaCatController c) {
+        this.aggiornaCatController = c;
     }
 
 }

@@ -29,8 +29,7 @@
             <Insets left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Button layoutX="963.4" layoutY="30.4" mnemonicParsing="false" onAction="#goHome" prefHeight="46.0" prefWidth="73.0" text="Home" AnchorPane.rightAnchor="223.0" AnchorPane.topAnchor="30.0" />
-            <Button layoutX="853.0" layoutY="31.2" mnemonicParsing="false" onAction="#salva" prefHeight="46.0" prefWidth="142.0" text="Salva modifiche" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="30.0" />
+            <Button layoutX="853.0" layoutY="31.2" mnemonicParsing="false" onAction="#goBack" prefHeight="46.0" prefWidth="94.0" text="Indietro" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="31.0" />
             <Label fx:id="titolo" layoutX="65.8" layoutY="23.2" styleClass="titolo" text="Catalogo - opzioni di modifica" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="23.2" />
             <TableView fx:id="tableView" layoutX="71.2" layoutY="148.0" prefHeight="452.0" prefWidth="1199.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="150.0">
                <columns>
@@ -46,10 +45,10 @@
                </columns>
             </TableView>
             <Button layoutX="563.0" layoutY="625.0" mnemonicParsing="false" onAction="#aggiungiLibro" prefHeight="46.0" prefWidth="161.0" text="Aggiungi libro" />
-            <SplitMenuButton fx:id="orderSplit" layoutX="761.0" layoutY="32.8" mnemonicParsing="false" prefHeight="43.0" prefWidth="190.0" stylesheets="@form_Stylesheet.css" text="Ordinamento" AnchorPane.rightAnchor="308.6" AnchorPane.topAnchor="33.0">
+            <SplitMenuButton fx:id="orderSplit" layoutX="896.8000000000001" layoutY="33.4" mnemonicParsing="false" prefHeight="43.0" prefWidth="190.0" stylesheets="@form_Stylesheet.css" text="Ordinamento" AnchorPane.rightAnchor="172.79999999999995" AnchorPane.topAnchor="33.4">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#setOrderSplitText" text="Crescente" />
-                  <MenuItem mnemonicParsing="false" onAction="#setOrderSplitText" text="Decrescente" />
+                  <MenuItem fx:id="crescenteModificaItem" mnemonicParsing="false" text="Crescente" />
+                  <MenuItem fx:id="decrescenteModificaItem" mnemonicParsing="false" text="Decrescente" />
                </items>
             </SplitMenuButton>
             <Button layoutX="677.4" layoutY="90.4" mnemonicParsing="false" onAction="#search" prefHeight="47.0" prefWidth="73.0" styleClass="searchButton" stylesheets="@form_Stylesheet.css" AnchorPane.leftAnchor="677.4" AnchorPane.topAnchor="90.4">

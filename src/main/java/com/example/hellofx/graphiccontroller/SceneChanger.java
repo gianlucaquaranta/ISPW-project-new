@@ -61,4 +61,8 @@ public class SceneChanger {
         alert.setContentText("Errore di lettura del file.");
         alert.showAndWait();
     }
+
+    public static void setUpCatalogoTableView(){
+
+    }
 }

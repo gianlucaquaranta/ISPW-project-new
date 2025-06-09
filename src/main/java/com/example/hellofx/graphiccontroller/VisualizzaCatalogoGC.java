@@ -2,25 +2,23 @@ package com.example.hellofx.graphiccontroller;
 
 import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.controller.AggiornaCatController;
-import com.example.hellofx.controllerfactory.AggiornaCatControllerFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
 
 public class VisualizzaCatalogoGC {
     @FXML
-    private TableColumn<LibroBean, String> annoCol;
+    private TableColumn<LibroBean, Integer> annoCol;
     @FXML
     private TableColumn<LibroBean, String> autoreCol;
     @FXML
-    private TableColumn<LibroBean, String> copieCol;
+    private TableColumn<LibroBean, Integer> copieCol;
     @FXML
-    private TableColumn<LibroBean, String> copieDispCol;
+    private TableColumn<LibroBean, Integer> copieDispCol;
     @FXML
     private TableColumn<LibroBean, String> editoreCol;
     @FXML
@@ -42,18 +40,12 @@ public class VisualizzaCatalogoGC {
     @FXML
     private MenuItem decrescenteItem;
 
-    AggiornaCatController aggiornaCatController = AggiornaCatControllerFactory.getInstance().createAggiornaCatController();
+    AggiornaCatController aggiornaCatController;
 
     @FXML
     public void initialize() {
-        annoCol.setCellValueFactory(new PropertyValueFactory<>("annoPubblicazione"));
-        autoreCol.setCellValueFactory(new PropertyValueFactory<>("autore"));
-        copieCol.setCellValueFactory(new PropertyValueFactory<>("copie"));
-        copieDispCol.setCellValueFactory(new PropertyValueFactory<>("copieDisponibili"));
-        editoreCol.setCellValueFactory(new PropertyValueFactory<>("editore"));
-        genereCol.setCellValueFactory(new PropertyValueFactory<>("genereString"));
-        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-        titoloCol.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+        CatalogoTableConfigurator.initializeIntegerColumns(annoCol, copieCol, copieDispCol);
+        CatalogoTableConfigurator.initializeStringColumns(autoreCol, editoreCol, genereCol, isbnCol, titoloCol);
 
         crescenteItem.setOnAction(event -> {
             orderSplit.setText("Crescente");
@@ -85,7 +77,10 @@ public class VisualizzaCatalogoGC {
         SceneChanger.changeSceneWithController(
                 "/com/example/hellofx/modificaCatalogo.fxml",
                 event,
-                (ModificaCatalogoGC controller) -> controller.mostraCatalogoModificabile(aggiornaCatController.getCatalogo())
+                (ModificaCatalogoGC controller) -> {
+                    controller.setAggiornaCatController(aggiornaCatController);
+                    controller.mostraCatalogoModificabile(aggiornaCatController.getCatalogo());
+                }
         );
     }
 
@@ -98,5 +93,9 @@ public class VisualizzaCatalogoGC {
     void setFilterSplitText(ActionEvent event){
         MenuItem selectedItem = (MenuItem) event.getSource();
         filterSplit.setText(selectedItem.getText());
+    }
+
+    public void setAggiornaCatController(AggiornaCatController c) {
+        this.aggiornaCatController = c;
     }
 }

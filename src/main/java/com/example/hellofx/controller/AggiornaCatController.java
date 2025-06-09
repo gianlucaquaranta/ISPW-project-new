@@ -8,31 +8,31 @@ import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.exception.CopieDisponibiliException;
 import com.example.hellofx.model.Biblioteca;
+import com.example.hellofx.model.Prenotazione;
 import com.example.hellofx.model.Libro;
 import com.example.hellofx.exception.LibroGiaPresenteException;
 import com.example.hellofx.session.BibliotecarioSession;
 import com.example.hellofx.session.Session;
 import com.example.hellofx.session.SessionManager;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.time.Year;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class AggiornaCatController {
-    private Session session = SessionManager.getSession();
-    private LibroDao libroDaoMemory = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoLibro();
+    private final Session session = SessionManager.getSession();
+    private final LibroDao libroDaoMemory = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoLibro();
+
+    private final Biblioteca b = ((BibliotecarioSession)session).getBiblioteca();
 
     public void delete(LibroBean libroBean) {
-        Biblioteca b = ((BibliotecarioSession) session).getBiblioteca();
         b.getCatalogo().removeIf(l -> l.getIsbn().equals(libroBean.getIsbn()));
         b.getCopie().remove(libroBean.getIsbn());
+
     }
 
     public void update(LibroBean libroBean) throws CopieDisponibiliException {
-        Biblioteca b = ((BibliotecarioSession) session).getBiblioteca();
-
         for (Libro l : b.getCatalogo()) {
             if (l.getIsbn().equals(libroBean.getIsbn())) {
                 int copiePrenotate = b.getCopie().get(l.getIsbn())[0] - b.getCopie().get(l.getIsbn())[1];
@@ -40,8 +40,14 @@ public class AggiornaCatController {
                 if (libroBean.getNumCopie()[0] >= copiePrenotate) { //copie disponibili >= copie già prenotate
                     b.getCatalogo().removeIf(libro -> libro.getIsbn().equals(libroBean.getIsbn()));
                     b.getCatalogo().add(this.retrieveLibro(libroBean, Session.isFull()));
-                    Integer[] copie = {libroBean.getNumCopie()[0], b.getCopie().get(l.getIsbn())[1]}; //set nuovo numero di copie totali e vecchio numero di copie disponibili
+                    Integer[] copie = {libroBean.getNumCopie()[0], libroBean.getNumCopie()[0]-copiePrenotate}; //set nuovo numero di copie totali e disponibili
                     b.getCopie().replace(l.getIsbn(), copie);
+
+                    if (Session.isFull()) {
+                        BibliotecaDao bibliotecaDaoPers = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
+                        bibliotecaDaoPers.update(b);
+                    }
+
                     break;
                 } else {
                     throw new CopieDisponibiliException(copiePrenotate);
@@ -50,54 +56,18 @@ public class AggiornaCatController {
         }
     }
 
-    /*
-        public List<LibroBean> getCatalogo(){
-            List<LibroBean> list = new ArrayList<>();
-            Biblioteca b = ((BibliotecarioSession)session).getBiblioteca();
-            for(Libro l : b.getCatalogo()){
-                LibroBean bean = Converter.libroToBean(l);
-                Integer[] copie = b.getCopie().get(l.getIsbn());
-                bean.setNumCopie(copie);
-                list.add(bean);
-            }
-            return list;
-        }
-
-     */
     public List<LibroBean> getCatalogo() {
-        System.out.println("DEBUG - Inizio metodo getCatalogo");
-
         List<LibroBean> list = new ArrayList<>();
-        Biblioteca b = ((BibliotecarioSession) session).getBiblioteca();
-
-        if (b == null) {
-            System.out.println("DEBUG - La biblioteca è null!");
-        } else {
-            System.out.println("DEBUG - Biblioteca caricata: " + b.getNome() + ", numero libri: " + b.getCatalogo().size());
-        }
-
         for (Libro l : b.getCatalogo()) {
-            System.out.println("DEBUG - Elaborazione libro: " + l.getTitolo() + " (ISBN: " + l.getIsbn() + ")");
-
             LibroBean bean = Converter.libroToBean(l);
-
             Integer[] copie = b.getCopie().get(l.getIsbn());
-            if (copie != null) {
-                System.out.println("DEBUG - Copie trovate: totali=" + copie[0] + ", disponibili=" + copie[1]);
-            } else {
-                System.out.println("DEBUG - Nessuna informazione sulle copie per ISBN: " + l.getIsbn());
-            }
-
             bean.setNumCopie(copie);
             list.add(bean);
         }
-
-        System.out.println("DEBUG - Numero totale di LibroBean nella lista: " + list.size());
         return list;
     }
 
     public void add(LibroBean libroBean) throws LibroGiaPresenteException {
-        Biblioteca b = ((BibliotecarioSession) session).getBiblioteca();
         // Controlla se il libro è già nel catalogo della biblioteca
         if (b.getLibroByIsbn(libroBean.getIsbn()) != null) {
             throw new LibroGiaPresenteException(libroBean.getIsbn());
@@ -105,12 +75,17 @@ public class AggiornaCatController {
 
         Libro l = this.retrieveLibro(libroBean, Session.isFull());
         b.getCatalogo().add(l);
-        Integer[] copie = {libroBean.getNumCopie()[0], libroBean.getNumCopie()[1]};
-        b.getCopie().replace(l.getIsbn(), copie);
+        Integer[] copie = {libroBean.getNumCopie()[0], libroBean.getNumCopie()[0]};
+        b.getCopie().put(l.getIsbn(), copie);
+
+        if (Session.isFull()) {
+            BibliotecaDao bibliotecaDaoPers = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
+            bibliotecaDaoPers.update(b);
+        }
     }
 
     public List<LibroBean> searchByField(String field, String fieldType) {
-        List<Libro> list = ((BibliotecarioSession) session).getBiblioteca().getCatalogo();
+        List<Libro> list = b.getCatalogo();
         List<LibroBean> results = new ArrayList<>();
 
         Map<String, Function<Libro, String>> fieldExtractors = Map.of(
@@ -126,7 +101,7 @@ public class AggiornaCatController {
         if (extractor == null) return this.getCatalogo(); // fieldType Mostra tutti
 
         for (Libro l : list) {
-            if (extractor.apply(l).equals(field)) {
+            if (extractor.apply(l).equalsIgnoreCase(field)) {
                 results.add(Converter.libroToBean(l));
             }
         }
@@ -138,17 +113,6 @@ public class AggiornaCatController {
             catalogo.sort(Comparator.comparing(LibroBean::getIsbn).reversed());
         } else { //default: ordine crescente
             catalogo.sort(Comparator.comparing(LibroBean::getIsbn));
-        }
-    }
-
-    public void save() {
-        Biblioteca b = ((BibliotecarioSession) session).getBiblioteca();
-        BibliotecaDao bibliotecaDaoMemory = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoBiblioteca();
-        bibliotecaDaoMemory.update(b);
-
-        if (Session.isFull()) {
-            BibliotecaDao bibliotecaDaoPers = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
-            bibliotecaDaoPers.update(((BibliotecarioSession) session).getBiblioteca());
         }
     }
 
@@ -173,7 +137,8 @@ public class AggiornaCatController {
         return l;
     }
 
-    public static void validateLibroBean(LibroBean bean) throws IllegalArgumentException {
+    public void validateLibroBean(LibroBean bean) throws IllegalArgumentException {
+
         StringBuilder missingFields = new StringBuilder();
 
         if (bean.getTitolo() == null || bean.getTitolo().isBlank())
@@ -191,7 +156,7 @@ public class AggiornaCatController {
         if (bean.getGenere() == null)
             missingFields.append("- Genere\n");
 
-        if (bean.getAnnoPubblicazione() <= 0)
+        if (bean.getAnnoPubblicazione() <= 0 || bean.getAnnoPubblicazione() >= Year.now().getValue())
             missingFields.append("- Anno pubblicazione\n");
 
         Integer[] copie = bean.getNumCopie();
@@ -201,5 +166,36 @@ public class AggiornaCatController {
         if (!missingFields.isEmpty()) {
             throw new IllegalArgumentException("I seguenti campi sono mancanti o invalidi:\n" + missingFields);
         }
+    }
+
+    private Biblioteca setBibliotecaCopy(){
+        Biblioteca bib = ((BibliotecarioSession) session).getBiblioteca();
+        Biblioteca bibCopy = new Biblioteca();
+
+        bibCopy.setId(bib.getId());
+        bibCopy.setNome(bib.getNome());
+
+        // Copia profonda catalogo
+        bibCopy.setCatalogo(
+                bib.getCatalogo().stream()
+                        .map(Libro::new)
+                        .collect(Collectors.toList())
+        );
+
+        // Copia profonda prenotazioni
+        bibCopy.setPrenotazioniAttive(
+                bib.getPrenotazioniAttive().stream()
+                        .map(Prenotazione::new)
+                        .collect(Collectors.toList())
+        );
+
+        // Copia profonda mappa copie
+        Map<String, Integer[]> copieCopy = new HashMap<>();
+        for (Map.Entry<String, Integer[]> entry : bib.getCopie().entrySet()) {
+            copieCopy.put(entry.getKey(), new Integer[]{entry.getValue()[0], entry.getValue()[1]});
+        }
+        bibCopy.setCopie(copieCopy);
+
+        return bibCopy;
     }
 }

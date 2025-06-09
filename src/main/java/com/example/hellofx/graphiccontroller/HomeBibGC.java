@@ -17,7 +17,10 @@ public class HomeBibGC {
         SceneChanger.changeSceneWithController(
                 "/com/example/hellofx/visualizzaCatalogo.fxml",
                 event,
-                (VisualizzaCatalogoGC controller) -> controller.mostraCatalogo(aggiornaCatController.getCatalogo())
+                (VisualizzaCatalogoGC controller) -> {
+                    controller.setAggiornaCatController(aggiornaCatController);
+                    controller.mostraCatalogo(aggiornaCatController.getCatalogo());
+                }
         );
     }
 
