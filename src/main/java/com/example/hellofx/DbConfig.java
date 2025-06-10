@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DbConfig {
-    private static final String PROPERTIES_FILE = "C:\\Users\\beapr\\IdeaProjects\\ISPW-project-new\\src\\main\\java\\com\\example\\hellofx\\db.properties";
+    private static final String PROPERTIES_FILE = "C:\\Users\\gianl\\Desktop\\Università\\HelloFX\\src\\main\\java\\com\\example\\hellofx\\db.properties";
 
     private DbConfig() {}
 

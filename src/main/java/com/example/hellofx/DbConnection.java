@@ -30,8 +30,8 @@ public class DbConnection {
                 connection.close();
             }
         } catch (SQLException e) {
-            Logger logger = Logger.getLogger(DbConfig.class.getName());
-            logger.log(Level.SEVERE, "Errore durante la chiudura della conenssione al DB", e);
+            Logger logger = Logger.getLogger(DbConnection.class.getName());
+            logger.log(Level.SEVERE, "Errore durante la chiusura della connessione al DB", e);
         }
     }
 }
