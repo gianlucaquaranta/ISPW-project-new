@@ -68,4 +68,16 @@ public class Libro {
     public void setAnnoPubblicazione(Integer annoPubblicazione) {
         this.annoPubblicazione = annoPubblicazione;
     }
+
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "titolo='" + titolo + '\'' +
+                ", autore='" + autore + '\'' +
+                ", editore='" + editore + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", genere='" + genere + '\'' +
+                ", annoPubblicazione=" + annoPubblicazione +
+                '}';
+    }
 }

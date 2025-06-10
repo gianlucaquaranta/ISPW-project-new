@@ -1,11 +1,13 @@
-package com.example.hellofx.dao;
+package com.example.hellofx;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DbConfig {
-    private static final String PROPERTIES_FILE = "db.properties";
+    private static final String PROPERTIES_FILE = "C:\\Users\\beapr\\IdeaProjects\\ISPW-project-new\\src\\main\\java\\com\\example\\hellofx\\db.properties";
 
     private DbConfig() {}
 
@@ -14,7 +16,8 @@ public class DbConfig {
         try (FileInputStream fis = new FileInputStream(PROPERTIES_FILE)) {
             properties.load(fis);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(DbConfig.class.getName());
+            logger.log(Level.SEVERE, "Errore durante la configurazione del DB", e);
         }
         return properties;
     }

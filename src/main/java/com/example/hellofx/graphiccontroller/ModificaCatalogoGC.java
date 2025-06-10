@@ -2,13 +2,11 @@ package com.example.hellofx.graphiccontroller;
 
 import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.controller.AggiornaCatController;
-import com.example.hellofx.controllerfactory.AggiornaCatControllerFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 import java.util.List;
@@ -87,9 +85,9 @@ public class ModificaCatalogoGC {
                                 "/com/example/hellofx/formAggiungiModificaLibro.fxml",
                                 event,
                                 (AggiungiModificaLibroGC controller) -> {
+                                    controller.setEditMode(true);
                                     controller.setAggiornaCatController(aggiornaCatController);
                                     controller.setForm(bean);
-                                    controller.setEditMode(true);
                                 }
                         );
                     });

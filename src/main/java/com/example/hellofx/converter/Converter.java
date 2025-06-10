@@ -56,11 +56,11 @@ public class Converter {
         Posizione posizione = new Posizione(bibliotecaBean.getCap(), bibliotecaBean.getIndirizzo(), bibliotecaBean.getNumeroCivico(), bibliotecaBean.getCitta(), bibliotecaBean.getProvincia());
         b.setPosizione(posizione);
         //dopo aver settato nome e posizione è possibile creare l'id
-        b.setId();
         b.setCatalogo(null);
         b.setPrenotazioniAttive(null);
         b.setCopie(null);
         b.setNoleggiAttivi(null);
+        b.setId(b.getNome());
         return b;
     }
 
@@ -106,6 +106,4 @@ public class Converter {
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         return Timestamp.valueOf(localDate.atStartOfDay());
     }
-
-
 }

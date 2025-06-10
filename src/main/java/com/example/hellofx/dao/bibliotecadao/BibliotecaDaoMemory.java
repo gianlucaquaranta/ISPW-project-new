@@ -37,16 +37,22 @@ public class BibliotecaDaoMemory implements BibliotecaDao {
         } else return null;
     }
 
-    private void store(Biblioteca biblioteca) { // viene chiamata solo se non c'è la biblioteca nella Map
+    private void store(Biblioteca biblioteca) {
+        System.out.println("store");// viene chiamata solo se non c'è la biblioteca nella Map
         String key = biblioteca.getId();
         bibliotecheMap.put(key, biblioteca);
     }
 
     @Override
     public void update(Biblioteca biblioteca) {
+        System.out.println(biblioteca);
         String key = biblioteca.getId();
+        System.out.println(key+biblioteca.getNome());
         if(bibliotecheMap.containsKey(key)) {
+            System.out.println("update");
             bibliotecheMap.replace(key, biblioteca);
-        } else this.store(biblioteca);
+        } else {
+            this.store(biblioteca);
+        }
     }
 }

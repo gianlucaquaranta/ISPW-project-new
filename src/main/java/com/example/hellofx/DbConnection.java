@@ -1,9 +1,11 @@
-package com.example.hellofx.dao;
+package com.example.hellofx;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DbConnection {
     private static Connection connection;
@@ -28,7 +30,8 @@ public class DbConnection {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(DbConfig.class.getName());
+            logger.log(Level.SEVERE, "Errore durante la chiudura della conenssione al DB", e);
         }
     }
 }

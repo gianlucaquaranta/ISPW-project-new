@@ -69,5 +69,16 @@ public class LibroBean {
         this.isbn = isbn;
     }
 
+    public Integer getCopie() {
+        return numCopie[0];
+    }
+
+    public Integer getCopieDisponibili() {
+        return numCopie[1];
+    }
+
+    public String getGenereString() {
+        return this.genere.getNome();
+    }
 
 }

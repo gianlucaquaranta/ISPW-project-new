@@ -8,7 +8,6 @@ import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.exception.CopieDisponibiliException;
 import com.example.hellofx.model.Biblioteca;
-import com.example.hellofx.model.Prenotazione;
 import com.example.hellofx.model.Libro;
 import com.example.hellofx.exception.LibroGiaPresenteException;
 import com.example.hellofx.session.BibliotecarioSession;
@@ -18,7 +17,6 @@ import com.example.hellofx.session.SessionManager;
 import java.time.Year;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class AggiornaCatController {
     private final Session session = SessionManager.getSession();
@@ -30,6 +28,10 @@ public class AggiornaCatController {
         b.getCatalogo().removeIf(l -> l.getIsbn().equals(libroBean.getIsbn()));
         b.getCopie().remove(libroBean.getIsbn());
 
+        if (Session.isFull()) {
+            BibliotecaDao bibliotecaDaoPers = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
+            bibliotecaDaoPers.update(b);
+        }
     }
 
     public void update(LibroBean libroBean) throws CopieDisponibiliException {
@@ -39,9 +41,10 @@ public class AggiornaCatController {
 
                 if (libroBean.getNumCopie()[0] >= copiePrenotate) { //copie disponibili >= copie già prenotate
                     b.getCatalogo().removeIf(libro -> libro.getIsbn().equals(libroBean.getIsbn()));
-                    b.getCatalogo().add(this.retrieveLibro(libroBean, Session.isFull()));
+                    Libro libro = Converter.beanToLibro(libroBean);
+                    b.getCatalogo().add(libro);
                     Integer[] copie = {libroBean.getNumCopie()[0], libroBean.getNumCopie()[0]-copiePrenotate}; //set nuovo numero di copie totali e disponibili
-                    b.getCopie().replace(l.getIsbn(), copie);
+                    b.getCopie().replace(libro.getIsbn(), copie);
 
                     if (Session.isFull()) {
                         BibliotecaDao bibliotecaDaoPers = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
@@ -119,22 +122,24 @@ public class AggiornaCatController {
     }
 
     private Libro retrieveLibro(LibroBean libroBean, boolean isFull) {
-        Libro l = libroDaoMemory.load(libroBean.getIsbn());
+        Libro l = libroDaoMemory.load(libroBean.getIsbn(), b.getId());
+
         if (l != null) { // il libro è in memoria
             return l;
         } else if (isFull) {
             LibroDao libroDaoPers = DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoLibro();
-            l = libroDaoPers.load(libroBean.getIsbn());
+            l = libroDaoPers.load(libroBean.getIsbn(), b.getId());
+
             if (l == null) { // il libro non è in memoria né in persistenza
                 l = Converter.beanToLibro(libroBean);
-                libroDaoMemory.store(l);
-                libroDaoPers.store(l);
+                libroDaoMemory.store(l, b.getId());
+                libroDaoPers.store(l, b.getId());
                 return l;
             } else return l; // il libro è in persistenza
 
         } else { // il libro non è presente nel sistema (demo version)
             l = Converter.beanToLibro(libroBean);
-            libroDaoMemory.store(l);
+            libroDaoMemory.store(l, b.getId());
         }
         return l;
     }
@@ -169,4 +174,5 @@ public class AggiornaCatController {
             throw new IllegalArgumentException("I seguenti campi sono mancanti o invalidi:\n" + missingFields);
         }
     }
+
 }
