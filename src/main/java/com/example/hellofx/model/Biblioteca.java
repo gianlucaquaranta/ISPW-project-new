@@ -16,11 +16,11 @@ public class Biblioteca{
 
     public Biblioteca(String nome, List<Libro> catalogo, Posizione posizione) {
         this.nome = nome;
-        this.catalogo = catalogo; //= new ArrayList<>() ??
+        this.catalogo = catalogo;
         this.posizione = posizione;
         prenotazioniAttive = new ArrayList<>();
         noleggiAttivi = new ArrayList<>();
-        this.id = this.nome.replace(" ", "")+this.posizione.getIndirizzo().replace(" ", "")+ this.posizione.getCap();
+        this.id = this.nome;
     }
 
     public Biblioteca() {
@@ -84,10 +84,6 @@ public class Biblioteca{
 
     public void setPrenotazioniAttive(List<Prenotazione> prenotazioniAttive) {
         this.prenotazioniAttive = prenotazioniAttive;
-    }
-
-    public void setId(){
-        this.id = this.nome.replace(" ", "")+this.posizione.getIndirizzo().replace(" ", "")+ this.posizione.getCap();
     }
 
     public void setId(String s){

@@ -91,6 +91,8 @@ public class AggiungiModificaLibroGC {
 
     @FXML
     void setForm(LibroBean libroBean){
+        if(isEditMode) lockIsbnField();
+
         titoloTextField.setText(libroBean.getTitolo());
         isbnTextField.setText(libroBean.getIsbn());
         autoreTextField.setText(libroBean.getAutore());
@@ -125,5 +127,11 @@ public class AggiungiModificaLibroGC {
 
     public void setAggiornaCatController(AggiornaCatController c) {
         this.aggiornaCatController = c;
+    }
+
+    private void lockIsbnField() {
+        isbnTextField.setEditable(false);
+        isbnTextField.setDisable(true);
+        isbnTextField.setStyle("-fx-opacity: 1; -fx-background-color: #f0f0f0;");
     }
 }

@@ -43,10 +43,10 @@ public class BibliotecaService {
         List<Libro> catalogo = new ArrayList<>();
         Libro temp;
         for (Map.Entry<String, Integer[]> entry : b.getCopie().entrySet()) {
-            temp = lDaoM.load(entry.getKey());
+            temp = lDaoM.load(entry.getKey(), b.getId());
             if(temp == null){
-                temp = lDaoD.load(entry.getKey());
-                lDaoM.store(temp);
+                temp = lDaoD.load(entry.getKey(), b.getId());
+                lDaoM.store(temp, b.getId());
             }
             catalogo.add(temp);
 

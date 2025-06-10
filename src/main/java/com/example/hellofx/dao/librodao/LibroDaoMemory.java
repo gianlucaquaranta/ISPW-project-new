@@ -9,7 +9,8 @@ import java.util.Map;
 
 public class LibroDaoMemory implements LibroDao {
 
-    private static Map<String, Libro> libriMap = new HashMap<>();
+    //idBiblioteca -> (isbn -> Libro)
+    private static Map<String, Map<String, Libro>> bibliotecheMap = new HashMap<>();
 
     private static LibroDaoMemory instance = null;
 
@@ -23,28 +24,37 @@ public class LibroDaoMemory implements LibroDao {
     private LibroDaoMemory() {}
 
     @Override
-    public Libro load(String isbn) {
-        if(libriMap.containsKey(isbn)) {
-            return libriMap.get(isbn);
-        } else return null;
+    public Libro load(String isbn, String idBiblioteca) {
+        if (!bibliotecheMap.containsKey(idBiblioteca)) {
+            return null;
+        }
+        return bibliotecheMap.get(idBiblioteca).get(isbn);
     }
 
     @Override
-    public List<Libro> loadAll() {
-        List<Libro> list = new ArrayList<>();
-        for(Libro libro : libriMap.values()) {
-            list.add(libro);
+    public List<Libro> loadAll(String idBiblioteca) {
+        if (!bibliotecheMap.containsKey(idBiblioteca)) {
+            return new ArrayList<>();
         }
-        return list;
+        return new ArrayList<>(bibliotecheMap.get(idBiblioteca).values());
     }
 
     @Override
-    public void store(Libro libro) {
-        if(!libriMap.containsKey(libro.getIsbn())) {
-            libriMap.put(libro.getIsbn(), libro);
-        } else {
-            libriMap.replace(libro.getIsbn(), libro);
-        }
+    public void store(Libro libro, String idBiblioteca) {
+        // Se la biblioteca non esiste ancora, la creiamo
+        bibliotecheMap.computeIfAbsent(idBiblioteca, k -> new HashMap<>());
+
+        // Aggiungiamo/sostituiamo il libro nella biblioteca specificata
+        bibliotecheMap.get(idBiblioteca).put(libro.getIsbn(), libro);
     }
 
+    // Metodo aggiuntivo per rimuovere una biblioteca
+    public void removeBiblioteca(String idBiblioteca) {
+        bibliotecheMap.remove(idBiblioteca);
+    }
+
+    // Metodo aggiuntivo per verificare l'esistenza di una biblioteca
+    public boolean containsBiblioteca(String idBiblioteca) {
+        return bibliotecheMap.containsKey(idBiblioteca);
+    }
 }
