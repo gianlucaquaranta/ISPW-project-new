@@ -1,5 +1,7 @@
 package com.example.hellofx.cli;
 
+import com.example.hellofx.controller.Logout;
+
 import java.util.Scanner;
 
 public class CliSchermataInizialeUtente {
@@ -22,7 +24,7 @@ public class CliSchermataInizialeUtente {
             System.out.println("2. Profilo utente");
             System.out.println("3. Prenota libro");
             System.out.println("4. Trova prezzi");
-            System.out.println("5. Vai al login");
+            System.out.println("5. Logout");
             System.out.print("Seleziona un'opzione: ");
 
             int scelta = scanner.nextInt();
@@ -42,6 +44,9 @@ public class CliSchermataInizialeUtente {
                     avviaCliTrovaPrezzi();
                     break;
                 case 5:
+                    Logout logoutController = new Logout();
+                    logoutController.logout();
+                    System.out.println("\nLogout effettuato con successo!");
                     return;
                 default:
                     System.out.println("Opzione non valida! Riprova.");

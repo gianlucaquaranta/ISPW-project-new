@@ -1,7 +1,6 @@
 package com.example.hellofx.dao.utentedao;
 
 import com.example.hellofx.DbConnection;
-import com.example.hellofx.dao.prenotazionedao.PrenotazioneDaoDb;
 import com.example.hellofx.model.Utente;
 import com.example.hellofx.model.modelfactory.UtenteFactory;
 

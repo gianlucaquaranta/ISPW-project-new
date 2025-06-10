@@ -5,6 +5,7 @@ import com.example.hellofx.controller.LoginController;
 import com.example.hellofx.controller.LoginResult;
 import com.example.hellofx.controller.PLController;
 import com.example.hellofx.controllerfactory.LoginControllerFactory;
+import com.example.hellofx.exception.PrenotazioneGiaPresenteException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -31,15 +32,16 @@ public class LoginGC {
         switch (result) {
             case LoginResult.UTENTE:
                 if(plController != null){ //Significa che gliel'ha passato RiepilogoPrenotazioneGC per gestire la UserNotLoggedException, quindi è necessario cambiare flusso
-                    plController.registraPrenotazione();
+                    try {
+                        plController.registraPrenotazione();
+                    } catch(PrenotazioneGiaPresenteException e){
+                        showAlert(e.getMessage(), Alert.AlertType.ERROR, "Errore nell'aggiunta della prenotazione");
+                    }
                 }
                 SceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
                 break;
             case LoginResult.NON_AUTENTICATO:
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText(null);
-                alert.setContentText("Credenziali non valide");
-                alert.showAndWait();
+                showAlert("Credenziali non valide", Alert.AlertType.ERROR, null);
                 break;
             case LoginResult.BIBLIOTECARIO:
                 SceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
@@ -65,4 +67,11 @@ public class LoginGC {
 
     void setPlController(PLController plController) { this.plController = plController; }
 
+    public void showAlert(String message, Alert.AlertType alertType, String header){
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+
+    }
 }

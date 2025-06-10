@@ -53,7 +53,7 @@ public class PLController {
                 }
                 if(biblioteca.isBlank() && cap.isBlank()){ //L'utente deve inserire almeno un filtro che permetta di filtrare le biblioteche
                         throw new EmptyFiltersException("Inserisci almeno un filtro tra CAP e Biblioteca"); //handle exception ??
-                } else if(titolo.isBlank() && autore.isBlank() && genere.equals("Scegli un genere") && isbn.isBlank()) {
+                } else if(titolo.isBlank() && autore.isBlank() && genere.isBlank() && isbn.isBlank()) {
                         throw new EmptyFiltersException("Inserisci almeno un filtro relativo ai libri");
                 }
 

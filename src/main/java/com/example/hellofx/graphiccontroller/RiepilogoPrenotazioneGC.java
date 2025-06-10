@@ -99,7 +99,7 @@ public class RiepilogoPrenotazioneGC {
 
     public void showAlert(String message, Alert.AlertType alertType){
         Alert alert = new Alert(alertType);
-        alert.setHeaderText(null);
+        alert.setHeaderText("Errore nell'aggiunta della prenotazione");
         alert.setContentText(message);
         alert.showAndWait();
 

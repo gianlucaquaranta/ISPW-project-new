@@ -5,6 +5,7 @@ import com.example.hellofx.controller.LoginController;
 import com.example.hellofx.controller.LoginResult;
 import com.example.hellofx.controller.PLController;
 import com.example.hellofx.controllerfactory.LoginControllerFactory;
+import com.example.hellofx.exception.PrenotazioneGiaPresenteException;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -85,15 +86,18 @@ public class CliLogin {
                 avviaHomeBibliotecario();
                 break;
             case LoginResult.NON_AUTENTICATO:
-                Logger logger = Logger.getLogger(CliLogin.class.getName());
-                logger.log(Level.SEVERE, () -> "Credenziali non valide");
+                printLogger("Credenziali non valide");
                 break;
         }
     }
 
     private void gestisciUtenteAutenticato() {
         if (plController != null) {
-            plController.registraPrenotazione();
+            try {
+                plController.registraPrenotazione();
+            } catch(PrenotazioneGiaPresenteException e){
+                printLogger(e.getMessage());
+            }
             return;
         }
         avviaSchermateUtente("Accesso effettuato come utente");
@@ -122,11 +126,9 @@ public class CliLogin {
     }
 
     private void avviaHomeBibliotecario() {
-        System.out.println("\nAccesso effettuato come bibliotecario");/*
+        System.out.println("\nAccesso effettuato come bibliotecario");
         CliHomeBibliotecario homeBibliotecario = new CliHomeBibliotecario(scanner);
         homeBibliotecario.start();
-        */
-
     }
 
     private String richiediInput(String messaggio) {
@@ -134,4 +136,8 @@ public class CliLogin {
         return scanner.nextLine();
     }
 
+    void printLogger(String message) {
+        Logger logger = Logger.getLogger(CliLogin.class.getName());
+        logger.log(Level.SEVERE, message);
+    }
 }
