@@ -59,7 +59,7 @@ public class AggiornaCatController {
         }
     }
 
-    public List<LibroBean> getCatalogo() {
+    public List<LibroBean> getCatalogo() { //restituisce il catalogo
         List<LibroBean> list = new ArrayList<>();
         for (Libro l : b.getCatalogo()) {
             LibroBean bean = Converter.libroToBean(l);
