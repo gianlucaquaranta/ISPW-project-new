@@ -46,7 +46,7 @@ public class PrenotazioniBibGC {
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         dataInizioCol.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
-        scadenzaCol.setCellValueFactory(new PropertyValueFactory<>("scadenza"));
+        scadenzaCol.setCellValueFactory(new PropertyValueFactory<>("dataScadenza"));
 
         setUpOptions();
     }

@@ -109,5 +109,9 @@ public class PrenotazioneBean {
 
     public void setId(String id) {this.id = id;}
 
+    public String getEmail() {return utente.getEmail();}
+
+    public String getUsername() {return utente.getUsername();}
+
 
 }
