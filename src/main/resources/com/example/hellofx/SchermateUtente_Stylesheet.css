@@ -33,17 +33,19 @@
 
 }
 
-.tab:selected{
+.tab-pane .tab-header-area .tab:selected{
     -fx-background-color: #E9E0D9;
 
 }
 
-.tab:selected .focus-indicator{
+
+.tab-pane .tab-header-area .tab:selected .focus-indicator{
     -fx-background-color: TRANSPARENT;
     -fx-border-color: TRANSPARENT;
 }
 
-.tab:selected .tab-label{
+
+.tab-pane .tab-header-area .tab:selected .tab-label{
     -fx-text-fill: #0b6b75;
 }
 
