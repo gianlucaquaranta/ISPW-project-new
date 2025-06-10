@@ -1,7 +1,7 @@
 package com.example.hellofx.dao.noleggiodao;
 
 import com.example.hellofx.converter.Converter;
-import com.example.hellofx.dao.DbConnection;
+import com.example.hellofx.DbConnection;
 import com.example.hellofx.model.Noleggio;
 import com.example.hellofx.model.modelfactory.NoleggioFactory;
 

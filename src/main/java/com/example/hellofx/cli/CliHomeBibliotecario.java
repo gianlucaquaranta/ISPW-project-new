@@ -1,5 +1,4 @@
 package com.example.hellofx.cli;
-
 import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.bean.PrenotazioneBean;
 import com.example.hellofx.controller.AggiornaCatController;
@@ -12,123 +11,114 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CliHomeBibliotecario {
-    private Scanner scanner;
-    private boolean running;
+    private final Scanner scanner;
+    private final AggiornaCatController aggiornaCatController;
+    private final PrenotazioniBibController prenotazioniBibController;
+    private static final String CONTINUE = "\nPremi INVIO per continuare...";
 
     public CliHomeBibliotecario(Scanner scanner) {
         this.scanner = scanner;
-        this.running = true;
+        this.aggiornaCatController = AggiornaCatControllerFactory.getInstance().createAggiornaCatController();
+        this.prenotazioniBibController = PrenotazioniBibControllerFactory.getInstance().createPrenotazioniBibController();
     }
 
     public void start() {
-        System.out.println("=== Biblioteca System ===");
+        boolean running = true;
 
         while (running) {
-            displayMenu();
-            int choice = getMenuChoice();
-            handleChoice(choice);
-        }
+            System.out.println("\n=== MENU BIBLIOTECARIO ===");
+            System.out.println("1. Visualizza Catalogo");
+            System.out.println("2. Visualizza Registro Noleggi");
+            System.out.println("3. Visualizza Prenotazioni");
+            System.out.println("4. Logout");
+            System.out.print("Scelta: ");
 
-        scanner.close();
-    }
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consuma il newline
 
-    private void displayMenu() {
-        System.out.println("\n=== Home - La tua Biblioteca ===");
-        System.out.println("1. Visualizza Catalogo");
-        System.out.println("2. Visualizza Registro Noleggi");
-        System.out.println("3. Visualizza Prenotazioni");
-        System.out.println("4. Logout");
-        System.out.print("Seleziona un'opzione: ");
-    }
-
-    private int getMenuChoice() {
-        while (!scanner.hasNextInt()) {
-            System.out.println("Input non valido. Inserisci un numero.");
-            scanner.next(); // discard non-integer input
-        }
-        return scanner.nextInt();
-    }
-
-    private void handleChoice(int choice) {
-        switch (choice) {
-            case 1:
-                visualizzaCatalogo();
-                askForModification();
-                break;
-            case 2:
-                visualizzaRegistroNoleggi();
-                break;
-            case 3:
-                visualizzaPrenotazioni();
-                break;
-            case 4:
-                logout();
-                break;
-            default:
-                System.out.println("Scelta non valida. Riprova.");
+            switch (choice) {
+                case 1:
+                    visualizzaCatalogo();
+                    break;
+                case 2:
+                    visualizzaRegistroNoleggi();
+                    break;
+                case 3:
+                    visualizzaPrenotazioni();
+                    break;
+                case 4:
+                    running = false;
+                    logout();
+                    break;
+                default:
+                    System.out.println("Scelta non valida!");
+            }
         }
     }
 
     private void visualizzaCatalogo() {
-        System.out.println("\n=== Visualizzazione Catalogo ===");
+        System.out.println("\n=== CATALOGO LIBRI ===");
+        List<LibroBean> catalogo = aggiornaCatController.getCatalogo();
 
-        try {
-            // Recupera il catalogo
-            AggiornaCatController aggiornaCatController = AggiornaCatControllerFactory.getInstance().createAggiornaCatController();
-            List<LibroBean> catalogo = aggiornaCatController.getCatalogo();
-
-            // Display catalog COME IN climodcat
-            if (catalogo.isEmpty()) {
-                System.out.println("Il catalogo è vuoto.");
-            } else {
-                System.out.println("Libri nel catalogo:");
-                for (LibroBean libro : catalogo) {
-                    System.out.println("- " + libro.getTitolo() + " di " + libro.getAutore() +
-                            " (ISBN: " + libro.getIsbn() + ")");
-                }
+        if (catalogo.isEmpty()) {
+            System.out.println("Nessun libro presente nel catalogo.");
+            return;
+        } else {
+            for (int i = 0; i < catalogo.size(); i++) {
+                LibroBean libro = catalogo.get(i);
+                System.out.printf("%d. %s - %s (ISBN: %s)%n",
+                        i + 1,
+                        libro.getTitolo(),
+                        libro.getAutore(),
+                        libro.getIsbn());
             }
-
-        } catch (Exception e) {
-            System.out.println("Errore durante il recupero del catalogo: " + e.getMessage());
         }
-    }
 
-    private void askForModification() throws Exception {
-        System.out.println("\nCosa vuoi fare?");
-        System.out.println("1. Modifica catalogo");
-        System.out.println("2. Torna al menu principale");
-        System.out.print("Scelta: ");
+        System.out.print("Opzioni: ");
+        System.out.print("\n1. Modifica catalogo");
+        System.out.print("\n2. Indietro\n");
 
-        int choice = getMenuChoice();
-        scanner.nextLine(); // consume newline
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consuma il newline
 
-        if (choice == 1) {
-            CliModificaCatalogo modificaCLI = new CliModificaCatalogo(this.scanner);
-            modificaCLI.start();
-        } else if (choice != 2) {
-            System.out.println("Scelta non valida. Torno al menu principale.");
+        if(choice == 1) {
+                CliModificaCatalogo modificaCatalogo = new CliModificaCatalogo(scanner, aggiornaCatController);
+                modificaCatalogo.start();
         }
     }
 
     private void visualizzaRegistroNoleggi() {
-        System.out.println("\n=== Registro Noleggi ===");
-
-        System.out.println("Funzionalità di visualizzazione noleggi non ancora implementata.");
-
-        System.out.println("\nPremi Invio per continuare...");
-        scanner.nextLine(); // consume newline
-        scanner.nextLine(); // wait for enter
+        System.out.println("\n=== REGISTRO NOLEGGI ===");
+        // Implementazione visualizzazione noleggi
+        System.out.println("Funzionalità non ancora implementata");
+        System.out.println(CONTINUE);
+        scanner.nextLine();
     }
 
-    private void visualizzaPrenotazioni() throws Exception {
-        CliPrenotazioniBibliotecario cliPrenotazioniBibliotecario = new CliPrenotazioniBibliotecario(this.scanner);
-        cliPrenotazioniBibliotecario.start();
+    private void visualizzaPrenotazioni() {
+        System.out.println("\n=== PRENOTAZIONI ===");
+        List<PrenotazioneBean> prenotazioni = prenotazioniBibController.getPrenotazioni();
+
+        if (prenotazioni.isEmpty()) {
+            System.out.println("Nessuna prenotazione attiva.");
+            return;
+        }
+
+        for (int i = 0; i < prenotazioni.size(); i++) {
+            PrenotazioneBean p = prenotazioni.get(i);
+            System.out.printf("%d. %s - %s (ISBN: %s)%n",
+                    i+1,
+                    p.getUtente().getUsername(),
+                    p.getLibro().getTitolo(),
+                    p.getLibro().getIsbn());
+        }
+
+        System.out.println(CONTINUE);
+        scanner.nextLine();
     }
 
     private void logout() {
-        System.out.println("\nEffettuando il logout...");
         new Logout().logout();
-        this.running = false;
-        System.out.println("Logout completato. Arrivederci!");
+        System.out.println("Logout effettuato con successo.");
     }
 }

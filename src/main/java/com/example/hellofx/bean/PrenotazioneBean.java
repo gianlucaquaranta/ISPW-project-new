@@ -1,6 +1,7 @@
 package com.example.hellofx.bean;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -34,6 +35,10 @@ public class PrenotazioneBean {
 
     public PrenotazioneBean() {
         //converter
+    }
+
+    public PrenotazioneBean(String o, LocalDate dataInizio, LocalDate dataScadenza, Object o1, BibliotecaBean selezionata, LibroBean lb) {
+        //da aggiungere? (158 PLController)
     }
 
     public String getDataInizio() {

@@ -122,11 +122,9 @@ public class CliLogin {
     }
 
     private void avviaHomeBibliotecario() {
-        System.out.println("\nAccesso effettuato come bibliotecario");/*
+        System.out.println("\nAccesso effettuato come bibliotecario");
         CliHomeBibliotecario homeBibliotecario = new CliHomeBibliotecario(scanner);
         homeBibliotecario.start();
-        */
-
     }
 
     private String richiediInput(String messaggio) {
