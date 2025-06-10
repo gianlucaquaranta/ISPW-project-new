@@ -68,7 +68,14 @@ public class CliPrenotaLibro {
         String cap = richiediInput("CAP (lascia vuoto per ignorare): ");
 
         // Creazione bean e chiamata al controller
-        FiltriBean filtriBean = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
+        FiltriBean filtriBean;
+        try {
+            filtriBean = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
+        } catch(IllegalArgumentException e) {
+            showLogger(e.getMessage());
+            return 1;
+        }
+
         List<LibroBean> risultati;
         plController = PLControllerFactory.getInstance().createPLController();
         try {

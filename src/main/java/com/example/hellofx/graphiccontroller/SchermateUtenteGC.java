@@ -118,8 +118,12 @@ public class SchermateUtenteGC {
     @FXML
     void cercaLibri(ActionEvent event){
 
-        setFiltri();
-
+        try {
+            setFiltri();
+        } catch(IllegalArgumentException e){
+            mostraAlert(e.getMessage(), Alert.AlertType.ERROR);
+            return;
+        }
         plController = PLControllerFactory.getInstance().createPLController();
         List<LibroBean> libriFiltrati;
         try {
@@ -139,7 +143,7 @@ public class SchermateUtenteGC {
     }
 
     @FXML
-    private void setFiltri(){
+    private void setFiltri() throws IllegalArgumentException {
         String titolo = titoloTextField.getText();
         String autore = autoreTextField.getText();
         String isbn = isbnTextField.getText();
