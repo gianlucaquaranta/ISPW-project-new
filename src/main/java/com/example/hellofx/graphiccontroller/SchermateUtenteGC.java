@@ -85,6 +85,7 @@ public class SchermateUtenteGC {
                                     rbGC.setLibriTemp(getTableView().getItems());
                                     rbGC.setFiltriTemp(filtriTemp);
                                     rbGC.visualizzaBiblioteche(bean);
+                                    if(filtriTemp == null){ setFiltri(); }
                                 }
                         );
                     });
@@ -100,14 +101,8 @@ public class SchermateUtenteGC {
     @FXML
     void cercaLibri(ActionEvent event){
 
-        String titolo = titoloTextField.getText();
-        String autore = autoreTextField.getText();
-        String isbn = isbnTextField.getText();
-        String genere = genereSplitMenuButton.getText();
-        String biblioteca = bibliotecaTextField.getText();
-        String cap = capTextField.getText();
+        setFiltri();
 
-        filtriTemp = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
         plController = PLControllerFactory.getInstance().createPLController();
         List<LibroBean> libriFiltrati;
         try {
@@ -124,6 +119,18 @@ public class SchermateUtenteGC {
         tableViewBooksPL.setItems(data);
 
         
+    }
+
+    @FXML
+    private void setFiltri(){
+        String titolo = titoloTextField.getText();
+        String autore = autoreTextField.getText();
+        String isbn = isbnTextField.getText();
+        String genere = genereSplitMenuButton.getText();
+        if(genere.equals("Scegli un genere")) genere = ""; //il genere non è stato specificato
+        String biblioteca = bibliotecaTextField.getText();
+        String cap = capTextField.getText();
+        filtriTemp = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
     }
 
     @FXML
@@ -166,8 +173,7 @@ public class SchermateUtenteGC {
     }
 
     @FXML
-    void caricaDati(ObservableList<LibroBean> lblist, FiltriBean fb){
-        tableViewBooksPL.setItems(lblist);
+    void caricaDati(FiltriBean fb){
         titoloTextField.setText(fb.getTitolo());
         autoreTextField.setText(fb.getAutore());
         isbnTextField.setText(fb.getIsbn());

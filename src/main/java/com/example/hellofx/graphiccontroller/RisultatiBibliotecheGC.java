@@ -104,8 +104,9 @@ public class RisultatiBibliotecheGC {
                 "/com/example/hellofx/schermateUtente.fxml",
                 event,
                 (SchermateUtenteGC suGC) -> {
-                    suGC.caricaDati(libriTemp, filtriTemp);
+                    suGC.caricaDati(filtriTemp);
                     suGC.setPlController(plController);
+                    suGC.cercaLibri(null);
                 }
         );
 

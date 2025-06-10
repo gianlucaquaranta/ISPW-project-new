@@ -3,14 +3,20 @@ package com.example.hellofx.cli;
 import com.example.hellofx.bean.*;
 import com.example.hellofx.controller.PLController;
 import com.example.hellofx.controllerfactory.PLControllerFactory;
+import com.example.hellofx.exception.EmptyFiltersException;
+import com.example.hellofx.exception.PrenotazioneGiaPresenteException;
+import com.example.hellofx.exception.UserNotLoggedException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CliPrenotaLibro {
 
     private Scanner scanner;
-    private PLController plController = PLControllerFactory.getInstance().createPLController();
+    private PLController plController;
     private List<LibroBean> datiTemp;  // Mantiene lo stato tra le schermate
     static final String SEPARATOR = "+----+--------------------------------+----------------------+----------------------+---------------+";
     static final String CHOICE = "Scelta: ";
@@ -29,8 +35,7 @@ public class CliPrenotaLibro {
         while (true) {
             System.out.println("\n--- RICERCA LIBRI ---");
             System.out.println("1. Cerca libro");
-            System.out.println("2. Rimuovi filtri");
-            System.out.println("3. Torna alla schermata iniziale");
+            System.out.println("2. Torna alla schermata iniziale");
             System.out.print(CHOICE);
 
             int scelta = scanner.nextInt();
@@ -45,9 +50,6 @@ public class CliPrenotaLibro {
                         return;
                     }
                 case 2:
-                    rimuoviFiltri();
-                    break;
-                case 3:
                     return;
                 default:
                     System.out.println(NOT_VALID_OPTION);
@@ -68,8 +70,14 @@ public class CliPrenotaLibro {
 
         // Creazione bean e chiamata al controller
         FiltriBean filtriBean = new FiltriBean(titolo, autore, genere, isbn, biblioteca, cap);
-        List<LibroBean> risultati = plController.filtra(filtriBean);
-
+        List<LibroBean> risultati;
+        plController = PLControllerFactory.getInstance().createPLController();
+        try {
+            risultati = plController.filtra(filtriBean);
+        } catch(EmptyFiltersException e){
+            showLogger(e.getMessage());
+            return 1;
+        }
         // Visualizzazione risultati
         if (risultati.isEmpty()) {
             System.out.println("\nNessun risultato trovato.");
@@ -85,7 +93,7 @@ public class CliPrenotaLibro {
         System.out.println("Generi disponibili:");
         // Stampa elenco puntato
         GenereBean[] generi = GenereBean.values();
-        System.out.println("0. Non modificare il genere");
+        System.out.println("0 per ignorare");
         for (int i = 0; i < generi.length; i++) {
             System.out.println((i + 1) + ". " + generi[i].getNome());
         }
@@ -94,16 +102,14 @@ public class CliPrenotaLibro {
         scanner.nextLine();
 
         // Validazione input
-        if (scelta < 1 || scelta > generi.length) {
+        if (scelta > generi.length) {
             System.out.println("Indice non valido.");
             return null;
+        } else if(scelta==0){
+            return "";
         }
 
         return generi[scelta - 1].getNome();
-    }
-
-    private void rimuoviFiltri() {
-        System.out.println("\nFiltri rimossi correttamente.");
     }
 
     private String richiediInput(String messaggio) {
@@ -125,7 +131,7 @@ public class CliPrenotaLibro {
 
         for (int i = 0; i < libri.size(); i++) {
             LibroBean libro = libri.get(i);
-            System.out.printf("| %-2d | %-30s | %-20s | %-20s | %-13s |\n",
+            System.out.printf("| %-2d | %-30s | %-20s | %-20s | %-13s |%n",
                     i + 1,
                     truncate(libro.getTitolo(), 30),
                     truncate(libro.getAutore(), 20),
@@ -137,6 +143,7 @@ public class CliPrenotaLibro {
 
 
     private int gestisciSelezioneLibro(List<LibroBean> libri) {
+        List<BibliotecaBean> biblioteche;
         while(true){
             System.out.print("\nSeleziona un libro (1-" + libri.size() + ") o 0 per annullare: ");
             int scelta = scanner.nextInt();
@@ -144,8 +151,8 @@ public class CliPrenotaLibro {
 
             if (scelta > 0 && scelta <= libri.size()) {
                 LibroBean libroSelezionato = libri.get(scelta - 1);
-                datiTemp = libri;// Salva per eventuale ritorno indietro
-                List<BibliotecaBean> biblioteche = plController.getBiblioteche(libroSelezionato);
+                datiTemp = libri; // Salva per eventuale ritorno indietro
+                biblioteche = plController.getBiblioteche(libroSelezionato);
 
                 stampaBiblioteche(biblioteche);
                 int result = gestisciSelezioneBiblioteca(biblioteche);
@@ -197,10 +204,9 @@ public class CliPrenotaLibro {
         System.out.println(SEPARATOR);
         System.out.println("| #  | NOME                         | INDIRIZZO                   | CIVICO| CITTA     | CAP      | PROVINCIA |");
         System.out.println(SEPARATOR);
-
         for (int i = 0; i < biblioteche.size(); i++) {
             BibliotecaBean bib = biblioteche.get(i);
-            System.out.printf("| %-2d | %-28s | %-27s | %-5s | %-9s | %-8s | %-7s |\n",
+            System.out.printf("| %-2d | %-28s | %-27s | %-5s | %-9s | %-8s | %-7s |%n",
                     i + 1,
                     truncate(bib.getNome(), 28),
                     truncate(bib.getIndirizzo(), 27),
@@ -216,10 +222,12 @@ public class CliPrenotaLibro {
     private int visualizzaRiepilogo(List<BibliotecaBean> biblioteche) {
 
         System.out.print("\nSeleziona biblioteca (1-" + biblioteche.size() + "): ");
-        int scelta = scanner.nextInt();
-        scanner.nextLine();
+        int scelta;
 
         while(true){
+            scelta = scanner.nextInt();
+            scanner.nextLine();
+
             if (scelta > 0 && scelta <= biblioteche.size()) {
                 BibliotecaBean biblioteca = biblioteche.get(scelta - 1);
                 PrenotazioneBean pb = plController.creaRiepilogo(biblioteca);
@@ -262,7 +270,17 @@ public class CliPrenotaLibro {
 
             switch (opzione) {
                 case 1:
-                    plController.registraPrenotazione();
+                    try {
+                        plController.registraPrenotazione();
+                    } catch (UserNotLoggedException e) {
+                        showLogger(e.getMessage());
+                        CliLogin cliLogin = new CliLogin(scanner);
+                        cliLogin.start(plController);
+                        return 0;
+                    } catch (PrenotazioneGiaPresenteException e){
+                        showLogger(e.getMessage());
+                        return 1;
+                    }
                     System.out.println("\nPRENOTAZIONE REGISTRATA CON SUCCESSO!");
                     return 0;
                 case 2:
@@ -273,6 +291,11 @@ public class CliPrenotaLibro {
                     break;
             }
         }
+    }
+
+    private void showLogger(String message) {
+        Logger logger = Logger.getLogger(CliPrenotaLibro.class.getName());
+        logger.log(Level.SEVERE, message);
     }
 
 }

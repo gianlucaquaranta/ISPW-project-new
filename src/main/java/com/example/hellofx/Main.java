@@ -1,5 +1,6 @@
 package com.example.hellofx;
 
+import com.example.hellofx.cli.CliLogin;
 import com.example.hellofx.session.Session;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\gianl\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -36,7 +36,7 @@ public class Main extends Application {
 
         boolean isFile;
         if (isFull) {
-            System.out.println("Quale tipo di persistenza desideri per gli utenti e le prenotazioni?\n1. DB\n2. File system \nInserisci 1 o 2 per effettuare la scelta e premi ENTER: ");
+            System.out.println("Quale tipo di persistenza desideri per le prenotazioni?\n1. DB\n2. File system \nInserisci 1 o 2 per effettuare la scelta e premi ENTER: ");
             isFile = scanner.nextInt() != 1;
             scanner.nextLine();
         } else isFile = false;
@@ -47,7 +47,8 @@ public class Main extends Application {
         if(isGui) {
             launch(args);
         } else {
-            //manager.start();
+            CliLogin cliLogin = new CliLogin(scanner);
+            cliLogin.start();
         }
     }
 

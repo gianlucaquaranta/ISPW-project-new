@@ -8,6 +8,7 @@ import com.example.hellofx.dao.bibliotecadao.BibliotecaDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
 import com.example.hellofx.dao.utentedao.UtenteDao;
 import com.example.hellofx.exception.EmptyFiltersException;
+import com.example.hellofx.exception.PrenotazioneGiaPresenteException;
 import com.example.hellofx.exception.UserNotLoggedException;
 import com.example.hellofx.model.*;
 import com.example.hellofx.model.modelfactory.FiltriFactory;
@@ -46,6 +47,10 @@ public class PLController {
                 String biblioteca = filtriRicerca.getBiblioteca();
                 String cap = filtriRicerca.getCap();
 
+                //Controlli sui filtri
+                if(biblioteca.isBlank() && cap.isBlank() && titolo.isBlank() && autore.isBlank() && genere.isBlank() && isbn.isBlank()){
+                        throw new EmptyFiltersException("Inserisci almeno un filtro relativo ai libri ed uno relativo alle biblioteche");
+                }
                 if(biblioteca.isBlank() && cap.isBlank()){ //L'utente deve inserire almeno un filtro che permetta di filtrare le biblioteche
                         throw new EmptyFiltersException("Inserisci almeno un filtro tra CAP e Biblioteca"); //handle exception ??
                 } else if(titolo.isBlank() && autore.isBlank() && genere.equals("Scegli un genere") && isbn.isBlank()) {
@@ -135,6 +140,7 @@ public class PLController {
                         if (l.getIsbn().equals(selezionato.getIsbn())) {
                                 bibliotecheRelative = risultatiFinali.get(l);
                                 libroSelezionato = l;
+
                                 break;
                         }
                 }
@@ -172,7 +178,7 @@ public class PLController {
         }
 
 
-        public void registraPrenotazione() throws UserNotLoggedException{
+        public void registraPrenotazione() throws UserNotLoggedException, PrenotazioneGiaPresenteException{
 
                 Utente u = session.getUtente();
                 if(u==null){
@@ -181,6 +187,12 @@ public class PLController {
                 UtenteBean ub = new UtenteBean(u.getUsername(), u.getEmail());
                 pb.setUtente(ub);
                 Prenotazione p = Converter.beanToPrenotazione(pb);
+
+                for (Prenotazione prenotazione : u.getPrenotazioniAttive()) {
+                        if (prenotazione.getIdPrenotazione().equals(p.getIdPrenotazione())) {
+                                throw new PrenotazioneGiaPresenteException(pb.getIsbn(), pb.getBiblioteca());
+                        }
+                }
 
                 //aggiungo la nuova prenotazione tra le prenotazioni attive dell'utente
                 List<Prenotazione> pUtente = u.getPrenotazioniAttive();
@@ -243,27 +255,15 @@ public class PLController {
                 risultatiFinali.put(libro, newEntry);
         }
 
-/*
-        private boolean isLibroCorrispondente(Libro libro) {
-                String titolo = formatString(filtriRicerca.getTitolo());
-                String autore = formatString(filtriRicerca.getAutore());
-                String genere = formatString(filtriRicerca.getGenere());
-                String isbn = formatString(filtriRicerca.getIsbn());
+        private boolean isBookValid(Libro l, Biblioteca b) {
 
-                String libroTitolo = formatString(libro.getTitolo());
-                String libroAutore = formatString(libro.getAutore());
-                String libroGenere = formatString(libro.getGenere());
-                String libroIsbn = formatString(libro.getIsbn());
+                int disponibili = b.getCopie().get(l.getIsbn())[1];
+                if(disponibili > 0){
+                        return isLibroCorrispondente(l);
+                }
 
-                boolean titoloMatch = titolo.isEmpty() || libroTitolo.contains(titolo) || titolo.contains(libroTitolo);
-                System.out.println("Titolo match: "+titoloMatch);
-                boolean autoreMatch = autore.isEmpty() || libroAutore.contains(autore) || autore.contains(libroAutore);
-                boolean genereMatch = genere.equals("scegliungenere") || libroGenere.contains(genere) || genere.contains(libroGenere);
-                boolean isbnMatch = isbn.isEmpty() || libroIsbn.equalsIgnoreCase(isbn);
-
-                return titoloMatch && autoreMatch && genereMatch && isbnMatch;
+                return false;
         }
-*/
 
         private boolean isLibroCorrispondente(Libro libro) {
                 String titolo = formatString(filtriRicerca.getTitolo());
@@ -278,7 +278,7 @@ public class PLController {
 
                 boolean titoloMatch = stringMatch(titolo, libroTitolo);
                 boolean autoreMatch = stringMatch(autore, libroAutore);
-                boolean genereMatch = genere.equals("scegliungenere") || libroGenere.equals(genere);
+                boolean genereMatch = genere.isBlank() || libroGenere.equals(genere);
                 boolean isbnMatch = isbn.isEmpty() || libroIsbn.equalsIgnoreCase(isbn);
 
                 return titoloMatch && autoreMatch && genereMatch && isbnMatch;
@@ -321,16 +321,6 @@ public class PLController {
                 }
 
                 return commonLetters >= requiredCommon;
-        }
-
-        private boolean isBookValid(Libro l, Biblioteca b) {
-
-                int disponibili = b.getCopie().get(l.getIsbn())[1];
-                if(disponibili > 0){
-                        return isLibroCorrispondente(l);
-                }
-
-                return false;
         }
 
 }

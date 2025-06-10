@@ -51,7 +51,7 @@ public class CliProfiloUtente {
                     Logout logoutController = new Logout();
                     logoutController.logout();
                     System.out.println("\nLogout effettuato con successo!");
-                    return; //Gestire cli quando viene effettuato logout per non creare stack overflow
+                    return;
                 case 7:
                     return;
                 default:

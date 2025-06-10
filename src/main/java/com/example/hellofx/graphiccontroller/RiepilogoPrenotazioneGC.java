@@ -5,10 +5,12 @@ import com.example.hellofx.bean.FiltriBean;
 import com.example.hellofx.bean.LibroBean;
 import com.example.hellofx.bean.PrenotazioneBean;
 import com.example.hellofx.controller.PLController;
+import com.example.hellofx.exception.PrenotazioneGiaPresenteException;
 import com.example.hellofx.exception.UserNotLoggedException;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 
 public class RiepilogoPrenotazioneGC {
@@ -54,8 +56,12 @@ public class RiepilogoPrenotazioneGC {
     public void confermaPrenotazione(ActionEvent event){
         try {
             plController.registraPrenotazione();
-        } catch (UserNotLoggedException e) {
+        } catch (UserNotLoggedException e){
+            showAlert(e.getMessage(), Alert.AlertType.ERROR);
             SceneChanger.changeSceneWithController("/com/example/hellofx/login.fxml", event, (LoginGC lgc) -> lgc.setPlController(plController));
+            return;
+        } catch(PrenotazioneGiaPresenteException e){
+            showAlert(e.getMessage(), Alert.AlertType.ERROR);
             return;
         }
         SceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml",event);
@@ -90,4 +96,12 @@ public class RiepilogoPrenotazioneGC {
     public void setFiltriTemp(FiltriBean fb){filtriTemp = fb;}
 
     public void setPlController(PLController plcontroller){ this.plController = plcontroller; }
+
+    public void showAlert(String message, Alert.AlertType alertType){
+        Alert alert = new Alert(alertType);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+
+    }
 }

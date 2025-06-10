@@ -3,6 +3,7 @@ package com.example.hellofx.cli;
 import java.util.Scanner;
 
 public class CliSchermataInizialeUtente {
+
     private Scanner scanner;
     private static final String NOT_AVAILABLE = "Funzionalità non ancora disponibile";
 
@@ -11,7 +12,6 @@ public class CliSchermataInizialeUtente {
     }
 
     public void start() {
-        System.out.println("=== BIBLIOTECA DIGITALE ===");
         mostraMenuPrincipale();
     }
 
@@ -22,7 +22,7 @@ public class CliSchermataInizialeUtente {
             System.out.println("2. Profilo utente");
             System.out.println("3. Prenota libro");
             System.out.println("4. Trova prezzi");
-            System.out.println("5. Chiudi l'applicazione");
+            System.out.println("5. Vai al login");
             System.out.print("Seleziona un'opzione: ");
 
             int scelta = scanner.nextInt();

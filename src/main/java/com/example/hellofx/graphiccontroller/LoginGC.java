@@ -7,6 +7,7 @@ import com.example.hellofx.controller.PLController;
 import com.example.hellofx.controllerfactory.LoginControllerFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -18,7 +19,7 @@ public class LoginGC {
     private TextField usernameTextField;
 
     LoginController loginController = LoginControllerFactory.getInstance().createLoginController();
-    PLController plController;
+    PLController plController = null;
 
     @FXML
     void login(ActionEvent event){
@@ -32,15 +33,18 @@ public class LoginGC {
                 if(plController != null){ //Significa che gliel'ha passato RiepilogoPrenotazioneGC per gestire la UserNotLoggedException, quindi è necessario cambiare flusso
                     plController.registraPrenotazione();
                 }
+                SceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
                 break;
             case LoginResult.NON_AUTENTICATO:
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setContentText("Credenziali non valide");
+                alert.showAndWait();
                 break;
             case LoginResult.BIBLIOTECARIO:
                 SceneChanger.changeScene("/com/example/hellofx/homeBibliotecario.fxml", event);
-                return;
+                break;
         }
-
-        SceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
 
     }
 

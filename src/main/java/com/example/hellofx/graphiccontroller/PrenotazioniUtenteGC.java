@@ -7,15 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 
 public class PrenotazioniUtenteGC {
@@ -107,26 +101,15 @@ public class PrenotazioniUtenteGC {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null); // nessun header
-        alert.setContentText("Eliminazione avvenuta!");
+        alert.setContentText("Eliminazione avvenuta con successo!");
         alert.showAndWait();
 
     }
 
     @FXML
     public void indietro(ActionEvent event){
-        Parent root;
-        Stage stage;
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hellofx/schermateUtente.fxml"));
-            root = loader.load();
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneChanger.changeScene("/com/example/hellofx/schermateUtente.fxml", event);
 
     }
 }

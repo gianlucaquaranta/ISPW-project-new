@@ -80,6 +80,7 @@
                                           <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Saggistica" />
                                           <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Horror" />
                                           <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Varie" />
+                                          <MenuItem mnemonicParsing="false" onAction="#setText" style="-fx-border-color: TRANSPARENT; -fx-background-color: TRANSPARENT;" text="Scegli un genere" />
                                        </items>
                                     </SplitMenuButton>
                                     <Label layoutX="241.0" layoutY="108.0" text="Genere" textFill="#0b6b75">

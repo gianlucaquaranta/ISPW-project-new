@@ -1,89 +1,95 @@
 package com.example.hellofx.cli;
 
-import com.example.hellofx.bean.BibliotecaBean;
-import com.example.hellofx.bean.BibliotecarioBean;
-import com.example.hellofx.bean.UtenteBean;
+import com.example.hellofx.bean.RegistrazioneBibliotecaBean;
+import com.example.hellofx.bean.RegistrazioneUtenteBean;
 import com.example.hellofx.controller.RegistrazioneController;
+import com.example.hellofx.controllerfactory.RegistrazioneControllerFactory;
 
 import java.util.Scanner;
 
-public class CliRegistrazione implements ShowInterface {
-    RegistrazioneController registrazioneController = RegistrazioneControllerFactory.getInstance().createRegistrazioneController();
+public class CliRegistrazione {
+    Scanner scanner;
+    private final RegistrazioneController registrazioneController = RegistrazioneControllerFactory.getInstance().creteRegistrazioneController();
 
-    public CliRegistrazione() {
-        //necessario all'ottenimento della classe a partire dal suo package
+    CliRegistrazione(Scanner s) {
+        scanner = s;
+    }
+    public void start() {
+        System.out.println("=== REGISTRAZIONE ===");
+        mostraSceltaTipoRegistrazione();
     }
 
-    @Override
-    public String show(Scanner scanner) {
-        while(true) {
-            System.out.println("=== MENU DI REGISTRAZIONE ===");
-            System.out.println("Selezionare il proprio ruolo:\n 0. Bibliotecario\n1. Utente\n2. Torna al log in\nCLOSE\n");
-            String risposta = scanner.nextLine();
+    private void mostraSceltaTipoRegistrazione() {
 
-            if (risposta.equals("0")) {
-                BibliotecarioBean bibliotecarioBean = new BibliotecarioBean();
-                BibliotecaBean bibliotecaBean = new BibliotecaBean();
+        while (true) {
+            System.out.println("\nRegistrati come:");
+            System.out.println("1. Utente");
+            System.out.println("2. Biblioteca");
+            System.out.println("3. Torna al login");
+            System.out.print("Scelta: ");
 
-                this.bibliotecarioForm(scanner, bibliotecarioBean);
-                this.bibliotecaForm(scanner, bibliotecaBean);
+            int scelta = scanner.nextInt();
+            scanner.nextLine(); // Consuma il newline
 
-                System.out.println("\nConfermare i dati inseriti? (Y/N): ");
-                if (scanner.nextLine().equalsIgnoreCase("Y") && registrazioneController.registerBibliotecario(bibliotecarioBean, bibliotecaBean)) {
-                    return bibliotecarioBean.getClass().getSimpleName();
-                }
-            } else if (risposta.equals("1")) {
-                UtenteBean utenteBean = new UtenteBean();
-
-                this.utenteForm(scanner, utenteBean);
-
-                System.out.println("\nConfermare i dati inseriti? (Y/N): ");
-                if (scanner.nextLine().equalsIgnoreCase("Y") && registrazioneController.registerUtente(utenteBean)) {
-                    return utenteBean.getClass().getSimpleName();
-                }
-            } else if (risposta.equalsIgnoreCase("CLOSE") || risposta.equals("2")) {
-                return risposta;
-            } else {
-                System.out.println("\nInput inserito invalido. Riprova.\n");
+            switch (scelta) {
+                case 1:
+                    registraUtente();
+                    return;
+                case 2:
+                    registraBiblioteca();
+                    return;
+                case 3:
+                    System.out.println("Torno al login...");
+                    return;
+                default:
+                    System.out.println("Opzione non valida!");
             }
         }
-
     }
 
+    private void registraUtente() {
+        System.out.println("\n--- REGISTRAZIONE UTENTE ---");
+        String username = richiediInput("Username: ");
+        String email = richiediInput("Email: ");
+        String password = richiediInput("Password: ");
 
-    public void bibliotecarioForm(Scanner scanner, BibliotecarioBean bibliotecarioBean) {
-        System.out.print("Inserire le credenziali per effettuare la registrazione (premere ENTER per confermare).\nNome: ");
-        bibliotecarioBean.setNome(scanner.nextLine());
-        System.out.println("\nCognome: ");
-        bibliotecarioBean.setCognome(scanner.nextLine());
-        System.out.println("\nUsername: ");
-        bibliotecarioBean.setUsername(scanner.nextLine());
-        System.out.println("\nPassword: ");
-        bibliotecarioBean.setPassword(scanner.nextLine());
+        RegistrazioneUtenteBean regBean = new RegistrazioneUtenteBean(username, email, password);
+        boolean success = registrazioneController.registraUtente(regBean);
+
+        if (success) {
+            System.out.println("\nRegistrazione completata con successo!");
+            System.out.println("Ora puoi effettuare il login");
+        } else {
+            System.out.println("\nERRORE: Username già esistente!");
+        }
     }
 
-    public void bibliotecaForm(Scanner scanner, BibliotecaBean bibliotecaBean) {
-        System.out.print("Inserire i dati della biblioteca (premere ENTER per confermare).\nNome: ");
-        bibliotecaBean.setNome(scanner.nextLine());
-        System.out.println("\nIndirizzo: ");
-        bibliotecaBean.setIndirizzo(scanner.nextLine());
-        System.out.println("\nNumero civico: ");
-        bibliotecaBean.setNumeroCivico(scanner.nextLine());
-        System.out.println("\nCittà: ");
-        bibliotecaBean.setCitta(scanner.nextLine());
-        System.out.println("\nCAP: ");
-        bibliotecaBean.setCap(scanner.nextLine());
-        System.out.println("\nProvincia: ");
-        bibliotecaBean.setProvincia(scanner.nextLine());
-        System.out.println("\nURL del sito ufficiale: ");
-        bibliotecaBean.setUrl(scanner.nextLine());
+    private void registraBiblioteca() {
+        System.out.println("\n--- REGISTRAZIONE BIBLIOTECA ---");
+        String nome = richiediInput("Nome biblioteca: ");
+        String indirizzo = richiediInput("Indirizzo: ");
+        String numCivico = richiediInput("Numero civico: ");
+        String citta = richiediInput("Città: ");
+        String provincia = richiediInput("Provincia: ");
+        String cap = richiediInput("CAP: ");
+        String password = richiediInput("Password: ");
+
+        RegistrazioneBibliotecaBean regBean = new RegistrazioneBibliotecaBean(
+                nome, password, indirizzo, cap, numCivico, citta, provincia);
+
+        boolean success = registrazioneController.registraBiblioteca(regBean);
+
+        if (success) {
+            System.out.println("\nBiblioteca registrata con successo!");
+            System.out.println("Ora puoi effettuare il login");
+        } else {
+            System.out.println("\nERRORE: Nome biblioteca già esistente!");
+        }
     }
 
-    public void utenteForm(Scanner scanner, UtenteBean utenteBean) {
-        System.out.print("Inserire le credenziali per effettuare la registrazione (premere ENTER per confermare).\nUsername: ");
-        utenteBean.setUsername(scanner.nextLine());
-        System.out.println("\nPassword: ");
-        utenteBean.setPassword(scanner.nextLine());
+    private String richiediInput(String messaggio) {
+        System.out.print(messaggio);
+        return scanner.nextLine();
     }
 
 }
