@@ -22,6 +22,8 @@ public class SchermateUtenteGC {
 
     //Prenota libro FXML
     @FXML
+    private TabPane tabPane;
+    @FXML
     private TextField titoloTextField;
     @FXML
     private TextField autoreTextField;
@@ -50,6 +52,7 @@ public class SchermateUtenteGC {
 
     private PLController plController;
     private FiltriBean filtriTemp;
+    private static final String ACTIVE_TAB = "active-tab";
 
     //Inizializzazioni table view
     @FXML
@@ -62,6 +65,20 @@ public class SchermateUtenteGC {
 
         setupOptionColumnPL();
 
+        tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+            if (oldTab != null) {
+                oldTab.getStyleClass().remove(ACTIVE_TAB);
+            }
+            if (newTab != null && !newTab.getStyleClass().contains(ACTIVE_TAB)) {
+                newTab.getStyleClass().add(ACTIVE_TAB);
+            }
+        });
+
+        // Aggiunge la classe alla tab iniziale
+        Tab initialTab = tabPane.getSelectionModel().getSelectedItem();
+        if (initialTab != null) {
+            initialTab.getStyleClass().add(ACTIVE_TAB);
+        }
     }
 
     private void setupOptionColumnPL(){

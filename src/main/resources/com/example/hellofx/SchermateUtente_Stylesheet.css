@@ -33,20 +33,17 @@
 
 }
 
-.tab-pane .tab-header-area .tab:selected{
+.tab.active-tab {
     -fx-background-color: #E9E0D9;
-
 }
 
-
-.tab-pane .tab-header-area .tab:selected .focus-indicator{
-    -fx-background-color: TRANSPARENT;
-    -fx-border-color: TRANSPARENT;
-}
-
-
-.tab-pane .tab-header-area .tab:selected .tab-label{
+.tab.active-tab .tab-label {
     -fx-text-fill: #0b6b75;
+}
+
+.tab.active-tab .focus-indicator {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 
 .AnchorPanes{

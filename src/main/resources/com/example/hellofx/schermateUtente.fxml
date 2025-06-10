@@ -36,7 +36,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <TabPane layoutX="163.0" layoutY="216.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="1280.0" styleClass="tab" stylesheets="@SchermateUtente_Stylesheet.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="45.0" tabMaxWidth="200.0" tabMinHeight="45.0" tabMinWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
+      <TabPane fx:id="tabPane" layoutX="163.0" layoutY="216.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="1280.0" styleClass="tab" stylesheets="@SchermateUtente_Stylesheet.css" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="45.0" tabMaxWidth="200.0" tabMinHeight="45.0" tabMinWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
          <tabs>
             <Tab text="Prenota un libro">
                <content>
