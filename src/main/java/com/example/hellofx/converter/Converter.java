@@ -3,6 +3,7 @@ package com.example.hellofx.converter;
 import com.example.hellofx.bean.*;
 import com.example.hellofx.model.*;
 import com.example.hellofx.model.modelfactory.*;
+import com.example.hellofx.session.BibliotecarioSession;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -92,7 +93,16 @@ public class Converter {
         p.setIdBiblioteca(pb.getBibliotecaB().getIdBiblioteca());
         p.setIdPrenotazione();
         return p;
+    }
 
+    public static PrenotazioneBean prenotazioneBibliotecaToBean(Prenotazione p, Biblioteca b){
+        UtenteBean utenteBean = new UtenteBean();
+        utenteBean.setUsername(p.getDatiUtente()[0]);
+        utenteBean.setEmail(p.getDatiUtente()[1]);
+        BibliotecaBean bibliotecaBean = Converter.bibliotecaToBean(b);
+        LibroBean libroBean = Converter.libroToBean(b.getLibroByIsbn(p.getIsbn()));
+
+        return new PrenotazioneBean(p.getIdPrenotazione(), p.getDataInizio(), p.getDataScadenza(), utenteBean, bibliotecaBean, libroBean);
     }
 
     public static String timestampToString(Timestamp timestamp){
