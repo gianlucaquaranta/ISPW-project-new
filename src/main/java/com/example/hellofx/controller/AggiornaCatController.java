@@ -59,7 +59,7 @@ public class AggiornaCatController {
         }
     }
 
-    public List<LibroBean> getCatalogo() { //restituisce il catalogo
+    public List<LibroBean> getCatalogo() {
         List<LibroBean> list = new ArrayList<>();
         for (Libro l : b.getCatalogo()) {
             LibroBean bean = Converter.libroToBean(l);
@@ -101,17 +101,26 @@ public class AggiornaCatController {
 
         Function<Libro, String> extractor = fieldExtractors.get(fieldType.toLowerCase());
 
-        if (extractor == null) return this.getCatalogo(); // fieldType Mostra tutti
+        if (extractor == null || field.isBlank()) return this.getCatalogo(); // mostra tutto
+
+        // rimuove spazi e virgole e mette tutto in minuscolo
+        String cleanedField = formatString(field);
 
         for (Libro l : list) {
-            if (extractor.apply(l).equalsIgnoreCase(field)) {
-                LibroBean lb = Converter.libroToBean(l);
-                lb.setNumCopie(b.getCopie().get(l.getIsbn()));
-                results.add(lb);
+            String fieldValue = extractor.apply(l);
+            if (fieldValue != null) {
+                String cleanedValue = formatString(fieldValue);
+                if (cleanedValue.contains(cleanedField)) {
+                    LibroBean lb = Converter.libroToBean(l);
+                    lb.setNumCopie(b.getCopie().get(l.getIsbn()));
+                    results.add(lb);
+                }
             }
         }
+
         return results;
     }
+
 
     public void orderByIsbn(List<LibroBean> catalogo, String order) {
         if (order.equalsIgnoreCase("decrescente")) {
@@ -173,6 +182,10 @@ public class AggiornaCatController {
         if (!missingFields.isEmpty()) {
             throw new IllegalArgumentException("I seguenti campi sono mancanti o invalidi:\n" + missingFields);
         }
+    }
+
+    private String formatString(String s){
+        return s.toLowerCase().replaceAll("[\\s,]+", "");
     }
 
 }

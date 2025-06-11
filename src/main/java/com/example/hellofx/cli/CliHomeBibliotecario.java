@@ -62,16 +62,8 @@ public class CliHomeBibliotecario {
 
         if (catalogo.isEmpty()) {
             System.out.println("Nessun libro presente nel catalogo.");
-            return;
         } else {
-            for (int i = 0; i < catalogo.size(); i++) {
-                LibroBean libro = catalogo.get(i);
-                System.out.printf("%d. %s - %s (ISBN: %s)%n",
-                        i + 1,
-                        libro.getTitolo(),
-                        libro.getAutore(),
-                        libro.getIsbn());
-            }
+            CliCatalogoTableConfigurator.mostraTabellaCatalogo(catalogo);
         }
 
         System.out.print("Opzioni: ");

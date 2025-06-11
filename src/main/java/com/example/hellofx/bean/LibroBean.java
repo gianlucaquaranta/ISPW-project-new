@@ -66,7 +66,9 @@ public class LibroBean {
     }
 
     public void setIsbn(String isbn) {
-        this.isbn = isbn;
+        if((isbn.matches("\\d{13}"))) {
+            this.isbn = isbn;
+        } else throw new IllegalArgumentException("ISBN non valido");
     }
 
     public Integer getCopie() {
@@ -80,5 +82,4 @@ public class LibroBean {
     public String getGenereString() {
         return this.genere.getNome();
     }
-
 }

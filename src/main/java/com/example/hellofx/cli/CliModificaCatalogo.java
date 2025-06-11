@@ -67,7 +67,7 @@ public class CliModificaCatalogo {
         }
 
         System.out.println("\n=== CATALOGO LIBRI ===");
-        mostraLibri(catalogo);
+        CliCatalogoTableConfigurator.mostraTabellaCatalogo(catalogo);
 
         attendiInput();
     }
@@ -165,7 +165,7 @@ public class CliModificaCatalogo {
         }
 
         System.out.println("\nSeleziona il libro da eliminare:");
-        mostraLibri(catalogo);
+        CliCatalogoTableConfigurator.mostraTabellaCatalogo(catalogo);
 
         System.out.print(CHOICE);
         int scelta = scanner.nextInt();
@@ -194,17 +194,6 @@ public class CliModificaCatalogo {
     private void attendiInput() {
         System.out.print("\nPremi INVIO per continuare...");
         scanner.nextLine();
-    }
-
-    private void mostraLibri(List<LibroBean> catalogo){
-        for (int i = 0; i < catalogo.size(); i++) {
-            LibroBean libro = catalogo.get(i);
-            System.out.printf(MENU_PLACEHOLDER,
-                    i+1,
-                    libro.getTitolo(),
-                    libro.getAutore(),
-                    libro.getIsbn());
-        }
     }
 
     private String chiediInput(String campo, String valorePredefinito) {
