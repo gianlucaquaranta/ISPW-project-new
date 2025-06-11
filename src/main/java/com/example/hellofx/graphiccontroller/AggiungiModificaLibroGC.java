@@ -59,7 +59,7 @@ public class AggiungiModificaLibroGC {
             bean.setNumCopie(copie);
 
             // Validazione
-            aggiornaCatController.validateLibroBean(bean);
+            bean.validate();
 
             // Azione
             if (this.isEditMode) {

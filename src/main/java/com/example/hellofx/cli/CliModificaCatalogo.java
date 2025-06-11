@@ -66,7 +66,6 @@ public class CliModificaCatalogo {
             return;
         }
 
-        System.out.println("\n=== CATALOGO LIBRI ===");
         CliCatalogoTableConfigurator.mostraTabellaCatalogo(catalogo);
 
         attendiInput();
@@ -114,7 +113,7 @@ public class CliModificaCatalogo {
 
         try {
             LibroBean bean = raccogliDatiLibro(libro);
-            aggiornaCatController.validateLibroBean(bean);
+            bean.validate();
             salvaLibro(bean);
         } catch (NumberFormatException _) {
             System.out.println("Errore: Inserire un numero valido per anno o copie");

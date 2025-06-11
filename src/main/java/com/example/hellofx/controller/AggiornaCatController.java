@@ -14,7 +14,6 @@ import com.example.hellofx.session.BibliotecarioSession;
 import com.example.hellofx.session.Session;
 import com.example.hellofx.session.SessionManager;
 
-import java.time.Year;
 import java.util.*;
 import java.util.function.Function;
 
@@ -151,37 +150,6 @@ public class AggiornaCatController {
             libroDaoMemory.store(l, b.getId());
         }
         return l;
-    }
-
-    public void validateLibroBean(LibroBean bean) throws IllegalArgumentException {
-
-        StringBuilder missingFields = new StringBuilder();
-
-        if (bean.getTitolo() == null || bean.getTitolo().isBlank())
-            missingFields.append("- Titolo\n");
-
-        if (bean.getAutore() == null || bean.getAutore().isBlank())
-            missingFields.append("- Autore\n");
-
-        if (bean.getIsbn() == null || bean.getIsbn().isBlank())
-            missingFields.append("- ISBN\n");
-
-        if (bean.getEditore() == null || bean.getEditore().isBlank())
-            missingFields.append("- Editore\n");
-
-        if (bean.getGenere() == null)
-            missingFields.append("- Genere\n");
-
-        if (bean.getAnnoPubblicazione() <= 0 || bean.getAnnoPubblicazione() >= Year.now().getValue())
-            missingFields.append("- Anno pubblicazione\n");
-
-        Integer[] copie = bean.getNumCopie();
-        if (copie == null || copie.length < 2 || copie[0] == null || copie[0] < 0)
-            missingFields.append("- Numero di copie\n");
-
-        if (!missingFields.isEmpty()) {
-            throw new IllegalArgumentException("I seguenti campi sono mancanti o invalidi:\n" + missingFields);
-        }
     }
 
     private String formatString(String s){
