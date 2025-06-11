@@ -7,7 +7,6 @@ import com.example.hellofx.dao.librodao.LibroDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDao;
 import com.example.hellofx.dao.prenotazionedao.PrenotazioneDaoFile;
 import com.example.hellofx.dao.utentedao.UtenteDao;
-import com.example.hellofx.dao.utentedao.UtenteDaoFile;
 
 public class DaoFileFactory extends DaoFactory {
     private static DaoFileFactory instance = null;
@@ -22,9 +21,7 @@ public class DaoFileFactory extends DaoFactory {
 
 
     @Override
-    public UtenteDao createDaoUtente() {
-        return new UtenteDaoFile();
-    }
+    public UtenteDao createDaoUtente() { return null; }
 
     @Override
     public LibroDao createDaoLibro() {

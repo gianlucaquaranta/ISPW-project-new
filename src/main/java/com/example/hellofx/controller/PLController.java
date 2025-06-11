@@ -289,7 +289,7 @@ public class PLController {
         }
 
         public static boolean stringMatch(String s1, String s2) {
-                if(s1.isEmpty() || s1.equals(s2)) return true;
+                if(s1.isEmpty() || s1.equals(s2) || s1.contains(s2) || s2.contains(s1)) return true;
 
                 // Normalizzo (puoi adattare a caso o spazi, se vuoi)
                 s1 = s1.toLowerCase();
