@@ -8,12 +8,14 @@ public class FiltriBean {
     private String biblioteca;
     private String cap;
 
+    public FiltriBean() {}
     public FiltriBean(String titolo, String autore, String genere, String isbn, String biblioteca, String cap) {
         this.titolo = titolo;
         this.autore = autore;
         this.genere = genere;
-        if(!validaIsbn(isbn)) throw new IllegalArgumentException("Formato ISBN non valido");
-        this.isbn = isbn;
+        String cleanedIsbn;
+        cleanedIsbn = validaIsbn(isbn);
+        this.isbn = cleanedIsbn;
         this.biblioteca = biblioteca;
         if(!validaCap(cap)) throw new IllegalArgumentException("Formato CAP non valido");
         this.cap = cap;
@@ -68,11 +70,22 @@ public class FiltriBean {
         this.biblioteca = biblioteca;
     }
 
-    private boolean validaIsbn(String isbn) {
-        return(isbn.matches("\\d{13}") || isbn.isBlank());
+    public String validaIsbn(String isbn) {
+        if (isbn.isBlank()) {
+            return isbn;
+        }
+
+        // Rimuove spazi e trattini
+        String cleanedIsbn = isbn.replaceAll("[\\s-]", "");
+
+        if(!cleanedIsbn.matches("\\d{13}")){
+            throw new IllegalArgumentException("Formato ISBN non valido");
+        }
+
+        return cleanedIsbn;
     }
 
-    private boolean validaCap(String cap) {
+    public boolean validaCap(String cap) {
         return(cap.matches("\\d{5}") || cap.isBlank());
     }
 }
