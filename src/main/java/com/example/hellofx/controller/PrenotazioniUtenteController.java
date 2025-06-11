@@ -22,7 +22,6 @@ import java.util.List;
 
 
 public class PrenotazioniUtenteController {
-    private static final String MEM = "memory";
     private Session session = SessionManager.getSession();
     List<Prenotazione> plist = ((UtenteSession)session).getUtente().getPrenotazioniAttive();
     BibliotecaDao bibliotecaDaoM = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoBiblioteca();
