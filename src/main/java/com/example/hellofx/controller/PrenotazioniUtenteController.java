@@ -78,13 +78,15 @@ public class PrenotazioniUtenteController {
             BibliotecaDao bibliotecaDao =  DaoFactory.getDaoFactory(PersistenceType.PERSISTENCE).createDaoBiblioteca();
             bibliotecaDao.update(b);
 
+
+
         } else {
             prenotazioneDao = DaoFactory.getDaoFactory(PersistenceType.MEMORY).createDaoPrenotazione();
             b = bibliotecaDaoM.loadOne(pb.getBibliotecaB().getIdBiblioteca());
-            b.getPrenotazioniAttive().removeIf(p -> p.getIdPrenotazione().equals(pb.getId()));
             b.getCopie().get(pb.getIsbn())[1] ++;
         }
 
+        b.getPrenotazioniAttive().removeIf(p -> p.getIdPrenotazione().equals(pb.getId()));
         prenotazioneDao.delete(pb.getId());
 
     }
