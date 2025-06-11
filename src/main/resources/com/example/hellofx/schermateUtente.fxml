@@ -266,7 +266,7 @@
                               </DropShadow>
                            </effect>
                            <children>
-                              <Button layoutX="20.0" layoutY="235.8" mnemonicParsing="false" onAction="#visualizzaNoleggi" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Noleggi attivi" textFill="#565656" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">
+                              <Button layoutX="20.0" layoutY="87.0" mnemonicParsing="false" onAction="#visualizzaNoleggi" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Noleggi attivi" textFill="#565656" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="87.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -278,7 +278,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button layoutX="20.0" layoutY="323.0" mnemonicParsing="false" onAction="#visualizzaPrenotazioni" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Prenotazioni attive" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="258.5">
+                              <Button layoutX="20.0" layoutY="145.4" mnemonicParsing="false" onAction="#visualizzaPrenotazioni" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Prenotazioni attive" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="145.4">
                                  <graphic>
                                     <ImageView fitHeight="69.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 40;" styleClass="icona">
                                        <image>
@@ -287,7 +287,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button layoutX="20.0" layoutY="391.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Le mie letture" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="317.0">
+                              <Button layoutX="20.0" layoutY="203.8" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Le mie letture" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="203.8">
                                  <graphic>
                                     <ImageView fitHeight="67.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 40;" styleClass="icona">
                                        <image>
@@ -296,10 +296,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Label layoutX="20.0" layoutY="14.0" prefWidth="1064.0" styleClass="intestazioneProfilo" text="Profilo di" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="14.0" />
-                              <Label layoutX="20.0" layoutY="104.0" prefWidth="1064.0" text="prenotazioni attive" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="104.0" />
-                              <Label layoutX="20.0" layoutY="144.0" prefWidth="1064.0" text="libri letti" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="144.0" />
-                              <Button layoutX="20.0" layoutY="459.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Wishlist" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="375.5">
+                              <Button layoutX="20.0" layoutY="262.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Wishlist" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="262.0">
                                  <graphic>
                                     <ImageView fitHeight="67.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 40;" styleClass="icona">
                                        <image>
@@ -308,8 +305,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Label layoutX="20.0" layoutY="64.0" prefWidth="1064.0" text="noleggi attivi" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="64.0" />
-                              <Button layoutX="20.0" layoutY="433.4" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci il tuo profilo" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="433.4">
+                              <Button layoutX="20.0" layoutY="321.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci il tuo profilo" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="321.0">
                                  <graphic>
                                     <ImageView fitHeight="69.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 40;" styleClass="icona">
                                        <image>
@@ -318,7 +314,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button layoutX="20.0" layoutY="491.8" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Log out" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="491.8">
+                              <Button layoutX="20.0" layoutY="379.0" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Log out" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="379.0">
                                  <graphic>
                                     <ImageView fitHeight="69.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 40;" styleClass="icona">
                                        <image>

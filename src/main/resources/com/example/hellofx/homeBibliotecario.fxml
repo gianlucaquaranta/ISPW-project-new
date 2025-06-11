@@ -25,7 +25,7 @@
             <Insets left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
-            <Button layoutY="254.0" mnemonicParsing="false" onAction="#visualizzaCatalogo" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Visualizza Catalogo" textFill="#565656" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="260.0">
+            <Button layoutX="20.0" layoutY="117.4" mnemonicParsing="false" onAction="#visualizzaCatalogo" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Visualizza Catalogo" textFill="#565656" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="117.4">
                <font>
                   <Font size="20.0" />
                </font>
@@ -37,7 +37,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="20.0" layoutY="318.6" mnemonicParsing="false" onAction="#visualizzaRegistroNoleggi" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Registro Noleggi" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="318.5">
+            <Button layoutX="20.0" layoutY="176.0" mnemonicParsing="false" onAction="#visualizzaRegistroNoleggi" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Registro Noleggi" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="176.0">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -46,7 +46,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="20.0" layoutY="372.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci Presentazione Eventi" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="377.0">
+            <Button layoutX="20.0" layoutY="234.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci Presentazione Eventi" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="234.0">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -55,10 +55,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label layoutX="118.0" layoutY="49.0" prefWidth="1064.0" text="Nome:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
-            <Label layoutX="96.0" layoutY="129.0" prefWidth="1064.0" text="Indirizzo:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0" />
             <Label layoutY="23.4" styleClass="titolo" stylesheets="@buttonList_Stylesheet.css" text="Home - La tua biblioteca" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
-            <Button layoutX="20.0" layoutY="459.0" mnemonicParsing="false" onAction="#visualizzaPrenotazioni" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci Prenotazioni" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="435.5">
+            <Button layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#visualizzaPrenotazioni" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Gestisci Prenotazioni" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="293.0">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -67,7 +65,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="20.0" layoutY="493.4" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Log out" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="493.4">
+            <Button layoutX="20.0" layoutY="351.0" mnemonicParsing="false" onAction="#logout" prefHeight="69.0" prefWidth="418.0" stylesheets="@buttonList_Stylesheet.css" text="Log out" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="351.0">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
